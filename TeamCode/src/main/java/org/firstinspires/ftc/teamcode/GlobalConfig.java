@@ -1,0 +1,1 @@
+//Contains all the variable for the components
