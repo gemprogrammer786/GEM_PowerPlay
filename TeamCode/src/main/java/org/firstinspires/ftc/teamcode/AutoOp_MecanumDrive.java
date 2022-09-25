@@ -65,7 +65,7 @@ public class AutoOp_MecanumDrive extends LinearOpMode {
     DcMotor leftMotorBack;
     DcMotor rightMotorBack;
 
-    static final double     MOTOR_SPEED = 0.5;
+    static final double MOTOR_SPEED = 0.5;
 
     @Override
     public void runOpMode() {
