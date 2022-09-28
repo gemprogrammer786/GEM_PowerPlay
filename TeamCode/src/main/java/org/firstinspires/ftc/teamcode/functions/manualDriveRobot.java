@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 
-public class manualDrive  extends LinearOpMode {
+public class manualDriveRobot extends LinearOpMode {
 
 
     /* Declare OpMode members. */

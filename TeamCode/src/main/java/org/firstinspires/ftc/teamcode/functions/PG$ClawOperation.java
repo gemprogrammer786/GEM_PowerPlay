@@ -1,4 +1,4 @@
 package org.firstinspires.ftc.teamcode.functions;
 
-public class autoDrive {
+public class PG$ClawOperation {
 }

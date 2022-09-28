@@ -1,4 +1,4 @@
 package org.firstinspires.ftc.teamcode.functions;
 
-public class linearSlide {
+public class PG$LinearSlideOperation {
 }

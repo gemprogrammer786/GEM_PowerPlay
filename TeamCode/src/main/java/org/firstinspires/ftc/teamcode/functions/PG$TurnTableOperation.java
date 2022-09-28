@@ -1,4 +1,4 @@
 package org.firstinspires.ftc.teamcode.functions;
 
-public class clawOperation {
+public class PG$TurnTableOperation {
 }

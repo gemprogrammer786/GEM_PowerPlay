@@ -1,4 +1,7 @@
 package org.firstinspires.ftc.teamcode.global;
 
-public class controlerFunction {
+public class PG$GameControlerMapping {
+
+
+
 }
