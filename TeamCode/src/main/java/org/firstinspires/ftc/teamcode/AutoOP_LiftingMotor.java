@@ -17,11 +17,11 @@ public class AutoOP_LiftingMotor extends LinearOpMode{
     }
 
     // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Ready to run");
-        telemetry.update();
+//        telemetry.addData("Status", "Ready to run");
+//        telemetry.update();
 
     // Wait for the game to start (driver presses PLAY)
-    waitForStart();
+    //waitForStart();
 
     public void lowSpring() {
 
