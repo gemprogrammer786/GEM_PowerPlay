@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -15,7 +16,7 @@ public class PG$MecanumDriveFourWheels {
     public DcMotorEx frontleft;
     public DcMotorEx backright;
     public DcMotorEx backleft;
-
+    BNO055IMU imu;
 
     //public DcMotorEx xRail;
 
@@ -42,6 +43,8 @@ public class PG$MecanumDriveFourWheels {
         frontleft = hardwareMap.get(DcMotorEx.class,"frontLeft");
         backright = hardwareMap.get(DcMotorEx.class,"backRight");
         backleft = hardwareMap.get(DcMotorEx.class,"backLeft");
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+
 
         //xRail = hardwareMap.get(DcMotorEx.class, "xRail");
     }
@@ -56,14 +59,8 @@ public class PG$MecanumDriveFourWheels {
         //frontright.setDirection(DcMotorSimple.Direction.REVERSE);
         backright.setDirection(DcMotorSimple.Direction.REVERSE);
         frontright.setDirection(DcMotorSimple.Direction.REVERSE);
-
         backleft.setDirection(DcMotorSimple.Direction.FORWARD);
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
-
-
-
-
-
 
         //middleright.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -75,23 +72,18 @@ public class PG$MecanumDriveFourWheels {
 
             backright.setDirection(DcMotorSimple.Direction.REVERSE);
             frontright.setDirection(DcMotorSimple.Direction.REVERSE);
-
             backleft.setDirection(DcMotorSimple.Direction.FORWARD);
             frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
             frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
             backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
             backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
             frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
             backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
             backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
@@ -172,10 +164,54 @@ public class PG$MecanumDriveFourWheels {
 
     public void move(double lefty, double righty, double leftx, double rightx){
 
-            frontright.setPower((-lefty  +rightx - leftx)*rightErrorAdjustment); // should work same as above
-             frontleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
-             backright.setPower((-lefty + rightx + leftx)*rightErrorAdjustment);
-             backleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment);
+
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        // Technically this is the default, however specifying it is clearer
+        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        // Without this, data retrieving from the IMU throws an exception
+        imu.initialize(parameters);
+
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData(">", "Robot Ready.  Press Play.");    //
+        telemetry.update();
+
+
+
+//        double y = -gamepad1.left_stick_y; // Remember, this is reversed!
+//        double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+//        double rx = gamepad1.right_stick_x;
+
+        leftx = leftx*1.1; // Counteract imperfect strafing
+
+        // Read inverse IMU heading, as the IMU heading is CW positive
+        double botHeading = -imu.getAngularOrientation().firstAngle;
+
+        double rotX = leftx * Math.cos(botHeading) - lefty * Math.sin(botHeading);
+        double rotY = leftx * Math.sin(botHeading) + lefty * Math.cos(botHeading);
+
+        // Denominator is the largest motor power (absolute value) or 1
+        // This ensures all the powers maintain the same ratio, but only when
+        // at least one is out of the range [-1, 1]
+        double denominator = Math.max(Math.abs(lefty) + Math.abs(leftx) + Math.abs(rightx), 1);
+        double frontLeftPower = (rotY + rotX + rightx) / denominator;
+        double backLeftPower = (rotY - rotX + rightx) / denominator;
+        double frontRightPower = (rotY - rotX - rightx) / denominator;
+        double backRightPower = (rotY + rotX - rightx) / denominator;
+
+        frontright.setPower(frontRightPower);
+        frontleft.setPower(frontLeftPower);
+        backright.setPower(backRightPower);
+        backleft.setPower(backLeftPower);
+
+
+
+
+
+//        frontright.setPower((-lefty  +rightx - leftx)*rightErrorAdjustment); // should work same as above
+//        frontleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
+//        backright.setPower((-lefty + rightx + leftx)*rightErrorAdjustment);
+//        backleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment);
 
     }
 }
