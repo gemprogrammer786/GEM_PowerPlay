@@ -47,7 +47,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="TeleOp MecanumDriveIMU", group="GENBot")
+@TeleOp(name="Pawan MecanumDriveIMU", group="GENBot")
 //@Disabled
 public class TeleOp_MecanumDriveIMU extends LinearOpMode {
 
