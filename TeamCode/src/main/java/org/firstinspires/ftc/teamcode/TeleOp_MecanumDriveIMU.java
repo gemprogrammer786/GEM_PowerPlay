@@ -60,10 +60,10 @@ public class TeleOp_MecanumDriveIMU extends LinearOpMode {
     @Override
     public void runOpMode() {
         // Initialize the drive system variables.
-        leftMotorFront = hardwareMap.get(DcMotor.class, "leftmotor_front");
-        rightMotorFront = hardwareMap.get(DcMotor.class, "rightmotor_front");
-        leftMotorBack = hardwareMap.get(DcMotor.class, "leftmotor_back");
-        rightMotorBack = hardwareMap.get(DcMotor.class, "rightmotor_back");
+        leftMotorFront = hardwareMap.get(DcMotor.class, "frontLeft");
+        rightMotorFront = hardwareMap.get(DcMotor.class, "frontRight");
+        leftMotorBack = hardwareMap.get(DcMotor.class, "backLeft");
+        rightMotorBack = hardwareMap.get(DcMotor.class, "backRight");
 
         leftMotorFront.setDirection(DcMotor.Direction.FORWARD);
         leftMotorBack.setDirection(DcMotor.Direction.REVERSE);
