@@ -9,19 +9,19 @@ import org.firstinspires.ftc.teamcode.components.*;
 
 @Autonomous(name="GEM_Autonomous_Prototype")
 
-@Disabled
+//@Disabled
 public class PG$AutonomousPrototype extends LinearOpMode {
     //Configuration used: 6wheelConfig
     private ElapsedTime runtime = new ElapsedTime();
     @Override
     public void runOpMode() throws InterruptedException {
 
-        double speed = 0.2;
+        double speed = 10;
         PG$MecanumDriveFourWheels mecanum = new PG$MecanumDriveFourWheels(hardwareMap);
 //        Claw claw = new Claw(hardwareMap);
 //        claw.parent = this;
 //        claw.telemetry = this.telemetry;
-        sleep(5000);
+        sleep(50);
         mecanum.IsAutonomous = true;
         mecanum.velocity = 400;
         mecanum.telemetry = this.telemetry;
@@ -29,17 +29,17 @@ public class PG$AutonomousPrototype extends LinearOpMode {
         mecanum.initialize();
         waitForStart();
         //forward
-        mecanum.encoderDrive(speed,12.0,12.0,12.0,12.0,1.0);
+        mecanum.encoderDrive(speed,120.0,120.0,120.0,120.0,1.0);
         //backward
-        //mecanum.encoderDrive(speed,-12,-12,-12,-12,-12,-12, 1.0);
+        mecanum.encoderDrive(speed,-120.0,-120.0,-120.0,-120.0,1.0);
         //left
-        //mecanum.encoderDrive(speed,-12,0,12,12,0,-12, 1.0);
+        mecanum.encoderDrive(speed,-120.0,0,120.0,120.0,1.0);
         //right
-        //mecanum.encoderDrive(speed,12,0,-12,-12,0,12, 1.0);
+        mecanum.encoderDrive(speed,120.0,0,-120.0,-120.0,1.0);
         //left turn
-        //mecanum.encoderDrive(speed,-12,0,-12,12,0,12, 1.0);
+        mecanum.encoderDrive(speed,-120.0,0,-120.0,120.0,1.0);
         //right turn
-        //mecanum.encoderDrive(speed,12,0,12,-12,0,-12, 1.0);
+        mecanum.encoderDrive(speed,120.0,0,120.0,-120.0,1.0);
         //contract
         //mecanum.encoderDrive(speed,3.15,0,-3.15,3.1,0,-3.1, 1.0);
         //expand

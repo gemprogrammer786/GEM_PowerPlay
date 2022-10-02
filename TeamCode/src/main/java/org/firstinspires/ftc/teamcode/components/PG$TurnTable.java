@@ -3,14 +3,14 @@ package org.firstinspires.ftc.teamcode.components;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Spinner {
+public class PG$TurnTable {
     //Configuration used: 6wheelConfig
     private DcMotorEx CarouselWheel;
     //private double power = 0;
     private int time = 0;
 
 
-    public Spinner(HardwareMap hardwareMap){
+    public PG$TurnTable(HardwareMap hardwareMap){
         //As per 6wheelConfig
         CarouselWheel = hardwareMap.get(DcMotorEx .class, "carouselMotor");
 

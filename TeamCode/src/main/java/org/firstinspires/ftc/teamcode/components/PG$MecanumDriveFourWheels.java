@@ -24,7 +24,7 @@ public class PG$MecanumDriveFourWheels {
     public double leftErrorAdjustment = 1.0;
     public double rightErrorAdjustment = 1.0;
 
-    public double mecanumWheelCircumference = 12; //inches
+    public double mecanumWheelCircumference = 11.87; //inches
     public double omniWheelCircumference = 12; //inches
 
 
@@ -73,11 +73,11 @@ public class PG$MecanumDriveFourWheels {
 //            middleright.setDirection(DcMotorSimple.Direction.REVERSE);
 //            backright.setDirection(DcMotorSimple.Direction.REVERSE);
 
-            frontleft.setDirection(DcMotor.Direction.FORWARD);
-            frontright.setDirection(DcMotor.Direction.FORWARD);
+            backright.setDirection(DcMotorSimple.Direction.REVERSE);
+            frontright.setDirection(DcMotorSimple.Direction.REVERSE);
 
-            backright.setDirection(DcMotor.Direction.FORWARD);
-            backleft.setDirection(DcMotor.Direction.REVERSE);
+            backleft.setDirection(DcMotorSimple.Direction.FORWARD);
+            frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
             frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -172,7 +172,7 @@ public class PG$MecanumDriveFourWheels {
 
     public void move(double lefty, double righty, double leftx, double rightx){
 
-           frontright.setPower((-lefty  +rightx - leftx)*rightErrorAdjustment); // should work same as above
+            frontright.setPower((-lefty  +rightx - leftx)*rightErrorAdjustment); // should work same as above
              frontleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
              backright.setPower((-lefty + rightx + leftx)*rightErrorAdjustment);
              backleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment);
