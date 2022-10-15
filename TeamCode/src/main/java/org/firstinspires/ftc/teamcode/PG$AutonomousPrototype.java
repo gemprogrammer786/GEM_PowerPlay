@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.components.*;
+import org.firstinspires.ftc.teamcode.functions.PG$AutoRobotDrive;
 
 @Autonomous(name="GEM_Autonomous_Prototype")
 
@@ -16,30 +17,31 @@ public class PG$AutonomousPrototype extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        double speed = 10;
-        PG$MecanumDriveFourWheels mecanum = new PG$MecanumDriveFourWheels(hardwareMap);
+        double speed = 0.1;
+        PG$MecanumDriveFourWheels_BKP mecanum = new PG$MecanumDriveFourWheels_BKP(hardwareMap,telemetry);
+        //PG$AutoRobotDrive mecanum = new PG$AutoRobotDrive(hardwareMap,telemetry);
 //        Claw claw = new Claw(hardwareMap);
 //        claw.parent = this;
 //        claw.telemetry = this.telemetry;
         sleep(50);
         mecanum.IsAutonomous = true;
-        mecanum.velocity = 400;
-        mecanum.telemetry = this.telemetry;
+        //mecanum.telemetry = this.telemetry;
         mecanum.parent = this;
-        mecanum.initialize();
+
         waitForStart();
         //forward
         mecanum.encoderDrive(speed,120.0,120.0,120.0,120.0,1.0);
+
         //backward
-        mecanum.encoderDrive(speed,-120.0,-120.0,-120.0,-120.0,1.0);
+       // mecanum.encoderDrive(speed,-120.0,-120.0,-120.0,-120.0,1.0);
         //left
-        mecanum.encoderDrive(speed,-120.0,0,120.0,120.0,1.0);
+        //mecanum.encoderDrive(speed,-120.0,0,120.0,120.0,1.0);
         //right
-        mecanum.encoderDrive(speed,120.0,0,-120.0,-120.0,1.0);
+        //mecanum.encoderDrive(speed,120.0,0,-120.0,-120.0,1.0);
         //left turn
-        mecanum.encoderDrive(speed,-120.0,0,-120.0,120.0,1.0);
+        //mecanum.encoderDrive(speed,-120.0,0,-120.0,120.0,1.0);
         //right turn
-        mecanum.encoderDrive(speed,120.0,0,120.0,-120.0,1.0);
+        //mecanum.encoderDrive(speed,120.0,0,120.0,-120.0,1.0);
         //contract
         //mecanum.encoderDrive(speed,3.15,0,-3.15,3.1,0,-3.1, 1.0);
         //expand

@@ -9,71 +9,60 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.global.PG$GlobalConfig;
 
 public class PG$MecanumDriveFourWheels {
-    //Configuration used: 6wheelConfig
+
+    public boolean IsAutonomous = false;
+    PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
+    public LinearOpMode parent;
+    //private ElapsedTime runtime = new ElapsedTime();
+    public Telemetry telemetry;
+
+
+    //Configuration used: 4wheelConfig
     public DcMotorEx frontright;
     public DcMotorEx frontleft;
     public DcMotorEx backright;
     public DcMotorEx backleft;
-    BNO055IMU imu;
+    public BNO055IMU imu;
 
     //public DcMotorEx xRail;
-
-    public boolean IsAutonomous = false;
-
-    public double leftErrorAdjustment = 1.0;
-    public double rightErrorAdjustment = 1.0;
-
-    public double mecanumWheelCircumference = 11.87; //inches
-    public double omniWheelCircumference = 12; //inches
+    public HardwareMap hardwareMap;
 
 
 
-    public LinearOpMode parent;
 
-    public int velocity = 200;
+    public PG$MecanumDriveFourWheels( HardwareMap hardwareMap,Telemetry telemetry) {
 
-    private ElapsedTime runtime = new ElapsedTime();
+        this.telemetry=telemetry;
+        this.hardwareMap=hardwareMap;
 
-    public Telemetry telemetry;
-
-    public PG$MecanumDriveFourWheels(HardwareMap hardwareMap) {
-        frontright = hardwareMap.get(DcMotorEx.class,"frontRight");
-        frontleft = hardwareMap.get(DcMotorEx.class,"frontLeft");
-        backright = hardwareMap.get(DcMotorEx.class,"backRight");
-        backleft = hardwareMap.get(DcMotorEx.class,"backLeft");
+        frontright = hardwareMap.get(DcMotorEx.class,newGlobalConfig.frontRightWheel);
+        frontleft = hardwareMap.get(DcMotorEx.class,newGlobalConfig.frontLeftWheel);
+        backright = hardwareMap.get(DcMotorEx.class, newGlobalConfig.backRightWheel);
+        backleft = hardwareMap.get(DcMotorEx.class, newGlobalConfig.backRightWheel);
         imu = hardwareMap.get(BNO055IMU.class, "imu");
 
-
-        //xRail = hardwareMap.get(DcMotorEx.class, "xRail");
-    }
-
-    //initialize for TeleOp
-    public void initialize() {
         double reset = 0;
         frontright.setPower(reset);
         frontleft.setPower(reset);
         backleft.setPower(reset);
         backright.setPower(reset);
-        //frontright.setDirection(DcMotorSimple.Direction.REVERSE);
         backright.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontright.setDirection(DcMotorSimple.Direction.REVERSE);
-        backleft.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontright.setDirection(DcMotorSimple.Direction.FORWARD);
+        backleft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontleft.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        //middleright.setDirection(DcMotorSimple.Direction.REVERSE);
 
         if(IsAutonomous)
         {
-//            frontright.setDirection(DcMotorSimple.Direction.REVERSE);
-//            middleright.setDirection(DcMotorSimple.Direction.REVERSE);
-//            backright.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
             backright.setDirection(DcMotorSimple.Direction.REVERSE);
-            frontright.setDirection(DcMotorSimple.Direction.REVERSE);
-            backleft.setDirection(DcMotorSimple.Direction.FORWARD);
-            frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
+            frontright.setDirection(DcMotorSimple.Direction.FORWARD);
+            backleft.setDirection(DcMotorSimple.Direction.REVERSE);
+            frontleft.setDirection(DcMotorSimple.Direction.FORWARD);
 
             frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -86,49 +75,62 @@ public class PG$MecanumDriveFourWheels {
             frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
+        else{
+
+            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+            // Technically this is the default, however specifying it is clearer
+            parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+            // Without this, data retrieving from the IMU throws an exception
+            imu.initialize(parameters);
+
+            // Send telemetry message to signify robot waiting;
+            // telemetry.addData(">", "Robot Ready.  Press Play.");    //
+            // telemetry.update();
+
+        }
+
+
     }
 
+    public PG$MecanumDriveFourWheels() {
+    }
 
+/*
     public void encoderDrive(double speed,
                              double frontLeftInches, double backLeftInches, double frontRightInches,
                              double backRightInches, double timeoutS) {
         int new_frontLeftTarget;
         int new_frontRightTarget;
-        int new_middleLeftTarget=0;
-        int new_middleRightTarget=0;
         int new_backLeftTarget;
         int new_backRightTarget;
-        double ticksPerInchMecanum = (537.7 / mecanumWheelCircumference);
+        double ticksPerInchMecanum = (537.7 /  newGlobalConfig.mecanumWheelCircumference);
         // Ensure that the opmode is still active
         if (parent.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            new_frontLeftTarget = frontleft.getCurrentPosition() + (int) (frontLeftInches * ticksPerInchMecanum);
-            new_frontRightTarget = frontright.getCurrentPosition() + (int) (frontRightInches * ticksPerInchMecanum);
+            new_frontLeftTarget =  frontleft.getCurrentPosition() + (int) (frontLeftInches * ticksPerInchMecanum);
+            new_frontRightTarget =  frontright.getCurrentPosition() + (int) (frontRightInches * ticksPerInchMecanum);
+            new_backLeftTarget =  backleft.getCurrentPosition() + (int) (backLeftInches * ticksPerInchMecanum);
+            new_backRightTarget =  backright.getCurrentPosition() + (int) (backRightInches * ticksPerInchMecanum);
 
-            new_backLeftTarget = backleft.getCurrentPosition() + (int) (backLeftInches * ticksPerInchMecanum);
-            new_backRightTarget = backright.getCurrentPosition() + (int) (backRightInches * ticksPerInchMecanum);
             frontleft.setTargetPosition(new_frontLeftTarget);
             frontright.setTargetPosition(new_frontRightTarget);
-
-
             backleft.setTargetPosition(new_backLeftTarget);
             backright.setTargetPosition(new_backRightTarget);
 
             // Turn On RUN_TO_POSITION
             frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
             backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
-            frontleft.setPower(speed*leftErrorAdjustment);
-            frontright.setPower(speed*rightErrorAdjustment);
 
-            backleft.setPower(speed*leftErrorAdjustment);
-            backright.setPower(speed*rightErrorAdjustment);
+            frontleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+            frontright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+            backleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+            backright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (parent.opModeIsActive() &&
@@ -139,7 +141,6 @@ public class PG$MecanumDriveFourWheels {
                 telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
                         frontleft.getCurrentPosition(),
                         frontright.getCurrentPosition(),
-
                         backleft.getCurrentPosition(),
                         backright.getCurrentPosition());
                 telemetry.update();
@@ -148,14 +149,12 @@ public class PG$MecanumDriveFourWheels {
         // Stop all motion;
         frontleft.setPower(0);
         frontright.setPower(0);
-
         backleft.setPower(0);
         backright.setPower(0);
 
         // Turn off RUN_TO_POSITION
         frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -165,24 +164,11 @@ public class PG$MecanumDriveFourWheels {
     public void move(double lefty, double righty, double leftx, double rightx){
 
 
-
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        // Technically this is the default, however specifying it is clearer
-        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-        // Without this, data retrieving from the IMU throws an exception
-        imu.initialize(parameters);
-
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData(">", "Robot Ready.  Press Play.");    //
-        telemetry.update();
-
-
-
 //        double y = -gamepad1.left_stick_y; // Remember, this is reversed!
 //        double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
 //        double rx = gamepad1.right_stick_x;
 
-        leftx = leftx*1.1; // Counteract imperfect strafing
+        //leftx = leftx*1.1; // Counteract imperfect strafing
 
         // Read inverse IMU heading, as the IMU heading is CW positive
         double botHeading = -imu.getAngularOrientation().firstAngle;
@@ -199,19 +185,17 @@ public class PG$MecanumDriveFourWheels {
         double frontRightPower = (rotY - rotX - rightx) / denominator;
         double backRightPower = (rotY + rotX - rightx) / denominator;
 
-        frontright.setPower(frontRightPower);
-        frontleft.setPower(frontLeftPower);
-        backright.setPower(backRightPower);
-        backleft.setPower(backLeftPower);
+        frontright.setPower(frontRightPower  * newGlobalConfig.robotTeleOpsSpeedReducer);
+        frontleft.setPower(frontLeftPower  * newGlobalConfig.robotTeleOpsSpeedReducer);
+        backright.setPower(backRightPower  * newGlobalConfig.robotTeleOpsSpeedReducer);
+        backleft.setPower(backLeftPower  * newGlobalConfig.robotTeleOpsSpeedReducer);
 
-
-
-
-
-//        frontright.setPower((-lefty  +rightx - leftx)*rightErrorAdjustment); // should work same as above
-//        frontleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
-//        backright.setPower((-lefty + rightx + leftx)*rightErrorAdjustment);
-//        backleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment);
+       // frontright.setPower((-lefty  +rightx - leftx)*rightErrorAdjustment   * newGlobalConfig.robotTeleOpsSpeedReducer); // should work same as above
+       // frontleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment   * newGlobalConfig.robotTeleOpsSpeedReducer);
+       // backright.setPower((-lefty + rightx + leftx)*rightErrorAdjustment   * newGlobalConfig.robotTeleOpsSpeedReducer);
+       // backleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment   * newGlobalConfig.robotTeleOpsSpeedReducer);
 
     }
+
+ */
 }

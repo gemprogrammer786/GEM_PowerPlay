@@ -18,6 +18,10 @@ public class manualDriveRobot extends LinearOpMode {
     DcMotor leftMotorBack;
     DcMotor rightMotorBack;
 
+
+
+
+
     // Retrieve the IMU from the hardware map
     BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
     BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -26,10 +30,10 @@ public class manualDriveRobot extends LinearOpMode {
     @Override
     public void runOpMode() {
         // Initialize the drive system variables.
-        leftMotorFront = hardwareMap.get(DcMotor.class, "leftmotor_front");
-        rightMotorFront = hardwareMap.get(DcMotor.class, "rightmotor_front");
-        leftMotorBack = hardwareMap.get(DcMotor.class, "leftmotor_back");
-        rightMotorBack = hardwareMap.get(DcMotor.class, "rightmotor_back");
+        leftMotorFront = hardwareMap.get(DcMotor.class, "frontLeft");
+        rightMotorFront = hardwareMap.get(DcMotor.class, "frontRight");
+        leftMotorBack = hardwareMap.get(DcMotor.class, "backLeft");
+        rightMotorBack = hardwareMap.get(DcMotor.class, "backRight");
 
         leftMotorFront.setDirection(DcMotor.Direction.FORWARD);
         leftMotorBack.setDirection(DcMotor.Direction.REVERSE);

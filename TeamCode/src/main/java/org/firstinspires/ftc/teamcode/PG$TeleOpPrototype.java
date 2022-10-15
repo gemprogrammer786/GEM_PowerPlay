@@ -9,14 +9,18 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.components.*;
+import org.firstinspires.ftc.teamcode.functions.PG$AutoRobotDrive;
+import org.firstinspires.ftc.teamcode.functions.PG$TeleOpRobotDrive;
 
 
-@TeleOp(name = "GEM_TeleOp_Prototype")
+@TeleOp(name = "Pawan_TeleOp_Prototype")
 
 //@Disabled
 public class PG$TeleOpPrototype extends LinearOpMode {
     //Configuration used: 6wheelConfig
-    PG$MecanumDriveFourWheels  wheels;
+    //PG$TeleOpRobotDrive wheels;
+    PG$MecanumDriveFourWheels_BKP wheels;
+    //PG$MecanumDriveFourWheels wheels;
     double lefty = 0.0;
     double leftx = 0.0;
     double righty = 0.0;
@@ -28,10 +32,14 @@ public class PG$TeleOpPrototype extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         //Hardware Mapping
-        wheels = new PG$MecanumDriveFourWheels(hardwareMap);
-        wheels.initialize();
+        //wheels = new PG$MecanumDriveFourWheels(hardwareMap,telemetry);
+        wheels = new PG$MecanumDriveFourWheels_BKP(hardwareMap,telemetry);
+
+        //wheels = new PG$TeleOpRobotDrive(hardwareMap,telemetry);
+
+
         //wheels.rightErrorAdjustment = 0.93;//1;
-        wheels.telemetry = telemetry;
+        //wheels.telemetry = telemetry;
         wheels.parent = this;
 
 
@@ -76,7 +84,7 @@ public class PG$TeleOpPrototype extends LinearOpMode {
 
             else{
                 //wheels.move(lefty,righty,leftx,rightx);
-                wheels.move(leftx,rightx,lefty,righty);
+                wheels.move(lefty,righty,leftx,rightx);
                 //spinner.setPower(0);
             }
 
