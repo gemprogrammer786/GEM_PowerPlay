@@ -26,7 +26,7 @@ public class PG$LinearPrototype2 extends LinearOpMode {
         lift.IsAutonomous = true;
 
         lift.parent = this;
-        lift.initiateLift();
+        //lift.initiateLift();
         waitForStart();
         //forward
        //lift.encoderDrive(speed,120.0,1.0);

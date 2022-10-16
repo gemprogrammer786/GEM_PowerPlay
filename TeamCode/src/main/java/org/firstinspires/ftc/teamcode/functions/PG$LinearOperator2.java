@@ -23,7 +23,7 @@ public class PG$LinearOperator2 extends PG$LinearMontion2 {
 //    public double liftPower = -0.2;
     public LinearOpMode parent;
 
-    public int new_frontLeftTarget = 0;
+    public int new_TargetPosition = 0;
 
     HardwareMap hardwareMap;
     Telemetry telemetry;
@@ -52,15 +52,15 @@ public class PG$LinearOperator2 extends PG$LinearMontion2 {
 
         }
 
-        new_frontLeftTarget = position;
+        new_TargetPosition = position;
         if(level!=0) {
-            linearLift.setTargetPosition(new_frontLeftTarget);
+            linearLift.setTargetPosition(new_TargetPosition);
             parent.sleep(200);
         }
         else{
 
             parent.sleep(200);
-            linearLift.setTargetPosition(new_frontLeftTarget);
+            linearLift.setTargetPosition(new_TargetPosition);
         }
 
         if(position==0){
@@ -75,7 +75,7 @@ public class PG$LinearOperator2 extends PG$LinearMontion2 {
         //else{
         //arm.setPower(0.0);
         //}
-        telemetry.addData("Path1",  "Running to %7d ", new_frontLeftTarget);
+        telemetry.addData("Path1",  "Running to %7d ", new_TargetPosition);
 
         telemetry.addData("Path2",  "Running at %7d ",
                 linearLift.getCurrentPosition());
