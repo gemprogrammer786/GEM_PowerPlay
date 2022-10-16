@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.components.*;
-import org.firstinspires.ftc.teamcode.functions.PG$AutoRobotDrive;
-
+import org.firstinspires.ftc.teamcode.archived.PG$MecanumDriveFourWheels_BKP;
+import org.firstinspires.ftc.teamcode.functions.PG$RobotAutoDrive;
 @Autonomous(name="GEM_Autonomous_Prototype")
 
 //@Disabled
@@ -17,9 +15,9 @@ public class PG$AutonomousPrototype extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        double speed = 0.1;
-        PG$MecanumDriveFourWheels_BKP mecanum = new PG$MecanumDriveFourWheels_BKP(hardwareMap,telemetry);
-        //PG$AutoRobotDrive mecanum = new PG$AutoRobotDrive(hardwareMap,telemetry);
+        double speed = 0.5;
+        //PG$MecanumDriveFourWheels_BKP mecanum = new PG$MecanumDriveFourWheels_BKP(hardwareMap,telemetry);
+        PG$RobotAutoDrive mecanum = new PG$RobotAutoDrive(hardwareMap,telemetry);
 //        Claw claw = new Claw(hardwareMap);
 //        claw.parent = this;
 //        claw.telemetry = this.telemetry;
@@ -30,10 +28,10 @@ public class PG$AutonomousPrototype extends LinearOpMode {
 
         waitForStart();
         //forward
-        mecanum.encoderDrive(speed,120.0,120.0,120.0,120.0,1.0);
+        mecanum.encoderDrive(speed,200.0,200.0,200.0,200.0,2.0);
 
         //backward
-       // mecanum.encoderDrive(speed,-120.0,-120.0,-120.0,-120.0,1.0);
+        mecanum.encoderDrive(speed,-120.0,-120.0,-120.0,-120.0,2.0);
         //left
         //mecanum.encoderDrive(speed,-120.0,0,120.0,120.0,1.0);
         //right

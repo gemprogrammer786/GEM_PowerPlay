@@ -1,10 +1,6 @@
 package org.firstinspires.ftc.teamcode.functions;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -13,23 +9,22 @@ import org.firstinspires.ftc.teamcode.global.PG$GlobalConfig;
 import org.firstinspires.ftc.teamcode.components.PG$MecanumDriveFourWheels;
 
 
-public class PG$AutoRobotDrive extends PG$MecanumDriveFourWheels{
+public class PG$RobotAutoDrive extends PG$MecanumDriveFourWheels{
 
-    //private HardwareMap hardwareMap;
-    //private Telemetry telemetry;
-    PG$MecanumDriveFourWheels robot;
+    HardwareMap hardwareMap;
+    Telemetry telemetry;
+    private ElapsedTime runtime = new ElapsedTime();
+    PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
+    // PG$MecanumDriveFourWheels robot = new PG$MecanumDriveFourWheels(hardwareMap, telemetry );
 
-    public PG$AutoRobotDrive(HardwareMap hardwareMap,Telemetry telemetry){
-        parent.hardwareMap=hardwareMap;
-        parent.telemetry=telemetry;
-        robot = new PG$MecanumDriveFourWheels(hardwareMap, telemetry );
+
+    public PG$RobotAutoDrive(HardwareMap hardwareMap, Telemetry telemetry){
+        super(hardwareMap, telemetry);
+        this.hardwareMap=hardwareMap;
+        this.telemetry=telemetry;
+        //robot = new PG$MecanumDriveFourWheels(hardwareMap, telemetry );
 
     }
-
-
-   // PG$MecanumDriveFourWheels robot = new PG$MecanumDriveFourWheels(hardwareMap, telemetry );
-    PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
-    private ElapsedTime runtime = new ElapsedTime();
 
 
     public void encoderDrive(double speed,

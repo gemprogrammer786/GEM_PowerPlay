@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.functions;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -9,26 +8,21 @@ import org.firstinspires.ftc.teamcode.components.PG$MecanumDriveFourWheels;
 import org.firstinspires.ftc.teamcode.global.PG$GlobalConfig;
 
 
-public class PG$TeleOpRobotDrive extends PG$MecanumDriveFourWheels{
+public class PG$RobotTeleOpDrive extends PG$MecanumDriveFourWheels{
 
     HardwareMap hardwareMap;
     Telemetry telemetry;
 
-
-
-    public PG$TeleOpRobotDrive(HardwareMap hardwareMap,Telemetry telemetry){
+    public PG$RobotTeleOpDrive(HardwareMap hardwareMap, Telemetry telemetry){
         super(hardwareMap, telemetry);
         this.hardwareMap=hardwareMap;
         this.telemetry=telemetry;
 
     }
 
-
-
     //PG$MecanumDriveFourWheels robot = new PG$MecanumDriveFourWheels( hardwareMap, telemetry );
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
     private ElapsedTime runtime = new ElapsedTime();
-
 
 
     public void move(double lefty, double righty, double leftx, double rightx){
@@ -55,13 +49,10 @@ public class PG$TeleOpRobotDrive extends PG$MecanumDriveFourWheels{
         double frontRightPower = ((rotY - rotX - rightx) / denominator * newGlobalConfig.robotTeleOpsSpeedReducer);
         double backRightPower = ((rotY + rotX - rightx) / denominator * newGlobalConfig.robotTeleOpsSpeedReducer);
 
-
         frontright.setPower(frontRightPower);
         frontleft.setPower(frontLeftPower);
         backright.setPower(backRightPower);
         backleft.setPower(backLeftPower);
-
-
 
         // Display it for the driver.
         telemetry.addData("frontRightPower", "Power Is to %.3f  :", frontRightPower);

@@ -24,9 +24,13 @@ public class PG$GlobalConfig {
     public double robotTeleOpsSpeedReducer = 1.0; // the value should be between 0 to 1
 
 
+    public String clawServoName = "claw";
+    public double clawMin = 0.0;
+    public double clawMax = 1.0;
 
-
-
+    public String turnTableServoName = "turnTable";
+    public double turnTableMin = 0.0;
+    public double turnTableMax = 1.0;
 
 
 }

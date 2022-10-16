@@ -9,25 +9,21 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class PG$LinearMotionLift {
+public class PG$LinearMotion {
     //Configuration used: 6wheelConfig
     public DcMotorEx viperMotor;
-
     public double motorErrorAdjustment = 1.0;
-
     public boolean IsAutonomous = false;
-
-    public double mecanumWheelCircumference = 11.87; //inches
+    public double linearGearCircumference = 5.2; //inches
 
     public LinearOpMode parent;
 
     public int velocity = 200;
 
     private ElapsedTime runtime = new ElapsedTime();
-
     public Telemetry telemetry;
 
-    public PG$LinearMotionLift(HardwareMap hardwareMap) {
+    public PG$LinearMotion(HardwareMap hardwareMap) {
         viperMotor = hardwareMap.get(DcMotorEx.class,"viperMotor");
     }
 
@@ -41,15 +37,15 @@ public class PG$LinearMotionLift {
     }
 
 
-    public void encoderDrive(double speed, double viperMotorInches, double timeoutS) {
+    public void runViperMotor(double speed, double numberRotation, double timeoutS) {
         int new_liftTarget;
 
-        double ticksPerInchMecanum = (537.7 / mecanumWheelCircumference);
+        double ticksPerInchMecanum = (537.7 / linearGearCircumference);
         // Ensure that the opmode is still active
         if (parent.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            new_liftTarget = viperMotor.getCurrentPosition() + (int) (viperMotorInches * ticksPerInchMecanum);
+            new_liftTarget = viperMotor.getCurrentPosition() + (int) (numberRotation * ticksPerInchMecanum);
             viperMotor.setTargetPosition(new_liftTarget);
 
             // Turn On RUN_TO_POSITION

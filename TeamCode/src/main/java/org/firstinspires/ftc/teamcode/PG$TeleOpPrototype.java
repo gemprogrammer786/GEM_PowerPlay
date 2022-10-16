@@ -4,13 +4,10 @@ the robot just like an Rc Car.
 */
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.components.*;
-import org.firstinspires.ftc.teamcode.functions.PG$AutoRobotDrive;
-import org.firstinspires.ftc.teamcode.functions.PG$TeleOpRobotDrive;
+import org.firstinspires.ftc.teamcode.functions.PG$RobotTeleOpDrive;
 
 
 @TeleOp(name = "Pawan_TeleOp_Prototype")
@@ -18,7 +15,7 @@ import org.firstinspires.ftc.teamcode.functions.PG$TeleOpRobotDrive;
 //@Disabled
 public class PG$TeleOpPrototype extends LinearOpMode {
 
-    PG$TeleOpRobotDrive wheels;
+    PG$RobotTeleOpDrive wheels;
     //PG$MecanumDriveFourWheels_BKP wheels;
     //PG$MecanumDriveFourWheels wheels;
     double lefty = 0.0;
@@ -35,7 +32,7 @@ public class PG$TeleOpPrototype extends LinearOpMode {
 
        // wheels = new PG$MecanumDriveFourWheels_BKP(hardwareMap,telemetry);
 
-        wheels = new PG$TeleOpRobotDrive(hardwareMap,telemetry);
+        wheels = new PG$RobotTeleOpDrive(hardwareMap,telemetry);
 
 
         //wheels.rightErrorAdjustment = 0.93;//1;

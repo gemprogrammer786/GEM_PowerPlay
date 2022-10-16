@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.components.PG$LinearMotionLift;
-import org.firstinspires.ftc.teamcode.components.PG$ArmLiftAndGrabber;
+import org.firstinspires.ftc.teamcode.components.PG$LinearMotion;
+import org.firstinspires.ftc.teamcode.functions.PG$ArmLiftAndGrabber;
 
 @Autonomous(name="GEM_Linear_Prototype")
 
@@ -17,7 +17,7 @@ public class PG$LinearPrototype extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         double speed = 10;
-        PG$LinearMotionLift lift = new PG$LinearMotionLift(hardwareMap);
+        PG$LinearMotion lift = new PG$LinearMotion(hardwareMap);
         PG$ArmLiftAndGrabber claw = new PG$ArmLiftAndGrabber(hardwareMap);
         //claw.initiateLift();
         claw.parent = this;
