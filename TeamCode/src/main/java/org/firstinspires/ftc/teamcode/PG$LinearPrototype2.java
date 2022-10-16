@@ -6,41 +6,39 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.components.PG$LinearMotion1;
 import org.firstinspires.ftc.teamcode.functions.PG$ArmLiftAndGrabber;
+import org.firstinspires.ftc.teamcode.functions.PG$LinearOperator2;
+import org.firstinspires.ftc.teamcode.functions.PG$RobotAutoDrive;
 
-@Autonomous(name="GEM_Linear_Prototype")
+@Autonomous(name="GEM_Linear_Prototype2")
 
 //@Disabled
-public class PG$LinearPrototype extends LinearOpMode {
+public class PG$LinearPrototype2 extends LinearOpMode {
     //Configuration used: 6wheelConfig
     private ElapsedTime runtime = new ElapsedTime();
     @Override
     public void runOpMode() throws InterruptedException {
+        PG$LinearOperator2 lift = new PG$LinearOperator2(hardwareMap,telemetry);
 
         double speed = 10;
-        PG$LinearMotion1 lift = new PG$LinearMotion1(hardwareMap);
-        PG$ArmLiftAndGrabber claw = new PG$ArmLiftAndGrabber(hardwareMap);
-        //claw.initiateLift();
-        claw.parent = this;
-        claw.telemetry = this.telemetry;
+
 
         sleep(50);
         lift.IsAutonomous = true;
-        lift.velocity = 400;
-        lift.telemetry = this.telemetry;
+
         lift.parent = this;
-        lift.initialize();
+        lift.initiateLift();
         waitForStart();
         //forward
        //lift.encoderDrive(speed,120.0,1.0);
-        claw.lift(1);
-        claw.grab();
+        lift.lift(1);
         sleep(2000);
-        claw.lift(0);
-        claw.release();
-        claw.lift(1);
-        sleep(5000);
+        lift.lift(0);
+        lift.lift(2);
+        sleep(2000);
+        lift.lift(3);
+        sleep(2000);
         //lift.encoderDrive(speed,-120.0,1.0);
-
+        lift.lift(0);
 //        mecanum.moveForward();
 //        //mecanum.TestMechanumWheels(0.5);
 //        //mecanum.TestOmniWheels(0.5);

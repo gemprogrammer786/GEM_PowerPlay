@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class PG$LinearMotion {
+public class PG$LinearMotion1 {
     //Configuration used: 6wheelConfig
     public DcMotorEx viperMotor;
     public double motorErrorAdjustment = 1.0;
@@ -23,7 +23,7 @@ public class PG$LinearMotion {
     private ElapsedTime runtime = new ElapsedTime();
     public Telemetry telemetry;
 
-    public PG$LinearMotion(HardwareMap hardwareMap) {
+    public PG$LinearMotion1(HardwareMap hardwareMap) {
         viperMotor = hardwareMap.get(DcMotorEx.class,"viperMotor");
     }
 

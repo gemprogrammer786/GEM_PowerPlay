@@ -28,9 +28,24 @@ public class PG$GlobalConfig {
     public double clawMin = 0.0;
     public double clawMax = 1.0;
 
+    public String viperMotorName = "viperMotor";
+
+
     public String turnTableServoName = "turnTable";
     public double turnTableMin = 0.0;
     public double turnTableMax = 1.0;
+
+
+    //0 position
+    public int liftMin = 5;
+    //Level 1
+    public int liftLevel1 = 5;
+    //Level 2
+    public int liftLevel2 = 10;
+    //Level 3
+    public int liftLevel3 = 15;
+
+    public double liftPower = 0.5;
 
 
 }
