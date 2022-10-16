@@ -41,7 +41,7 @@ public class PG$MecanumDriveFourWheels {
         frontright = hardwareMap.get(DcMotorEx.class,newGlobalConfig.frontRightWheel);
         frontleft = hardwareMap.get(DcMotorEx.class,newGlobalConfig.frontLeftWheel);
         backright = hardwareMap.get(DcMotorEx.class, newGlobalConfig.backRightWheel);
-        backleft = hardwareMap.get(DcMotorEx.class, newGlobalConfig.backRightWheel);
+        backleft = hardwareMap.get(DcMotorEx.class, newGlobalConfig.backLeftWheel);
         imu = hardwareMap.get(BNO055IMU.class, "imu");
 
         double reset = 0;
@@ -51,7 +51,7 @@ public class PG$MecanumDriveFourWheels {
         backright.setPower(reset);
         backright.setDirection(DcMotorSimple.Direction.REVERSE);
         frontright.setDirection(DcMotorSimple.Direction.FORWARD);
-        backleft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backleft.setDirection(DcMotorSimple.Direction.FORWARD);
         frontleft.setDirection(DcMotorSimple.Direction.FORWARD);
 
 
@@ -61,7 +61,7 @@ public class PG$MecanumDriveFourWheels {
 
             backright.setDirection(DcMotorSimple.Direction.REVERSE);
             frontright.setDirection(DcMotorSimple.Direction.FORWARD);
-            backleft.setDirection(DcMotorSimple.Direction.REVERSE);
+            backleft.setDirection(DcMotorSimple.Direction.FORWARD);
             frontleft.setDirection(DcMotorSimple.Direction.FORWARD);
 
             frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

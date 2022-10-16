@@ -17,13 +17,15 @@ public class PG$TeleOpRobotDrive extends PG$MecanumDriveFourWheels{
 
 
     public PG$TeleOpRobotDrive(HardwareMap hardwareMap,Telemetry telemetry){
+        super(hardwareMap, telemetry);
         this.hardwareMap=hardwareMap;
         this.telemetry=telemetry;
+
     }
 
 
 
-    PG$MecanumDriveFourWheels robot = new PG$MecanumDriveFourWheels( hardwareMap, telemetry );
+    //PG$MecanumDriveFourWheels robot = new PG$MecanumDriveFourWheels( hardwareMap, telemetry );
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -48,21 +50,26 @@ public class PG$TeleOpRobotDrive extends PG$MecanumDriveFourWheels{
         // This ensures all the powers maintain the same ratio, but only when
         // at least one is out of the range [-1, 1]
         double denominator = Math.max(Math.abs(lefty) + Math.abs(leftx) + Math.abs(rightx), 1);
-        double frontLeftPower = (rotY + rotX + rightx) / denominator;
-        double backLeftPower = (rotY - rotX + rightx) / denominator;
-        double frontRightPower = (rotY - rotX - rightx) / denominator;
-        double backRightPower = (rotY + rotX - rightx) / denominator;
+        double frontLeftPower = ((rotY + rotX + rightx) / denominator  * newGlobalConfig.robotTeleOpsSpeedReducer);
+        double backLeftPower = ((rotY - rotX + rightx) / denominator * newGlobalConfig.robotTeleOpsSpeedReducer);
+        double frontRightPower = ((rotY - rotX - rightx) / denominator * newGlobalConfig.robotTeleOpsSpeedReducer);
+        double backRightPower = ((rotY + rotX - rightx) / denominator * newGlobalConfig.robotTeleOpsSpeedReducer);
 
-        frontright.setPower(frontRightPower  * newGlobalConfig.robotTeleOpsSpeedReducer);
-        frontleft.setPower(frontLeftPower  * newGlobalConfig.robotTeleOpsSpeedReducer);
-        backright.setPower(backRightPower  * newGlobalConfig.robotTeleOpsSpeedReducer);
-        backleft.setPower(backLeftPower  * newGlobalConfig.robotTeleOpsSpeedReducer);
 
-        // frontright.setPower((-lefty  +rightx - leftx)*rightErrorAdjustment   * newGlobalConfig.robotTeleOpsSpeedReducer); // should work same as above
-        // frontleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment   * newGlobalConfig.robotTeleOpsSpeedReducer);
-        // backright.setPower((-lefty + rightx + leftx)*rightErrorAdjustment   * newGlobalConfig.robotTeleOpsSpeedReducer);
-        // backleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment   * newGlobalConfig.robotTeleOpsSpeedReducer);
+        frontright.setPower(frontRightPower);
+        frontleft.setPower(frontLeftPower);
+        backright.setPower(backRightPower);
+        backleft.setPower(backLeftPower);
 
+
+
+        // Display it for the driver.
+        telemetry.addData("frontRightPower", "Power Is to %.3f  :", frontRightPower);
+        telemetry.addData("frontLeftPower", "Running at %.3f :", frontLeftPower);
+        telemetry.addData("backRightPower", "Running to %.3f  :", backRightPower);
+        telemetry.addData("backLeftPower", "Running at %.3f :", backLeftPower);
+
+        telemetry.update();
     }
 
 

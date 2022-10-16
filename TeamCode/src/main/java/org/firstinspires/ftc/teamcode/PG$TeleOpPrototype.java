@@ -17,9 +17,9 @@ import org.firstinspires.ftc.teamcode.functions.PG$TeleOpRobotDrive;
 
 //@Disabled
 public class PG$TeleOpPrototype extends LinearOpMode {
-    //Configuration used: 6wheelConfig
-    //PG$TeleOpRobotDrive wheels;
-    PG$MecanumDriveFourWheels_BKP wheels;
+
+    PG$TeleOpRobotDrive wheels;
+    //PG$MecanumDriveFourWheels_BKP wheels;
     //PG$MecanumDriveFourWheels wheels;
     double lefty = 0.0;
     double leftx = 0.0;
@@ -32,10 +32,10 @@ public class PG$TeleOpPrototype extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         //Hardware Mapping
-        //wheels = new PG$MecanumDriveFourWheels(hardwareMap,telemetry);
-        wheels = new PG$MecanumDriveFourWheels_BKP(hardwareMap,telemetry);
 
-        //wheels = new PG$TeleOpRobotDrive(hardwareMap,telemetry);
+       // wheels = new PG$MecanumDriveFourWheels_BKP(hardwareMap,telemetry);
+
+        wheels = new PG$TeleOpRobotDrive(hardwareMap,telemetry);
 
 
         //wheels.rightErrorAdjustment = 0.93;//1;
@@ -103,13 +103,12 @@ public class PG$TeleOpPrototype extends LinearOpMode {
 
 
 
-            telemetry.addData("lefty", "%.2f", lefty);
-            telemetry.addData("leftx", "%.2f", leftx);
-
-            telemetry.addData("rightx", "%.2f", rightx);
-            telemetry.addData("righty", "%.2f", righty);
-
-            telemetry.update();
+//            telemetry.addData("lefty", "%.2f", lefty);
+//            telemetry.addData("leftx", "%.2f", leftx);
+//            telemetry.addData("rightx", "%.2f", rightx);
+//            telemetry.addData("righty", "%.2f", righty);
+//
+//            telemetry.update();
         }
     }
 }
