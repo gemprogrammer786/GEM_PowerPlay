@@ -4,40 +4,40 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.components.PG$LinearMotion1;
-import org.firstinspires.ftc.teamcode.functions.PG$ArmLiftAndGrabber;
+import org.firstinspires.ftc.teamcode.functions.PG$LinearOperator1;
 
 @Autonomous(name="GEM_Linear_Prototype")
 
 //@Disabled
-public class PG$LinearPrototype extends LinearOpMode {
+public class PG$LinearPrototype1 extends LinearOpMode {
     //Configuration used: 6wheelConfig
     private ElapsedTime runtime = new ElapsedTime();
     @Override
     public void runOpMode() throws InterruptedException {
 
         double speed = 10;
-        PG$LinearMotion1 lift = new PG$LinearMotion1(hardwareMap);
-        PG$ArmLiftAndGrabber claw = new PG$ArmLiftAndGrabber(hardwareMap);
+        PG$LinearOperator1 lift = new PG$LinearOperator1(hardwareMap,telemetry);
+/*        PG$ArmLiftAndGrabber claw = new PG$ArmLiftAndGrabber(hardwareMap);
         //claw.initiateLift();
         claw.parent = this;
         claw.telemetry = this.telemetry;
 
         sleep(50);
-        lift.IsAutonomous = true;
-        lift.velocity = 400;
-        lift.telemetry = this.telemetry;
+  */
+        boolean IsAutonomous = false;
+  //      lift.velocity = 400;
+  //      lift.telemetry = this.telemetry;
         lift.parent = this;
-        lift.initialize();
         waitForStart();
+        lift.runViperMotor(0.5,1,10);
         //forward
        //lift.encoderDrive(speed,120.0,1.0);
-        claw.lift(1);
-        claw.grab();
+   //     claw.lift(1);
+   //     claw.grab();
         sleep(2000);
-        claw.lift(0);
-        claw.release();
-        claw.lift(1);
+   //     claw.lift(0);
+   //     claw.release();
+   //     claw.lift(1);
         sleep(5000);
         //lift.encoderDrive(speed,-120.0,1.0);
 

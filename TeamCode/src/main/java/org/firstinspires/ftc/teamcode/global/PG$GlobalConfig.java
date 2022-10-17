@@ -35,7 +35,7 @@ public class PG$GlobalConfig {
     public double turnTableMin = 0.0;
     public double turnTableMax = 1.0;
 
-
+    public int[] lifLevel = {2, 5, 8, 12};
     //0 position
     public int liftMin = 5;
     //Level 1

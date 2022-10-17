@@ -30,16 +30,15 @@ public class PG$LinearPrototype2 extends LinearOpMode {
         waitForStart();
         //forward
        //lift.encoderDrive(speed,120.0,1.0);
+
         lift.lift(1);
-        sleep(2000);
-        lift.lift(0);
-        lift.lift(2);
-        sleep(2000);
-        lift.lift(3);
-        sleep(2000);
-        //lift.encoderDrive(speed,-120.0,1.0);
-        lift.lift(0);
-//        mecanum.moveForward();
+//        lift.lift(2);
+//        sleep(2000);
+//        lift.lift(3);
+//        sleep(2000);
+//        //lift.encoderDrive(speed,-120.0,1.0);
+//        lift.lift(0);
+////        mecanum.moveForward();
 //        //mecanum.TestMechanumWheels(0.5);
 //        //mecanum.TestOmniWheels(0.5);
 //        //mecanum.TestOmniWheelsBackward(1);

@@ -8,13 +8,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.global.PG$GlobalConfig;
 
 public class PG$LinearMotion1 {
     //Configuration used: 6wheelConfig
-    public DcMotorEx viperMotor;
-    public double motorErrorAdjustment = 1.0;
-    public boolean IsAutonomous = false;
-    public double linearGearCircumference = 5.2; //inches
+    public DcMotorEx linearLift;
 
     public LinearOpMode parent;
 
@@ -22,65 +20,36 @@ public class PG$LinearMotion1 {
 
     private ElapsedTime runtime = new ElapsedTime();
     public Telemetry telemetry;
+    PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
 
     public PG$LinearMotion1(HardwareMap hardwareMap) {
-        viperMotor = hardwareMap.get(DcMotorEx.class,"viperMotor");
-    }
-
-    //initialize for TeleOp
-    public void initialize() {
+        linearLift = hardwareMap.get(DcMotorEx.class,newGlobalConfig.viperMotorName);
         double reset = 0;
-        viperMotor.setPower(reset);
-        viperMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        viperMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        viperMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        linearLift.setPower(reset);
+        linearLift.setDirection(DcMotorSimple.Direction.REVERSE);
+        linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        linearLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        linearLift.setTargetPosition(0);
+        linearLift.setPower(0.2);
     }
 
-
-    public void runViperMotor(double speed, double numberRotation, double timeoutS) {
-        int new_liftTarget;
-
-        double ticksPerInchMecanum = (537.7 / linearGearCircumference);
-        // Ensure that the opmode is still active
-        if (parent.opModeIsActive()) {
-
-            // Determine new target position, and pass to motor controller
-            new_liftTarget = viperMotor.getCurrentPosition() + (int) (numberRotation * ticksPerInchMecanum);
-            viperMotor.setTargetPosition(new_liftTarget);
-
-            // Turn On RUN_TO_POSITION
-            viperMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // reset the timeout time and start motion.
-            runtime.reset();
-            viperMotor.setPower(speed*motorErrorAdjustment);
+//    //initialize for TeleOp
+//    public void initialize() {
+//        double reset = 0;
+//        linearLift.setPower(reset);
+//        linearLift.setDirection(DcMotorSimple.Direction.REVERSE);
+//        linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        linearLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        linearLift.setTargetPosition(0);
+//        linearLift.setPower(0.2);
+//    }
 
 
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            while (parent.opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (viperMotor.isBusy() )) {
-                // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d", new_liftTarget);
-                telemetry.addData("Path2", "Running at %7d", viperMotor.getCurrentPosition());
-                telemetry.update();
-            }
-        }
-        // Stop all motion;
-        viperMotor.setPower(0);
 
-        // Turn off RUN_TO_POSITION
-        viperMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        //  sleep(250);   // optional pause after each move
-    }
-
-    public void move(double lefty, double righty, double leftx, double rightx){
-
-//        frontright.setPower((-lefty  +rightx - leftx)*rightErrorAdjustment); // should work same as above
-//        frontleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
-//        backright.setPower((-lefty + rightx + leftx)*rightErrorAdjustment);
-//        backleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment);
-
-    }
 }
