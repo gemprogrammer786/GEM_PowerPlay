@@ -28,7 +28,7 @@ public class PG$LinearMotion1 {
         linearLift = hardwareMap.get(DcMotorEx.class,newGlobalConfig.viperMotorName);
         double reset = 0;
         linearLift.setPower(reset);
-        linearLift.setDirection(DcMotorSimple.Direction.REVERSE);
+        linearLift.setDirection(DcMotorSimple.Direction.FORWARD);
         linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -38,7 +38,6 @@ public class PG$LinearMotion1 {
 
         telemetry.addData("PG$LinearMotion", "Initialization Completed");
         telemetry.update();
-        parent.sleep(5000);
     }
 
 //    //initialize for TeleOp

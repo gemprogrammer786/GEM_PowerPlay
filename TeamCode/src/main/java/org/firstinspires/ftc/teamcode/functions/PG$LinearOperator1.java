@@ -149,7 +149,7 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
         int new_liftTarget;
 
         //double ticksPerInchMecanum = (384.44 / linearGearCircumference);
-        double ticksPerInchMecanum =5.0;
+        double ticksPerInchMecanum =10.0;
         // Ensure that the opmode is still active
         if (parent.opModeIsActive()) {
 
@@ -158,10 +158,9 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
             new_liftTarget = (int)(setTargetPosition(liftLevel)* ticksPerInchMecanum);
 
             linearLift.setTargetPosition(new_liftTarget);
-            telemetry.addData("Current Position-1",  "At %7d ", getCurrentPosition());
-            telemetry.addData("Current Position-2",  "At %7d ", new_liftTarget);
+            telemetry.addData("Current Position:",  "At %7d ", getCurrentPosition());
+            telemetry.addData("Requested Position:",  "At %7d ", new_liftTarget);
             telemetry.update();
-            parent.sleep(10000);
 
             // Turn On RUN_TO_POSITION
             linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);

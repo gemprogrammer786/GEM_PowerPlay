@@ -41,9 +41,9 @@ public class PG$GlobalConfig {
     //Level 1
     public int liftLevel1 = 5;
     //Level 2
-    public int liftLevel2 = 10;
+    public int liftLevel2 = 17;
     //Level 3
-    public int liftLevel3 = 15;
+    public int liftLevel3 = 10;
 
     public double liftPower = 0.5;
 

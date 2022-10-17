@@ -29,7 +29,7 @@ public class PG$LinearPrototype1 extends LinearOpMode {
   //      lift.telemetry = this.telemetry;
         lift.parent = this;
         waitForStart();
-        lift.runViperMotor(0.5,1,5);
+        lift.runViperMotor(0.5,1,60);
         //forward
        //lift.encoderDrive(speed,120.0,1.0);
    //     claw.lift(1);
