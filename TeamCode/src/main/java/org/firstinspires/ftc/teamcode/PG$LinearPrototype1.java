@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.functions.PG$LinearOperator1;
 
-@Autonomous(name="GEM_Linear_Prototype")
+@Autonomous(name="GEM_Linear_Prototype1")
 
 //@Disabled
 public class PG$LinearPrototype1 extends LinearOpMode {
@@ -29,7 +29,7 @@ public class PG$LinearPrototype1 extends LinearOpMode {
   //      lift.telemetry = this.telemetry;
         lift.parent = this;
         waitForStart();
-        lift.runViperMotor(0.5,1,10);
+        lift.runViperMotor(0.5,1,5);
         //forward
        //lift.encoderDrive(speed,120.0,1.0);
    //     claw.lift(1);

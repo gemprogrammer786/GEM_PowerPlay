@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.components.PG$LinearMontion2;
+import org.firstinspires.ftc.teamcode.components.PG$LinearMotion1;
 import org.firstinspires.ftc.teamcode.global.PG$GlobalConfig;
 
-public class PG$LinearOperator1 extends PG$LinearMontion2 {
+public class PG$LinearOperator1 extends PG$LinearMotion1 {
 
 
 //    //0 position
@@ -148,7 +148,8 @@ public class PG$LinearOperator1 extends PG$LinearMontion2 {
     public void runViperMotor(double speed, int liftLevel, double timeoutS) {
         int new_liftTarget;
 
-        double ticksPerInchMecanum = (384.44 / linearGearCircumference);
+        //double ticksPerInchMecanum = (384.44 / linearGearCircumference);
+        double ticksPerInchMecanum =5.0;
         // Ensure that the opmode is still active
         if (parent.opModeIsActive()) {
 
@@ -157,6 +158,10 @@ public class PG$LinearOperator1 extends PG$LinearMontion2 {
             new_liftTarget = (int)(setTargetPosition(liftLevel)* ticksPerInchMecanum);
 
             linearLift.setTargetPosition(new_liftTarget);
+            telemetry.addData("Current Position-1",  "At %7d ", getCurrentPosition());
+            telemetry.addData("Current Position-2",  "At %7d ", new_liftTarget);
+            telemetry.update();
+            parent.sleep(10000);
 
             // Turn On RUN_TO_POSITION
             linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -171,8 +176,9 @@ public class PG$LinearOperator1 extends PG$LinearMontion2 {
                     (runtime.seconds() < timeoutS) &&
                     (linearLift.isBusy() )) {
                 // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d", new_liftTarget);
-                telemetry.addData("Path2", "Running at %7d", linearLift.getCurrentPosition());
+                telemetry.addData("Current Position",  "At %7d ", getCurrentPosition());
+                telemetry.addData("New Position",  "Running to %7d ", liftLevel);
+                telemetry.addData("Motor Current Position", "Running at %7d", linearLift.getCurrentPosition());
                 telemetry.update();
             }
         }
@@ -186,6 +192,8 @@ public class PG$LinearOperator1 extends PG$LinearMontion2 {
 
         telemetry.addData("Current Position",  "At %7d ", getCurrentPosition());
         telemetry.addData("New Position",  "Running to %7d ", liftLevel);
+        telemetry.addData("Motor Current Position", "Running at %7d", linearLift.getCurrentPosition());
+
         setCurrentPosition(liftLevel);
 
         //armRight.getCurrentPosition();
