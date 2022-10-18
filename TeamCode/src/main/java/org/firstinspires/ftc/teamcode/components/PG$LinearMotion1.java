@@ -29,7 +29,7 @@ public class PG$LinearMotion1 {
         linearLift.setPower(0);
         linearLift.setDirection(DcMotorSimple.Direction.FORWARD);
         linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+       // linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         linearLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //linearLift.setTargetPosition(0);

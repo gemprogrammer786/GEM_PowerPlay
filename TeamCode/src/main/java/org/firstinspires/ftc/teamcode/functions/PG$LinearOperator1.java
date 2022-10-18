@@ -60,21 +60,29 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
     }
 
 
-    public void runViperMotor(double speed, int liftLevel, double timeoutS) {
+    public void runViperMotor(double speed, int liftTargetLevel, double timeoutS) {
         int new_TargetPosition=0;
 
         //double ticksPerInchMecanum = (384.44 / linearGearCircumference);
         double ticksPerInchMecanum =1.0;
         // Ensure that the opmode is still active
         if (parent.opModeIsActive()) {
-            Telemetry.Item telemetryliftPosition = telemetry.addData("Lift Position", linearLift.getCurrentPosition());
-            telemetry.update();
+
             // Determine new target position, and pass to motor controller
-            new_TargetPosition = (int)(levelToPostionCalc(liftLevel)* ticksPerInchMecanum);
+            new_TargetPosition = (int)(levelToPostionCalc(liftTargetLevel)* ticksPerInchMecanum);
             linearLift.setTargetPosition(new_TargetPosition);
 
             // Turn On RUN_TO_POSITION
             linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            //telemetry.setAutoClear(false);
+            Telemetry.Item telemetryliftCurrentLevel = telemetry.addData("Lift Current Level", getCurrentLevel());
+            Telemetry.Item telemetryliftTargetLevel = telemetry.addData("Lift Target Level", liftTargetLevel);
+            Telemetry.Item telemetryliftCurrentPosition = telemetry.addData("Lift Current Position", linearLift.getCurrentPosition());
+            Telemetry.Item telemetryliftNewTargetPosition = telemetry.addData("Lift NewTarget Position", new_TargetPosition);
+            Telemetry.Item telemetryliftCurrentTargetPosition = telemetry.addData("Lift CurrentTarget Position", linearLift.getTargetPosition());
+
+            telemetry.update();
 
             // reset the timeout time and start motion.
             runtime.reset();
@@ -85,30 +93,34 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
                     (runtime.seconds() < timeoutS) &&
                     (linearLift.isBusy() ) &&
                     (  linearLift.getTargetPosition() != linearLift.getCurrentPosition()*-1) &&
-                    (-1*linearLift.getCurrentPosition() >= newGlobalConfig.lifLevel[0] || -1*linearLift.getCurrentPosition() <= newGlobalConfig.lifLevel[3] )) {
-                telemetryliftPosition.setValue(linearLift.getCurrentPosition());
-                telemetry.update();
+                    (-1*linearLift.getCurrentPosition() >= newGlobalConfig.lifLevel[0]) && (-1*linearLift.getCurrentPosition() <= newGlobalConfig.lifLevel[3] )) {
+               telemetryliftCurrentLevel.setValue(getCurrentLevel());
+               telemetryliftTargetLevel.setValue(liftTargetLevel);
+               telemetryliftCurrentPosition.setValue(linearLift.getCurrentPosition());
+                telemetryliftNewTargetPosition.setValue(new_TargetPosition);
+                telemetryliftCurrentTargetPosition.setValue(linearLift.getTargetPosition());
+               telemetry.update();
             }
         }
         // Stop all motion;
         linearLift.setPower(0);
 
         // Turn off RUN_TO_POSITION
-        linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //  sleep(250);   // optional pause after each move
+          parent.sleep(250);   // optional pause after each move
 
-        telemetry.addData("Lift Current Position:",  "At %7d ", getCurrentLevel());
-        telemetry.addData("Lift Target Position:",  "At %7d ", getNewTargetPosition());
-        telemetry.addData("Lift New Lift Position:",  "At %7d ", new_TargetPosition);
-        telemetry.addData("Lift Lift Position Request:",  "Running to %7d ", liftLevel);
-        telemetry.addData("Motor Current Position", "Running at %7d", linearLift.getCurrentPosition());
+//        telemetry.addData("Lift Current Position:",  "At %7d ", getCurrentLevel());
+//        telemetry.addData("Lift Target Position:",  "At %7d ", getNewTargetPosition());
+//        telemetry.addData("Lift New Lift Position:",  "At %7d ", new_TargetPosition);
+//        telemetry.addData("Lift Lift Position Request:",  "Running to %7d ", liftTargetLevel);
+//        telemetry.addData("Motor Current Position", "Running at %7d", linearLift.getCurrentPosition());
+//        telemetry.update();
 
-        setCurrentLevel(liftLevel);
+        setCurrentLevel(liftTargetLevel);
         setNewTargetPosition(new_TargetPosition);
 
-        //armRight.getCurrentPosition();
-        telemetry.update();
+
     }
 
     public void move(double lefty, double righty, double leftx, double rightx){

@@ -26,21 +26,26 @@ public class PG$LinearPrototype1 extends LinearOpMode {
         boolean IsAutonomous = false;
         lift.parent = this;
         waitForStart();
-        lift.runViperMotor(0.5,0,6);
+
+        lift.runViperMotor(0.2,0,60);
         telemetryDebug.setValue("PG$LinearPrototype1 - lift.runViperMotor(0.5,0,60)");
         telemetry.addData("---------------","--");
-        lift.parent.sleep(5000);
-        lift.runViperMotor(0.5,1,6);
+        lift.parent.sleep(1000);
+
+        lift.runViperMotor(0.2,1,60);
         telemetryDebug.setValue("PG$LinearPrototype1 - lift.runViperMotor(0.1,0,60)");
         telemetry.addData("---------------","--");
-        lift.parent.sleep(5000);
+        lift.parent.sleep(1000);
 
-        lift.runViperMotor(0.5,2,6);
+        lift.runViperMotor(0.2,3,60);
         telemetryDebug.setValue("PG$LinearPrototype1 - lift.runViperMotor(0.5,2,60)");
         telemetry.addData("---------------","--");
-        lift.parent.sleep(5000);
+        lift.parent.sleep(1000);
 
-
+        lift.runViperMotor(0.2,0,60);
+        telemetryDebug.setValue("PG$LinearPrototype1 - lift.runViperMotor(0.5,2,60)");
+        telemetry.addData("---------------","--");
+        lift.parent.sleep(1000);
 
     }
 
