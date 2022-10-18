@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -46,13 +47,13 @@ public class PG$LiftTeleOp extends LinearOpMode {
         armLeft = hardwareMap.dcMotor.get("viperMotor");
 
         // Reverse backwards arm motor
-        armLeft.setDirection(DcMotor.Direction.REVERSE);
+        armLeft.setDirection(DcMotor.Direction.FORWARD);
 
         // Set arm encoders to 0
         armLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Set arm run mode
-       // armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Zero Power Behavior
         armLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -63,20 +64,23 @@ public class PG$LiftTeleOp extends LinearOpMode {
 
 
         //code before waitForStart is run when Init button is pressed
-        while (!parent.isStarted()) {
+        while (!isStarted()) {
             //print encoder counts to telemetry while we manually move the arm
             armLeftPosition.setValue(armLeft.getCurrentPosition());
             telemetry.update();
         }
 
         //code after waitForStart is run when the start button is pressed
+        telemetry.addData("Where are we", "After waitForStart");
 
+        armLeftPosition.setValue(armLeft.getCurrentPosition());
 
         int armTarget = 0;
         double armSpeed = 0;
         String armCurrentDirection = "up";
 
-        while (parent.opModeIsActive()) {
+        while (opModeIsActive()) {
+            telemetry.addData("Where are we", "opModeIsActive");
 
             /**
              * BEGIN ARM LIFT
@@ -87,6 +91,8 @@ public class PG$LiftTeleOp extends LinearOpMode {
              **/
 
             if (gamepad1.a) { // Arm UP
+                telemetry.addData("Where are we", "gamepad1.a");
+
                 armTarget = 200;
                 armSpeed = 0.98;
                 armCurrentDirection = "up";
@@ -95,6 +101,8 @@ public class PG$LiftTeleOp extends LinearOpMode {
                 armLeft.setTargetPosition(armTarget);
 
             } else if (gamepad1.b) { // Arm DOWN
+                telemetry.addData("Where are we", "gamepad1.b");
+
                 armTarget = 0;
                 armSpeed = -0.1;  // From my research, negative is ignore, so I don't understand why this *seemed* to work
                 armCurrentDirection = "down";
@@ -102,21 +110,29 @@ public class PG$LiftTeleOp extends LinearOpMode {
                 armLeft.setPower(armSpeed);
                 armLeft.setTargetPosition(armTarget);
             }
+            telemetry.addData("Where are we", "Out side gamepad1");
 
             // Remove Power from the Arm Motor if motor is close to 0 position, arm should drop
             if (armCurrentDirection == "down" && (armLeft.getTargetPosition() < 5)) {
                 armSpeed = 0;
                 armLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                telemetry.addData("Where are we", "STOP_AND_RESET_ENCODER");
+
             }
 
             /** END ARM LIFT **/
 
+            telemetry.addData("Where are we", "before idle");
 
             idle();
+
+            telemetry.addData("Where are we", "after idle");
 
             // Arm Lift Telemetry
             if (armLeft.isBusy()) {
                 armLeftPosition.setValue(armLeft.getCurrentPosition());
+                telemetry.addData("Where are we", "isBusy");
+
                 telemetry.update();
             }
 
