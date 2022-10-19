@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.functions.PG$LinearOperator1;
 public class PG$LinearPrototype1 extends LinearOpMode {
     //Configuration used: 6wheelConfig
     private ElapsedTime runtime = new ElapsedTime();
+    PG$LinearOperator1 lift = new PG$LinearOperator1(hardwareMap,telemetry);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -20,29 +21,27 @@ public class PG$LinearPrototype1 extends LinearOpMode {
         telemetry.setAutoClear(false);
         Telemetry.Item telemetryDebug = telemetry.addData("Currenlty at", "PG$LinearPrototype1 - runOpMode");
         telemetry.update();
-
-        PG$LinearOperator1 lift = new PG$LinearOperator1(hardwareMap,telemetry);
         sleep(50);
         boolean IsAutonomous = false;
         lift.parent = this;
         waitForStart();
 
-        lift.runViperMotor(0.2,0,60);
+        lift.runViperMotor(0.2,0,1);
         telemetryDebug.setValue("PG$LinearPrototype1 - lift.runViperMotor(0.5,0,60)");
         telemetry.addData("---------------","--");
         lift.parent.sleep(1000);
 
-        lift.runViperMotor(0.2,1,60);
+        lift.runViperMotor(0.2,1,1);
         telemetryDebug.setValue("PG$LinearPrototype1 - lift.runViperMotor(0.1,0,60)");
         telemetry.addData("---------------","--");
         lift.parent.sleep(1000);
 
-        lift.runViperMotor(0.2,3,60);
+        lift.runViperMotor(0.2,3,1);
         telemetryDebug.setValue("PG$LinearPrototype1 - lift.runViperMotor(0.5,2,60)");
         telemetry.addData("---------------","--");
         lift.parent.sleep(1000);
 
-        lift.runViperMotor(0.2,0,60);
+        lift.runViperMotor(0.2,0,1);
         telemetryDebug.setValue("PG$LinearPrototype1 - lift.runViperMotor(0.5,2,60)");
         telemetry.addData("---------------","--");
         lift.parent.sleep(1000);

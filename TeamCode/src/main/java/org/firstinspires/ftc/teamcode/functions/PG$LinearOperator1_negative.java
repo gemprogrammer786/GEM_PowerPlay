@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.components.PG$LinearMotion1;
 import org.firstinspires.ftc.teamcode.global.PG$GlobalConfig;
 
-public class PG$LinearOperator1 extends PG$LinearMotion1 {
+public class PG$LinearOperator1_negative extends PG$LinearMotion1 {
 
 
 
@@ -27,7 +27,7 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
     private ElapsedTime runtime = new ElapsedTime();
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
 
-    public PG$LinearOperator1(HardwareMap hardwareMap, Telemetry telemetry){
+    public PG$LinearOperator1_negative(HardwareMap hardwareMap, Telemetry telemetry){
         super(hardwareMap, telemetry);
         this.hardwareMap=hardwareMap;
         this.telemetry=telemetry;
@@ -55,7 +55,7 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
 
         if (level>=getCurrentLevel()){
             position=newGlobalConfig.lifLevel[level]- newGlobalConfig.lifLevel[getCurrentLevel()];
-            return ((int)linearLift.getCurrentPosition() + (int)(position * ticksPerInchMecanum));
+            return ((int)linearLift.getCurrentPosition()*-1 + (int)(position * ticksPerInchMecanum));
 
         } else{
             position=newGlobalConfig.lifLevel[level]- newGlobalConfig.lifLevel[getCurrentLevel()];
@@ -84,7 +84,7 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
             telemetry.setAutoClear(false);
             Telemetry.Item telemetryliftCurrentLevel = telemetry.addData("Lift Current Level", getCurrentLevel());
             Telemetry.Item telemetryliftTargetLevel = telemetry.addData("Lift Target Level", liftTargetLevel);
-            Telemetry.Item telemetryliftCurrentPosition = telemetry.addData("Lift Current Position", linearLift.getCurrentPosition());
+            Telemetry.Item telemetryliftCurrentPosition = telemetry.addData("Lift Current Position", linearLift.getCurrentPosition()*-1);
             Telemetry.Item telemetryliftNewTargetPosition = telemetry.addData("Lift NewTarget Position", new_TargetPosition);
             Telemetry.Item telemetryliftCurrentTargetPosition = telemetry.addData("Lift CurrentTarget Position", linearLift.getTargetPosition());
 
@@ -97,15 +97,15 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
                     + "2-" + (runtime.seconds() < timeoutS)
                     +"3-"+ linearLift.isBusy()
                     +"4-"+ (  Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition()))
-                    +"5-"+ (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin)
-                    +"6-"+ (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
+                    +"5-"+ (-1*linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin)
+                    +"6-"+ (-1*linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
                     +"9:"+ (parent.opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
                     (linearLift.isBusy() ) &&
                     (  Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition())) &&
-                    (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) && (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax ))
+                    (-1*linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) && (-1*linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax ))
                     + "--"+ linearLift.getTargetPosition()
-                    +"--"+ linearLift.getCurrentPosition()
+                    +"--"+ linearLift.getCurrentPosition()*-1
             );
             telemetry.update();
 
@@ -119,11 +119,11 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
                         (runtime.seconds() < timeoutS) &&
                         (linearLift.isBusy()) &&
                         (Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition())) &&
-                        (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) &&
-                        (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)) {
+                        (-1 * linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) &&
+                        (-1 * linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)) {
                     telemetryliftCurrentLevel.setValue(getCurrentLevel());
                     telemetryliftTargetLevel.setValue(liftTargetLevel);
-                    telemetryliftCurrentPosition.setValue(linearLift.getCurrentPosition());
+                    telemetryliftCurrentPosition.setValue(linearLift.getCurrentPosition() * -1);
                     telemetryliftNewTargetPosition.setValue(new_TargetPosition);
                     telemetryliftCurrentTargetPosition.setValue(linearLift.getTargetPosition());
                     telemetry.addData("Inside While Loop",
@@ -131,15 +131,15 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
                                     + "2-" + (runtime.seconds() < timeoutS)
                                     + "3-" + linearLift.isBusy()
                                     + "4-" + (Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition()))
-                                    + "5-" + (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin)
-                                    + "6-" + (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
+                                    + "5-" + (-1 * linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin)
+                                    + "6-" + (-1 * linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
                                     + "9:" + (parent.opModeIsActive() &&
                                     (runtime.seconds() < timeoutS) &&
                                     (linearLift.isBusy()) &&
                                     (Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition())) &&
-                                    ( linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) && (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax))
+                                    (-1 * linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) && (-1 * linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax))
                                     + "--" + linearLift.getTargetPosition()
-                                    + "--" + linearLift.getCurrentPosition()
+                                    + "--" + linearLift.getCurrentPosition() * -1
 
                     );
 
@@ -155,11 +155,11 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
                         (runtime.seconds() < timeoutS) &&
                         (linearLift.isBusy()) &&
                         (Math.abs(linearLift.getTargetPosition()) <= Math.abs(linearLift.getCurrentPosition())) &&
-                        ( linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) &&
-                        ( linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)) {
+                        (-1 * linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) &&
+                        (-1 * linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)) {
                     telemetryliftCurrentLevel.setValue(getCurrentLevel());
                     telemetryliftTargetLevel.setValue(liftTargetLevel);
-                    telemetryliftCurrentPosition.setValue(linearLift.getCurrentPosition());
+                    telemetryliftCurrentPosition.setValue(linearLift.getCurrentPosition() * -1);
                     telemetryliftNewTargetPosition.setValue(new_TargetPosition);
                     telemetryliftCurrentTargetPosition.setValue(linearLift.getTargetPosition());
                     telemetry.addData("Inside While Loop",
@@ -167,15 +167,15 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
                                     + "2-" + (runtime.seconds() < timeoutS)
                                     + "3-" + linearLift.isBusy()
                                     + "4-" + (Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition()))
-                                    + "5-" + ( linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin)
-                                    + "6-" + ( linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
+                                    + "5-" + (-1 * linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin)
+                                    + "6-" + (-1 * linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
                                     + "9:" + (parent.opModeIsActive() &&
                                     (runtime.seconds() < timeoutS) &&
                                     (linearLift.isBusy()) &&
                                     (Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition())) &&
-                                    ( linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) && ( linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax))
+                                    (-1 * linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) && (-1 * linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax))
                                     + "--" + linearLift.getTargetPosition()
-                                    + "--" + linearLift.getCurrentPosition()
+                                    + "--" + linearLift.getCurrentPosition() * -1
 
                     );
 
@@ -206,15 +206,15 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
                         + "2-" + (runtime.seconds() < timeoutS)
                         +"3-"+ linearLift.isBusy()
                         +"4-"+ (  Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition()))
-                        +"5-"+ (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin)
-                        +"6-"+ (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
+                        +"5-"+ (-1*linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin)
+                        +"6-"+ (-1*linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
                         +"9:"+ (parent.opModeIsActive() &&
                         (runtime.seconds() < timeoutS) &&
                         (linearLift.isBusy() ) &&
                         (  Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition())) &&
-                        (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) && (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax ))
+                        (-1*linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) && (-1*linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax ))
                         + "--"+ linearLift.getTargetPosition()
-                        +"--"+ linearLift.getCurrentPosition()
+                        +"--"+ linearLift.getCurrentPosition()*-1
         );
         telemetry.update();
 
