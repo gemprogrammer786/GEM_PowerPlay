@@ -118,9 +118,11 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
                 while (parent.opModeIsActive() &&
                         (runtime.seconds() < timeoutS) &&
                         (linearLift.isBusy()) &&
-                        (Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition())) &&
-                        (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) &&
-                        (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)) {
+                        (Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition()))
+                        //&&
+                        //(linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) &&
+                        //(linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
+                        ) {
                     telemetryliftCurrentLevel.setValue(getCurrentLevel());
                     telemetryliftTargetLevel.setValue(liftTargetLevel);
                     telemetryliftCurrentPosition.setValue(linearLift.getCurrentPosition());
@@ -154,9 +156,11 @@ public class PG$LinearOperator1 extends PG$LinearMotion1 {
                 while (parent.opModeIsActive() &&
                         (runtime.seconds() < timeoutS) &&
                         (linearLift.isBusy()) &&
-                        (Math.abs(linearLift.getTargetPosition()) <= Math.abs(linearLift.getCurrentPosition())) &&
-                        ( linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) &&
-                        ( linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)) {
+                        (Math.abs(linearLift.getTargetPosition()) <= Math.abs(linearLift.getCurrentPosition()))
+                        //&&
+                        //( linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) &&
+                        //( linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
+                        ) {
                     telemetryliftCurrentLevel.setValue(getCurrentLevel());
                     telemetryliftTargetLevel.setValue(liftTargetLevel);
                     telemetryliftCurrentPosition.setValue(linearLift.getCurrentPosition());

@@ -27,7 +27,7 @@ public class PG$LinearMotion1 {
         telemetry.update();
         linearLift = hardwareMap.get(DcMotorEx.class,newGlobalConfig.viperMotorName);
         linearLift.setPower(0);
-        linearLift.setDirection(DcMotorSimple.Direction.FORWARD);
+        linearLift.setDirection(DcMotorSimple.Direction.REVERSE);
         linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
