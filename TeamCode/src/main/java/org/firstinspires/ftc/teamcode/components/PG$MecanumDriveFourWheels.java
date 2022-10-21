@@ -57,7 +57,6 @@ public class PG$MecanumDriveFourWheels {
         if(IsAutonomous)
         {
 
-
 //            backright.setDirection(DcMotorSimple.Direction.REVERSE);
 //            frontright.setDirection(DcMotorSimple.Direction.FORWARD);
 //            backleft.setDirection(DcMotorSimple.Direction.FORWARD);

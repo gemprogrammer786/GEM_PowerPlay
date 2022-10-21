@@ -13,11 +13,12 @@ public class PG$AutonomousPrototype extends LinearOpMode {
     //Configuration used: 6wheelConfig
     private ElapsedTime runtime = new ElapsedTime();
     @Override
-    public void runOpMode() throws InterruptedException {
 
-        double speed = 0.5;
+    public void runOpMode() throws InterruptedException {
+        PG$RobotAutoDrive mecanum= new PG$RobotAutoDrive(hardwareMap,telemetry);
+
+        double speed = 0.75;
         //PG$MecanumDriveFourWheels_BKP mecanum = new PG$MecanumDriveFourWheels_BKP(hardwareMap,telemetry);
-        PG$RobotAutoDrive mecanum = new PG$RobotAutoDrive(hardwareMap,telemetry);
 //        Claw claw = new Claw(hardwareMap);
 //        claw.parent = this;
 //        claw.telemetry = this.telemetry;
@@ -29,9 +30,9 @@ public class PG$AutonomousPrototype extends LinearOpMode {
         waitForStart();
         //forward
         mecanum.encoderDrive(speed,200.0,200.0,200.0,200.0,2.0);
-
+sleep(30000);
         //backward
-        mecanum.encoderDrive(speed,-120.0,-120.0,-120.0,-120.0,2.0);
+        //mecanum.encoderDrive(speed,-120.0,-120.0,-120.0,-120.0,2.0);
         //left
         //mecanum.encoderDrive(speed,-120.0,0,120.0,120.0,1.0);
         //right

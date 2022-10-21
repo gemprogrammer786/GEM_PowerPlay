@@ -18,7 +18,7 @@ public class PG$GlobalConfig {
     public String backRightWheel="backRight";
     public String backLeftWheel="backLeft";
     public double leftWheelErrorAdjustment = 1.0;
-    public double rightWheelErrorAdjustment = 1.0;
+    public double rightWheelErrorAdjustment = 1.2;
     public double mecanumWheelCircumference = 11.87; //inches
     public double robotAutonomusSpeedReducer = 1.0; // the value should be between 0 to 1
     public double robotTeleOpsSpeedReducer = 1.0; // the value should be between 0 to 1

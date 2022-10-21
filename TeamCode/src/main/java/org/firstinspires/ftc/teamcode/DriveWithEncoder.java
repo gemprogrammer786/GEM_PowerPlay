@@ -15,6 +15,7 @@ public class DriveWithEncoder extends LinearOpMode
     public void runOpMode() throws InterruptedException
     {
         leftMotor = hardwareMap.dcMotor.get("viperMotor");
+        telemetry.setAutoClear(false);
 
         // You will need to set this based on your robot's
         // gearing to get forward control input to result in
