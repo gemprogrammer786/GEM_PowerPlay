@@ -17,27 +17,29 @@ public class PG$GlobalConfig {
     public String frontLeftWheel="frontLeft";
     public String backRightWheel="backRight";
     public String backLeftWheel="backLeft";
-    public double leftWheelErrorAdjustment = 1.0;
-    public double rightWheelErrorAdjustment = 1.2;
+    public double leftWheelErrorAdjustment = 0.45;
+    public double rightWheelErrorAdjustment = 0.0;
     public double mecanumWheelCircumference = 11.87; //inches
-    public double robotAutonomusSpeedReducer = 1.0; // the value should be between 0 to 1
-    public double robotTeleOpsSpeedReducer = 1.0; // the value should be between 0 to 1
+    public double teleOpdrivePowerfactor = 0.6;// the value should be between 0 to 1
+    public double autodrivePowerfactor = 0.8;// the value should be between 0 to 1
 
+    public float turnTablePowerFactor = .5f;
 
     public String clawServoName = "claw";
-    public double clawMin = 0.0;
-    public double clawMax = 1.0;
+    public double clawMin = 0.3;
+    public double clawMax = 0.75;
 
     public String viperMotorName = "viperMotor";
 
 
     public String turnTableServoName = "turnTable";
     public double turnTableMin = 0.0;
+    public double turnTableCenter = 0.5;
     public double turnTableMax = 1.0;
 
-    public int[] lifLevel = {0, 500, 1000, 1500};
+    public int[] lifLevel = {0, 700, 1300, 2000};
     public int liftLevelMin = 0;
-    public int liftLevelMax = 3000;
+    public int liftLevelMax = 4400;
 
     //0 position
     public int liftMin = 5;

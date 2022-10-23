@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 
@@ -41,7 +42,12 @@ public class PG$MecanumDriveFourWheels {
         frontleft = hardwareMap.get(DcMotorEx.class,newGlobalConfig.frontLeftWheel);
         backright = hardwareMap.get(DcMotorEx.class, newGlobalConfig.backRightWheel);
         backleft = hardwareMap.get(DcMotorEx.class, newGlobalConfig.backLeftWheel);
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        frontright.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        frontleft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backright.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backleft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
+
 
         double reset = 0;
         frontright.setPower(reset);
@@ -62,20 +68,27 @@ public class PG$MecanumDriveFourWheels {
 //            backleft.setDirection(DcMotorSimple.Direction.FORWARD);
 //            frontleft.setDirection(DcMotorSimple.Direction.FORWARD);
 
+            PIDFCoefficients newPIDF = new PIDFCoefficients(10.0,  3.0,   0.0,  12.0);
             frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
-            frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            frontright.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
+            frontleft.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
+            backright.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
+            backleft.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
+
         }
         else
         {
-
+            imu = hardwareMap.get(BNO055IMU.class, "imu");
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
             // Technically this is the default, however specifying it is clearer
             parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
@@ -90,6 +103,8 @@ public class PG$MecanumDriveFourWheels {
 
 
     }
+
+
 
 
 }

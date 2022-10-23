@@ -20,6 +20,7 @@ public class PG$ClawServo {
         this.hardwareMap=hardwareMap;
         clawGrabber = hardwareMap.get(Servo.class,newGlobalConfig.clawServoName);
         clawGrabber.setPosition(newGlobalConfig.clawMin);
+        telemetry.addData("PG$ClawServo : ","Initialized");
 
     }
 }

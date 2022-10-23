@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.functions;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.global.PG$GlobalConfig;
@@ -79,11 +80,15 @@ public class PG$RobotAutoDrive extends PG$MecanumDriveFourWheels{
 
             // reset the timeout time and start motion.
             runtime.reset();
+            frontleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            frontright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
 
-            frontleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
-            frontright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
-            backleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
-            backright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            frontleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            frontright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (parent.opModeIsActive() &&

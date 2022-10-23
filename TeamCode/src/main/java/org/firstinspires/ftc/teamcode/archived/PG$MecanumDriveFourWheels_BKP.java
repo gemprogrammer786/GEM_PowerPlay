@@ -122,10 +122,10 @@ public class PG$MecanumDriveFourWheels_BKP {
             // reset the timeout time and start motion.
             runtime.reset();
 
-            frontleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
-            frontright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
-            backleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
-            backright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+            frontleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.teleOpdrivePowerfactor);
+            frontright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.teleOpdrivePowerfactor);
+            backleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.teleOpdrivePowerfactor);
+            backright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.teleOpdrivePowerfactor);
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (parent.opModeIsActive() &&
@@ -175,10 +175,10 @@ public class PG$MecanumDriveFourWheels_BKP {
         // This ensures all the powers maintain the same ratio, but only when
         // at least one is out of the range [-1, 1]
         double denominator = Math.max(Math.abs(lefty) + Math.abs(leftx) + Math.abs(rightx), 1);
-        double frontLeftPower = ((rotY + rotX + rightx) / denominator  * newGlobalConfig.robotTeleOpsSpeedReducer);
-        double backLeftPower = ((rotY - rotX + rightx) / denominator * newGlobalConfig.robotTeleOpsSpeedReducer);
-        double frontRightPower = ((rotY - rotX - rightx) / denominator * newGlobalConfig.robotTeleOpsSpeedReducer);
-        double backRightPower = ((rotY + rotX - rightx) / denominator * newGlobalConfig.robotTeleOpsSpeedReducer);
+        double frontLeftPower = ((rotY + rotX + rightx) / denominator  * newGlobalConfig.teleOpdrivePowerfactor);
+        double backLeftPower = ((rotY - rotX + rightx) / denominator * newGlobalConfig.teleOpdrivePowerfactor);
+        double frontRightPower = ((rotY - rotX - rightx) / denominator * newGlobalConfig.teleOpdrivePowerfactor);
+        double backRightPower = ((rotY + rotX - rightx) / denominator * newGlobalConfig.teleOpdrivePowerfactor);
 
 
        frontright.setPower(frontRightPower);
