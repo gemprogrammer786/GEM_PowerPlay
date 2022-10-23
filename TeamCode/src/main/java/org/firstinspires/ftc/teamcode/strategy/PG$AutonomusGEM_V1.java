@@ -51,12 +51,12 @@ public class PG$AutonomusGEM_V1 extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            wheels.encoderDrive(.5,200.0,200.0,200.0,200.0,2.0);
-            lift.runViperMotor(1,1,1);
-            lift.runViperMotor(1,0,1);
+            wheels.encoderDrive(.5,50.0,50.0,50.0,50.0,2.0);
+            //lift.runViperMotor(1,1,1);
+            //lift.runViperMotor(1,0,1);
             claw.release();
             claw.grab();
-            turnTable.turn(0.2f,0);
+            //turnTable.turn(0.2f,0);
         }
     }
 }
