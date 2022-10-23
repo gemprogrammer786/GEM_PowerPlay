@@ -29,7 +29,7 @@ public class PG$LinearMotion {
         PIDFCoefficients newPIDF = new PIDFCoefficients(10.0,  3.0,   0.0,  12.0);
         linearLift = hardwareMap.get(DcMotorEx.class,newGlobalConfig.viperMotorName);
         linearLift.setPower(0);
-        linearLift.setDirection(DcMotorSimple.Direction.FORWARD);
+        linearLift.setDirection(DcMotorSimple.Direction.REVERSE);
         linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
