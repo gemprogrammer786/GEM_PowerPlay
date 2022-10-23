@@ -39,7 +39,7 @@ public class PG$GlobalConfig {
 
     public int[] lifLevel = {0, 700, 1300, 2000};
     public int liftLevelMin = 0;
-    public int liftLevelMax = 4400;
+    public int liftLevelMax = 3000;
 
 
 
