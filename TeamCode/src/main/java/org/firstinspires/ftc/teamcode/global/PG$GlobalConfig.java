@@ -17,8 +17,8 @@ public class PG$GlobalConfig {
     public String frontLeftWheel="frontLeft";
     public String backRightWheel="backRight";
     public String backLeftWheel="backLeft";
-    public double leftWheelErrorAdjustment = 0.45;
-    public double rightWheelErrorAdjustment = 0.0;
+    public double leftWheelErrorAdjustment = 0.45; // This is value added to Power. Total value (power+errorAdjustment) should not be greater than 1
+    public double rightWheelErrorAdjustment = 0.0; // This is value added to Power. Total value (power+errorAdjustment) should not be greater than 1
     public double mecanumWheelCircumference = 11.87; //inches
     public double teleOpdrivePowerfactor = 0.6;// the value should be between 0 to 1
     public double autodrivePowerfactor = 0.8;// the value should be between 0 to 1
@@ -41,16 +41,7 @@ public class PG$GlobalConfig {
     public int liftLevelMin = 0;
     public int liftLevelMax = 4400;
 
-    //0 position
-    public int liftMin = 5;
-    //Level 1
-    public int liftLevel1 = 5;
-    //Level 2
-    public int liftLevel2 = 17;
-    //Level 3
-    public int liftLevel3 = 10;
 
-    public double liftPower = 0.5;
 
 
 }
