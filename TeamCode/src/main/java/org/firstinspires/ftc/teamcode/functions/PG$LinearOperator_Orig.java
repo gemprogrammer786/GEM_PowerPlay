@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.components.PG$LinearMotion;
 import org.firstinspires.ftc.teamcode.global.PG$GlobalConfig;
 
-public class PG$LinearOperator extends PG$LinearMotion {
+public class PG$LinearOperator_Orig extends PG$LinearMotion {
 
 
 
@@ -27,7 +27,7 @@ public class PG$LinearOperator extends PG$LinearMotion {
     private ElapsedTime runtime = new ElapsedTime();
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
 
-    public PG$LinearOperator(HardwareMap hardwareMap, Telemetry telemetry){
+    public PG$LinearOperator_Orig(HardwareMap hardwareMap, Telemetry telemetry){
         super(hardwareMap, telemetry);
         this.hardwareMap=hardwareMap;
         this.telemetry=telemetry;
@@ -61,9 +61,9 @@ public class PG$LinearOperator extends PG$LinearMotion {
             return ((int)linearLift.getCurrentPosition() + (int)(position * ticksPerInchMecanum));
 
         } else{
-
             position=newGlobalConfig.lifLevel[getCurrentLevel()] - newGlobalConfig.lifLevel[level];
             return ((int)linearLift.getCurrentPosition() - (int)(position * ticksPerInchMecanum));
+
         }
 
     }
@@ -154,12 +154,11 @@ public class PG$LinearOperator extends PG$LinearMotion {
                 telemetry.addData("liftTargetLevel <= getCurrentLevel()", liftTargetLevel +"--"+ getCurrentLevel());
 
                 while (parent.opModeIsActive() &&
-                      (runtime.seconds() < timeoutS) &&
-                        (linearLift.isBusy()) //&&
-                        //(Math.abs(linearLift.getTargetPosition()) <= Math.abs(linearLift.getCurrentPosition())) &&
-                       // (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) &&
-                       // (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
-                ) {
+                      //  (runtime.seconds() < timeoutS) &&
+                        (linearLift.isBusy()) &&
+                        (Math.abs(linearLift.getTargetPosition()) <= Math.abs(linearLift.getCurrentPosition())) &&
+                        (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) &&
+                        (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)) {
                     telemetryliftCurrentLevel.setValue(getCurrentLevel());
                     telemetryliftTargetLevel.setValue(liftTargetLevel);
                     telemetryliftCurrentPosition.setValue(linearLift.getCurrentPosition());

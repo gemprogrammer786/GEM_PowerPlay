@@ -67,10 +67,10 @@ public class PG$RobotTeleOpDrive extends PG$MecanumDriveFourWheels{
 
 
         // Display it for the driver.
-        telemetry.addData("frontRightPower", "Power Is to %.3f  :", frontRightPower);
-        telemetry.addData("frontLeftPower", "Running at %.3f :", frontLeftPower);
-        telemetry.addData("backRightPower", "Running to %.3f  :", backRightPower);
-        telemetry.addData("backLeftPower", "Running at %.3f :", backLeftPower);
+//        telemetry.addData("frontRightPower", "Power Is to %.3f  :", frontRightPower);
+//        telemetry.addData("frontLeftPower", "Running at %.3f :", frontLeftPower);
+//        telemetry.addData("backRightPower", "Running to %.3f  :", backRightPower);
+//        telemetry.addData("backLeftPower", "Running at %.3f :", backLeftPower);
 
         telemetry.update();
     }
@@ -100,10 +100,10 @@ public class PG$RobotTeleOpDrive extends PG$MecanumDriveFourWheels{
 
 
         // Display it for the driver.
-        telemetry.addData("frontRightPower", "Power Is to %.3f  :", frontRightPower);
-        telemetry.addData("frontLeftPower", "Running at %.3f :", frontLeftPower);
-        telemetry.addData("backRightPower", "Running to %.3f  :", backRightPower);
-        telemetry.addData("backLeftPower", "Running at %.3f :", backLeftPower);
+//        telemetry.addData("frontRightPower", "Power Is to %.3f  :", frontRightPower);
+//        telemetry.addData("frontLeftPower", "Running at %.3f :", frontLeftPower);
+//        telemetry.addData("backRightPower", "Running to %.3f  :", backRightPower);
+//        telemetry.addData("backLeftPower", "Running at %.3f :", backLeftPower);
 
         telemetry.update();
 

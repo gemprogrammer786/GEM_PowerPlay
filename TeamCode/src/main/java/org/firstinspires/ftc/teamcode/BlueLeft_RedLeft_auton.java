@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode;
-
+/*
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.components.PG$LinearMotion;
-import org.firstinspires.ftc.teamcode.functions.PG$ArmLiftAndGrabber;
 import org.firstinspires.ftc.teamcode.functions.PG$ClawOperator;
 import org.firstinspires.ftc.teamcode.functions.PG$RobotAutoDrive;
 @Autonomous(name="GEM_Autonomous_Prototype")
@@ -120,3 +119,8 @@ public class Blue_right_Red_right_auton extends LinearOpMode{
 
 
 }
+
+
+}
+
+ */

@@ -65,18 +65,18 @@ public class PG$TeleOptGEM_V1 extends LinearOpMode {
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
 
-            boolean dpad_left = gamepad1.dpad_left;
-            boolean dpad_right = gamepad1.dpad_right;
-            boolean dpad_up= gamepad1.dpad_up;
-            boolean dpad_down= gamepad1.dpad_down;
+            boolean dpad_left = gamepad2.dpad_left;
+            boolean dpad_right = gamepad2.dpad_right;
+            boolean dpad_up= gamepad2.dpad_up;
+            boolean dpad_down= gamepad2.dpad_down;
             boolean b = gamepad1.b;
             boolean x = gamepad1.x;
             boolean y = gamepad1.y;
             boolean a = gamepad1.a;
             boolean gm1_lb =gamepad1.left_bumper;
             boolean gm1_rb =gamepad1.right_bumper;
-            float gm1_lt =gamepad1.left_trigger*newGlobalConfig.turnTablePowerFactor;
-            float gm1_rt =-gamepad1.right_trigger*newGlobalConfig.turnTablePowerFactor;
+            float gm1_lt =gamepad2.left_trigger*newGlobalConfig.turnTablePowerFactor;
+            float gm1_rt =-gamepad2.right_trigger*newGlobalConfig.turnTablePowerFactor;
 
 
             if(dpad_left) {

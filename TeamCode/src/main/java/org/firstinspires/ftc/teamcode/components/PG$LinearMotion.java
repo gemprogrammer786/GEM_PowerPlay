@@ -34,7 +34,7 @@ public class PG$LinearMotion {
         linearLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         linearLift.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
-        linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         //linearLift.setTargetPosition(0);
         //linearLift.setPower(0.2);
 
