@@ -51,9 +51,44 @@ public class PG$AutonomusGEM_V1 extends LinearOpMode {
 
 
     /*        wheels.encoderDrive(.5,10.0,10.0,10.0,10.0,2.0);
+     */
+
+        /* START OF FIRST CONE */
+        claw.grab();
+        wheels.moveRight(21,newGlobalConfig.medium,2.0);
+        lift.runViperMotor(1,1,1);
+        wheels.moveForward(7.5, newGlobalConfig.medium,2.0);
+        sleep(200);
+        claw.release();
+        wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
+        lift.runViperMotor(1,0,1);
+        claw.grab();
+        wheels.moveLeft(19,newGlobalConfig.medium,2.0);
+
+        /* END OF FIRST CONE */
+        /* START OF SECOND CONE */
+        claw.release();
+        wheels.moveForward(24, newGlobalConfig.medium,2.0);
+        claw.grab();
+        wheels.moveForward(-24, newGlobalConfig.medium,2.0);
+        wheels.moveRight(43,newGlobalConfig.medium,2.0);
+        lift.runViperMotor(1,2,1);
+        wheels.moveForward(7.5, newGlobalConfig.medium,2.0);
+        sleep(200);
+        claw.release();
+        wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
+        lift.runViperMotor(1,0,1);
+        claw.grab();
+        wheels.moveLeft(-43,newGlobalConfig.medium,2.0);
+
+        /* END OF SECOND CONE */
 
 
-            claw.grab();
+
+        /* END OF THIRD CONE */
+
+
+       /*
         lift.runViperMotor(1,2,1);
         claw.release();
 
@@ -62,10 +97,9 @@ public class PG$AutonomusGEM_V1 extends LinearOpMode {
         claw.grab();
 
         wheels.encoderDrive(.5,-20.0,20.0,-20.0,20.0,2.0);
-*/
 
 
-        wheels.moveForward(5, newGlobalConfig.fast,2.0);
+
         wheels.turnClockwise(-45, newGlobalConfig.fast,2.0);
         wheels.moveForward(5, newGlobalConfig.fast,2.0);
         wheels.turnClockwise(-45, newGlobalConfig.fast,2.0);
@@ -77,7 +111,7 @@ public class PG$AutonomusGEM_V1 extends LinearOpMode {
 
         wheels.moveForward(-5, newGlobalConfig.fast,2.0);
         wheels.turnClockwise(-135, newGlobalConfig.fast,2.0);
-        wheels.moveForward(10, newGlobalConfig.fast,2.0);
+        wheels.moveForward(10, newGlobalConfig.fast,2.0);*/
 
 
     }

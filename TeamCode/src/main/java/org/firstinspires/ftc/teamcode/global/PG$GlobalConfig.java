@@ -23,11 +23,12 @@ public class PG$GlobalConfig {
     public double teleOpdrivePowerfactor = 0.5;// the value should be between 0 to 1
     public double autodrivePowerfactor = 0.8;// the value should be between 0 to 1
 
-    public double fast = 0.5; // Limit motor power to this value for RUN_USING_ENCODER mode
-    public double medium = 0.3; // medium speed
-    public double slow = 0.1; // slow speed
-    public double clicksPerInch = 87.5; // empirically measured
-    public double clicksPerDeg = 21.94; // empirically measured
+    public double fast = 0.8; // Limit motor power to this value for RUN_USING_ENCODER mode
+    public double medium = 0.6; // medium speed
+    public double slow = 0.3; // slow speed
+    //public double clicksPerInch = 87.5; // empirically measured
+    public double clicksPerInch = 42; // empirically measured
+    public double clicksPerDeg = 0.5; // empirically measured
 
 
 

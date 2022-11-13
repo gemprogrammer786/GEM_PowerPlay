@@ -33,13 +33,13 @@ public class PG$ClawOperator extends PG$ClawServo {
     {
         telemetry.addData("Postion Claw 1:%d", clawGrabber.getPosition());
         telemetry.update();
-        clawGrabber.setPosition(newGlobalConfig.clawMin);
+        clawGrabber.setPosition(newGlobalConfig.clawMax);
         telemetry.addData("Postion Claw 1:%d", clawGrabber.getPosition());
         telemetry.update();
     }
 
     public void release() {
-        clawGrabber.setPosition(newGlobalConfig.clawMax);
+        clawGrabber.setPosition(newGlobalConfig.clawMin);
         telemetry.addData("Postion Claw 1:%d", clawGrabber.getPosition());
         telemetry.update();
         //parent.sleep(5000);

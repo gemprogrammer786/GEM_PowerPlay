@@ -251,7 +251,7 @@ public class PG$RobotAutoDrive extends PG$MecanumDriveFourWheels{
     }
 
 
-    public void moveForward(int distance, double speed, double timeoutS) {
+    public void moveForward(double distance, double speed, double timeoutS) {
 
 
 
@@ -361,7 +361,7 @@ public class PG$RobotAutoDrive extends PG$MecanumDriveFourWheels{
         parent.sleep(250);   // optional pause after each move
     }
 
-    public void moveRight(int distance, double speed, double timeoutS) {
+    public void moveRight(double distance, double speed, double timeoutS) {
 
 
 
@@ -473,7 +473,7 @@ public class PG$RobotAutoDrive extends PG$MecanumDriveFourWheels{
         parent.sleep(250);   // optional pause after each move
     }
 
-    public void moveLeft(int distance, double speed, double timeoutS) {
+    public void moveLeft(double distance, double speed, double timeoutS) {
 
 
 
@@ -585,7 +585,7 @@ public class PG$RobotAutoDrive extends PG$MecanumDriveFourWheels{
         parent.sleep(250);   // optional pause after each move
     }
 
-    public void turnClockwise(int whatAngle, double speed, double timeoutS) {
+    public void turnClockwise(double whatAngle, double speed, double timeoutS) {
 
 
 
@@ -696,7 +696,7 @@ public class PG$RobotAutoDrive extends PG$MecanumDriveFourWheels{
         parent.sleep(250);   // optional pause after each move
     }
 
-    public void turnAntiClockwise(int whatAngle, double speed, double timeoutS) {
+    public void turnAntiClockwise(double whatAngle, double speed, double timeoutS) {
 
 
 
