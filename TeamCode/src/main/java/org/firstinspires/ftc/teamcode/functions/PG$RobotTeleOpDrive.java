@@ -21,58 +21,36 @@ public class PG$RobotTeleOpDrive extends PG$MecanumDriveFourWheels{
 
     }
 
-    //PG$MecanumDriveFourWheels robot = new PG$MecanumDriveFourWheels( hardwareMap, telemetry );
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
     private ElapsedTime runtime = new ElapsedTime();
 
 
-    public void move(double lefty, double righty, double leftx, double rightx){
+    public void move(double y,  double x, double rx){
 
-        lefty *= newGlobalConfig.teleOpdrivePowerfactor;
-        righty *= newGlobalConfig.teleOpdrivePowerfactor;
-        leftx *= newGlobalConfig.teleOpdrivePowerfactor;
-        rightx *= newGlobalConfig.teleOpdrivePowerfactor;
-
-//        double y = -gamepad1.left_stick_y; // Remember, this is reversed!
-//        double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-//        double rx = gamepad1.right_stick_x;
-
-        //leftx = leftx*1.1; // Counteract imperfect strafing
+        y *= newGlobalConfig.teleOpdrivePowerfactor;
+        x *= newGlobalConfig.teleOpdrivePowerfactor;
+        rx *= newGlobalConfig.teleOpdrivePowerfactor;
 
         // Read inverse IMU heading, as the IMU heading is CW positive
         double botHeading = -imu.getAngularOrientation().firstAngle;
 
-        double rotX = leftx * Math.cos(botHeading) - lefty * Math.sin(botHeading);
-        double rotY = leftx * Math.sin(botHeading) + lefty * Math.cos(botHeading);
+        double rotX = x * Math.cos(botHeading) - y * Math.sin(botHeading);
+        double rotY = x * Math.sin(botHeading) + y * Math.cos(botHeading);
 
         // Denominator is the largest motor power (absolute value) or 1
         // This ensures all the powers maintain the same ratio, but only when
         // at least one is out of the range [-1, 1]
-        double denominator = Math.max(Math.abs(lefty) + Math.abs(leftx) + Math.abs(rightx), 1);
-        double frontLeftPower = ((rotY + rotX + rightx) / denominator);
-        double backLeftPower = ((rotY - rotX + rightx) / denominator);
-        double frontRightPower = ((rotY - rotX - rightx) / denominator);
-        double backRightPower = ((rotY + rotX - rightx) / denominator);
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        double frontLeftPower = (rotY + rotX + rx) / denominator;
+        double backLeftPower = (rotY - rotX + rx) / denominator;
+        double frontRightPower = (rotY - rotX - rx) / denominator;
+        double backRightPower = (rotY + rotX - rx) / denominator;
 
-//        frontright.setPower(frontRightPower);
-//        frontleft.setPower(frontLeftPower);
-//        backright.setPower(backRightPower);
-//        backleft.setPower(backLeftPower);
+        frontleft.setPower(frontLeftPower);
+        backleft.setPower(backLeftPower);
+        frontright.setPower(frontRightPower);
+        backright.setPower(backRightPower);
 
-        frontright.setPower(Range.clip(frontRightPower, -1, 1));
-        frontleft.setPower(Range.clip(frontLeftPower, -1, 1));
-        backright.setPower(Range.clip(backRightPower, -1, 1));
-        backleft.setPower(Range.clip(backLeftPower, -1, 1));
-
-
-
-        // Display it for the driver.
-//        telemetry.addData("frontRightPower", "Power Is to %.3f  :", frontRightPower);
-//        telemetry.addData("frontLeftPower", "Running at %.3f :", frontLeftPower);
-//        telemetry.addData("backRightPower", "Running to %.3f  :", backRightPower);
-//        telemetry.addData("backLeftPower", "Running at %.3f :", backLeftPower);
-
-        telemetry.update();
     }
 
     public void moveNoIMU(double y, double x, double rx){
@@ -92,6 +70,7 @@ public class PG$RobotTeleOpDrive extends PG$MecanumDriveFourWheels{
         double backLeftPower = (y - x + rx ) / denominator;
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
+
 
         frontleft.setPower(frontLeftPower);
         backleft.setPower(backLeftPower);

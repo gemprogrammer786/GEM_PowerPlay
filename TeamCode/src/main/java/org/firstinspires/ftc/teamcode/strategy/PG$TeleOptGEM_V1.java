@@ -61,9 +61,11 @@ public class PG$TeleOptGEM_V1 extends LinearOpMode {
         while (opModeIsActive()) {
 
             lefty = - gamepad1.left_stick_y ;
-            leftx =  gamepad1.left_stick_x;
+            leftx =  gamepad1.left_stick_x * 1.1;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
+
+
 
             boolean dpad_left = gamepad2.dpad_left;
             boolean dpad_right = gamepad2.dpad_right;
@@ -112,14 +114,13 @@ public class PG$TeleOptGEM_V1 extends LinearOpMode {
                 claw.parent.sleep(500);
             }
             else if(y)
-                newGlobalConfig.teleOpdrivePowerfactor=0.6;
+                newGlobalConfig.teleOpdrivePowerfactor=0.8;
             else if(a)
-                newGlobalConfig.teleOpdrivePowerfactor=0.25;
+                newGlobalConfig.teleOpdrivePowerfactor=0.3;
 
             else{
-               //wheels.move(lefty,righty,leftx,rightx);
                 wheels.moveNoIMU(lefty,leftx,rightx);
-                turnTable.turn(gm1_lt,gm1_rt);
+                //turnTable.turn(gm1_lt,gm1_rt);
             }
 
         }

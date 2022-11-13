@@ -138,4 +138,673 @@ public class PG$RobotAutoDrive extends PG$MecanumDriveFourWheels{
 
 
 
+    private int lfPos; private int rfPos; private int lrPos; private int rrPos;
+
+    public void echoDrive(int distance, double speed, double timeoutS) {
+
+
+
+        // fetch motor positions
+        int new_frontLeftTarget = frontleft.getCurrentPosition();
+        int new_frontRightTarget = frontright.getCurrentPosition();
+        int new_backLeftTarget = backleft.getCurrentPosition();
+        int new_backRightTarget = backright.getCurrentPosition();
+
+        // calculate new targets
+        new_frontLeftTarget += distance * newGlobalConfig.clicksPerInch;
+        new_frontRightTarget += distance * newGlobalConfig.clicksPerInch;
+        new_backLeftTarget += distance * newGlobalConfig.clicksPerInch;
+        new_backRightTarget += distance * newGlobalConfig.clicksPerInch;
+
+
+
+        if (parent.opModeIsActive()) {
+
+            //telemetry.setAutoClear(false);
+            Telemetry.Item telemetrygetCurrentPosition = telemetry.addData("frontleft.getCurrentPosition()", frontleft.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPosition = telemetry.addData("frontleft.getTargetPosition()", frontleft.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPosition = telemetry.addData("frontleft.getPower()", frontleft.getPower());
+
+
+            Telemetry.Item telemetrygetCurrentPositionFrontright = telemetry.addData("frontright.getCurrentPosition()", frontright.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionFrontright = telemetry.addData("frontright.getTargetPosition()", frontright.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionFrontright = telemetry.addData("frontright.getPower()", frontright.getPower());
+
+            Telemetry.Item telemetrygetCurrentPositionBacktleft = telemetry.addData("backleft.getCurrentPosition()", backleft.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionBackleft = telemetry.addData("backleft.getTargetPosition()", backleft.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionBacktleft = telemetry.addData("backleft.getPower()", backleft.getPower());
+
+            Telemetry.Item telemetrygetCurrentPositionBackright = telemetry.addData("backright.getCurrentPosition()", backright.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionBackright = telemetry.addData("backright.getTargetPosition()", backright.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionBackright = telemetry.addData("backright.getPower()", backright.getPower());
+
+
+            telemetry.update();
+
+            frontleft.setTargetPosition(new_frontLeftTarget);
+            frontright.setTargetPosition(new_frontRightTarget);
+            backleft.setTargetPosition(new_backLeftTarget);
+            backright.setTargetPosition(new_backRightTarget);
+
+            // Turn On RUN_TO_POSITION
+            frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            frontleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            frontright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+
+//            frontleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            frontright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (parent.opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (frontleft.isBusy() || frontright.isBusy() || backleft.isBusy() || backright.isBusy())) {
+                // Display it for the driver.
+//                telemetry.addData("Path1", "Running to %7d  :%7d :%7d :%7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
+//                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
+//                        frontleft.getCurrentPosition(),
+//                        frontright.getCurrentPosition(),
+//                        backleft.getCurrentPosition(),
+//                        backright.getCurrentPosition());
+                telemetrygetCurrentPosition.setValue( frontleft.getCurrentPosition());
+                telemetrygetTargetPosition.setValue( frontleft.getTargetPosition());
+                telemetryliftCurrentPosition.setValue( frontleft.getPower());
+
+
+                telemetrygetCurrentPositionFrontright.setValue( frontright.getCurrentPosition());
+                telemetrygetTargetPositionFrontright.setValue( frontright.getTargetPosition());
+                telemetryliftCurrentPositionFrontright.setValue( frontright.getPower());
+
+                telemetrygetCurrentPositionBacktleft.setValue(backleft.getCurrentPosition());
+                telemetrygetTargetPositionBackleft.setValue( backleft.getTargetPosition());
+                telemetryliftCurrentPositionBacktleft.setValue( backleft.getPower());
+
+                telemetrygetCurrentPositionBackright.setValue( backright.getCurrentPosition());
+                telemetrygetTargetPositionBackright.setValue( backright.getTargetPosition());
+                telemetryliftCurrentPositionBackright.setValue(backright.getPower());
+
+                telemetry.update();
+            }
+        }
+        // Stop all motion;
+        frontleft.setPower(0);
+        frontright.setPower(0);
+        backleft.setPower(0);
+        backright.setPower(0);
+
+        // Turn off RUN_TO_POSITION
+        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        parent.sleep(250);   // optional pause after each move
+    }
+
+
+    public void moveForward(int distance, double speed, double timeoutS) {
+
+
+
+        // fetch motor positions
+        int new_frontLeftTarget = frontleft.getCurrentPosition();
+        int new_frontRightTarget = frontright.getCurrentPosition();
+        int new_backLeftTarget = backleft.getCurrentPosition();
+        int new_backRightTarget = backright.getCurrentPosition();
+
+        // calculate new targets
+        new_frontLeftTarget += distance * newGlobalConfig.clicksPerInch;
+        new_frontRightTarget += distance * newGlobalConfig.clicksPerInch;
+        new_backLeftTarget += distance * newGlobalConfig.clicksPerInch;
+        new_backRightTarget += distance * newGlobalConfig.clicksPerInch;
+
+
+
+        if (parent.opModeIsActive()) {
+
+            //telemetry.setAutoClear(false);
+            Telemetry.Item telemetrygetCurrentPosition = telemetry.addData("frontleft.getCurrentPosition()", frontleft.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPosition = telemetry.addData("frontleft.getTargetPosition()", frontleft.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPosition = telemetry.addData("frontleft.getPower()", frontleft.getPower());
+
+
+            Telemetry.Item telemetrygetCurrentPositionFrontright = telemetry.addData("frontright.getCurrentPosition()", frontright.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionFrontright = telemetry.addData("frontright.getTargetPosition()", frontright.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionFrontright = telemetry.addData("frontright.getPower()", frontright.getPower());
+
+            Telemetry.Item telemetrygetCurrentPositionBacktleft = telemetry.addData("backleft.getCurrentPosition()", backleft.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionBackleft = telemetry.addData("backleft.getTargetPosition()", backleft.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionBacktleft = telemetry.addData("backleft.getPower()", backleft.getPower());
+
+            Telemetry.Item telemetrygetCurrentPositionBackright = telemetry.addData("backright.getCurrentPosition()", backright.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionBackright = telemetry.addData("backright.getTargetPosition()", backright.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionBackright = telemetry.addData("backright.getPower()", backright.getPower());
+
+
+            telemetry.update();
+
+            frontleft.setTargetPosition(new_frontLeftTarget);
+            frontright.setTargetPosition(new_frontRightTarget);
+            backleft.setTargetPosition(new_backLeftTarget);
+            backright.setTargetPosition(new_backRightTarget);
+
+            // Turn On RUN_TO_POSITION
+            frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            frontleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            frontright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+
+//            frontleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            frontright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (parent.opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (frontleft.isBusy() || frontright.isBusy() || backleft.isBusy() || backright.isBusy())) {
+                // Display it for the driver.
+//                telemetry.addData("Path1", "Running to %7d  :%7d :%7d :%7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
+//                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
+//                        frontleft.getCurrentPosition(),
+//                        frontright.getCurrentPosition(),
+//                        backleft.getCurrentPosition(),
+//                        backright.getCurrentPosition());
+                telemetrygetCurrentPosition.setValue( frontleft.getCurrentPosition());
+                telemetrygetTargetPosition.setValue( frontleft.getTargetPosition());
+                telemetryliftCurrentPosition.setValue( frontleft.getPower());
+
+
+                telemetrygetCurrentPositionFrontright.setValue( frontright.getCurrentPosition());
+                telemetrygetTargetPositionFrontright.setValue( frontright.getTargetPosition());
+                telemetryliftCurrentPositionFrontright.setValue( frontright.getPower());
+
+                telemetrygetCurrentPositionBacktleft.setValue(backleft.getCurrentPosition());
+                telemetrygetTargetPositionBackleft.setValue( backleft.getTargetPosition());
+                telemetryliftCurrentPositionBacktleft.setValue( backleft.getPower());
+
+                telemetrygetCurrentPositionBackright.setValue( backright.getCurrentPosition());
+                telemetrygetTargetPositionBackright.setValue( backright.getTargetPosition());
+                telemetryliftCurrentPositionBackright.setValue(backright.getPower());
+
+                telemetry.update();
+            }
+        }
+        // Stop all motion;
+        frontleft.setPower(0);
+        frontright.setPower(0);
+        backleft.setPower(0);
+        backright.setPower(0);
+
+        // Turn off RUN_TO_POSITION
+        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        parent.sleep(250);   // optional pause after each move
+    }
+
+    public void moveRight(int distance, double speed, double timeoutS) {
+
+
+
+        // fetch motor positions
+        int new_frontLeftTarget = frontleft.getCurrentPosition();
+        int new_frontRightTarget = frontright.getCurrentPosition();
+        int new_backLeftTarget = backleft.getCurrentPosition();
+        int new_backRightTarget = backright.getCurrentPosition();
+
+        // calculate new targets
+        new_frontLeftTarget += distance * newGlobalConfig.clicksPerInch;
+        new_frontRightTarget -= distance * newGlobalConfig.clicksPerInch;
+        new_backLeftTarget -= distance * newGlobalConfig.clicksPerInch;
+        new_backRightTarget += distance * newGlobalConfig.clicksPerInch;
+
+
+
+
+
+        if (parent.opModeIsActive()) {
+
+            //telemetry.setAutoClear(false);
+            Telemetry.Item telemetrygetCurrentPosition = telemetry.addData("frontleft.getCurrentPosition()", frontleft.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPosition = telemetry.addData("frontleft.getTargetPosition()", frontleft.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPosition = telemetry.addData("frontleft.getPower()", frontleft.getPower());
+
+
+            Telemetry.Item telemetrygetCurrentPositionFrontright = telemetry.addData("frontright.getCurrentPosition()", frontright.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionFrontright = telemetry.addData("frontright.getTargetPosition()", frontright.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionFrontright = telemetry.addData("frontright.getPower()", frontright.getPower());
+
+            Telemetry.Item telemetrygetCurrentPositionBacktleft = telemetry.addData("backleft.getCurrentPosition()", backleft.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionBackleft = telemetry.addData("backleft.getTargetPosition()", backleft.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionBacktleft = telemetry.addData("backleft.getPower()", backleft.getPower());
+
+            Telemetry.Item telemetrygetCurrentPositionBackright = telemetry.addData("backright.getCurrentPosition()", backright.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionBackright = telemetry.addData("backright.getTargetPosition()", backright.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionBackright = telemetry.addData("backright.getPower()", backright.getPower());
+
+
+            telemetry.update();
+
+            frontleft.setTargetPosition(new_frontLeftTarget);
+            frontright.setTargetPosition(new_frontRightTarget);
+            backleft.setTargetPosition(new_backLeftTarget);
+            backright.setTargetPosition(new_backRightTarget);
+
+            // Turn On RUN_TO_POSITION
+            frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            frontleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            frontright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+
+//            frontleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            frontright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (parent.opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (frontleft.isBusy() || frontright.isBusy() || backleft.isBusy() || backright.isBusy())) {
+                // Display it for the driver.
+//                telemetry.addData("Path1", "Running to %7d  :%7d :%7d :%7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
+//                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
+//                        frontleft.getCurrentPosition(),
+//                        frontright.getCurrentPosition(),
+//                        backleft.getCurrentPosition(),
+//                        backright.getCurrentPosition());
+                telemetrygetCurrentPosition.setValue( frontleft.getCurrentPosition());
+                telemetrygetTargetPosition.setValue( frontleft.getTargetPosition());
+                telemetryliftCurrentPosition.setValue( frontleft.getPower());
+
+
+                telemetrygetCurrentPositionFrontright.setValue( frontright.getCurrentPosition());
+                telemetrygetTargetPositionFrontright.setValue( frontright.getTargetPosition());
+                telemetryliftCurrentPositionFrontright.setValue( frontright.getPower());
+
+                telemetrygetCurrentPositionBacktleft.setValue(backleft.getCurrentPosition());
+                telemetrygetTargetPositionBackleft.setValue( backleft.getTargetPosition());
+                telemetryliftCurrentPositionBacktleft.setValue( backleft.getPower());
+
+                telemetrygetCurrentPositionBackright.setValue( backright.getCurrentPosition());
+                telemetrygetTargetPositionBackright.setValue( backright.getTargetPosition());
+                telemetryliftCurrentPositionBackright.setValue(backright.getPower());
+
+                telemetry.update();
+            }
+        }
+        // Stop all motion;
+        frontleft.setPower(0);
+        frontright.setPower(0);
+        backleft.setPower(0);
+        backright.setPower(0);
+
+        // Turn off RUN_TO_POSITION
+        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        parent.sleep(250);   // optional pause after each move
+    }
+
+    public void moveLeft(int distance, double speed, double timeoutS) {
+
+
+
+        // fetch motor positions
+        int new_frontLeftTarget = frontleft.getCurrentPosition();
+        int new_frontRightTarget = frontright.getCurrentPosition();
+        int new_backLeftTarget = backleft.getCurrentPosition();
+        int new_backRightTarget = backright.getCurrentPosition();
+
+        // calculate new targets
+        new_frontLeftTarget -= distance * newGlobalConfig.clicksPerInch;
+        new_frontRightTarget += distance * newGlobalConfig.clicksPerInch;
+        new_backLeftTarget += distance * newGlobalConfig.clicksPerInch;
+        new_backRightTarget -= distance * newGlobalConfig.clicksPerInch;
+
+
+
+
+
+        if (parent.opModeIsActive()) {
+
+            //telemetry.setAutoClear(false);
+            Telemetry.Item telemetrygetCurrentPosition = telemetry.addData("frontleft.getCurrentPosition()", frontleft.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPosition = telemetry.addData("frontleft.getTargetPosition()", frontleft.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPosition = telemetry.addData("frontleft.getPower()", frontleft.getPower());
+
+
+            Telemetry.Item telemetrygetCurrentPositionFrontright = telemetry.addData("frontright.getCurrentPosition()", frontright.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionFrontright = telemetry.addData("frontright.getTargetPosition()", frontright.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionFrontright = telemetry.addData("frontright.getPower()", frontright.getPower());
+
+            Telemetry.Item telemetrygetCurrentPositionBacktleft = telemetry.addData("backleft.getCurrentPosition()", backleft.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionBackleft = telemetry.addData("backleft.getTargetPosition()", backleft.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionBacktleft = telemetry.addData("backleft.getPower()", backleft.getPower());
+
+            Telemetry.Item telemetrygetCurrentPositionBackright = telemetry.addData("backright.getCurrentPosition()", backright.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionBackright = telemetry.addData("backright.getTargetPosition()", backright.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionBackright = telemetry.addData("backright.getPower()", backright.getPower());
+
+
+            telemetry.update();
+
+            frontleft.setTargetPosition(new_frontLeftTarget);
+            frontright.setTargetPosition(new_frontRightTarget);
+            backleft.setTargetPosition(new_backLeftTarget);
+            backright.setTargetPosition(new_backRightTarget);
+
+            // Turn On RUN_TO_POSITION
+            frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            frontleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            frontright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+
+//            frontleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            frontright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (parent.opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (frontleft.isBusy() || frontright.isBusy() || backleft.isBusy() || backright.isBusy())) {
+                // Display it for the driver.
+//                telemetry.addData("Path1", "Running to %7d  :%7d :%7d :%7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
+//                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
+//                        frontleft.getCurrentPosition(),
+//                        frontright.getCurrentPosition(),
+//                        backleft.getCurrentPosition(),
+//                        backright.getCurrentPosition());
+                telemetrygetCurrentPosition.setValue( frontleft.getCurrentPosition());
+                telemetrygetTargetPosition.setValue( frontleft.getTargetPosition());
+                telemetryliftCurrentPosition.setValue( frontleft.getPower());
+
+
+                telemetrygetCurrentPositionFrontright.setValue( frontright.getCurrentPosition());
+                telemetrygetTargetPositionFrontright.setValue( frontright.getTargetPosition());
+                telemetryliftCurrentPositionFrontright.setValue( frontright.getPower());
+
+                telemetrygetCurrentPositionBacktleft.setValue(backleft.getCurrentPosition());
+                telemetrygetTargetPositionBackleft.setValue( backleft.getTargetPosition());
+                telemetryliftCurrentPositionBacktleft.setValue( backleft.getPower());
+
+                telemetrygetCurrentPositionBackright.setValue( backright.getCurrentPosition());
+                telemetrygetTargetPositionBackright.setValue( backright.getTargetPosition());
+                telemetryliftCurrentPositionBackright.setValue(backright.getPower());
+
+                telemetry.update();
+            }
+        }
+        // Stop all motion;
+        frontleft.setPower(0);
+        frontright.setPower(0);
+        backleft.setPower(0);
+        backright.setPower(0);
+
+        // Turn off RUN_TO_POSITION
+        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        parent.sleep(250);   // optional pause after each move
+    }
+
+    public void turnClockwise(int whatAngle, double speed, double timeoutS) {
+
+
+
+        // fetch motor positions
+        int new_frontLeftTarget = frontleft.getCurrentPosition();
+        int new_frontRightTarget = frontright.getCurrentPosition();
+        int new_backLeftTarget = backleft.getCurrentPosition();
+        int new_backRightTarget = backright.getCurrentPosition();
+
+        // calculate new targets
+        new_frontLeftTarget += whatAngle * newGlobalConfig.clicksPerInch;
+        new_frontRightTarget -= whatAngle * newGlobalConfig.clicksPerInch;
+        new_backLeftTarget += whatAngle * newGlobalConfig.clicksPerInch;
+        new_backRightTarget -= whatAngle * newGlobalConfig.clicksPerInch;
+
+
+
+
+        if (parent.opModeIsActive()) {
+
+            //telemetry.setAutoClear(false);
+            Telemetry.Item telemetrygetCurrentPosition = telemetry.addData("frontleft.getCurrentPosition()", frontleft.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPosition = telemetry.addData("frontleft.getTargetPosition()", frontleft.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPosition = telemetry.addData("frontleft.getPower()", frontleft.getPower());
+
+
+            Telemetry.Item telemetrygetCurrentPositionFrontright = telemetry.addData("frontright.getCurrentPosition()", frontright.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionFrontright = telemetry.addData("frontright.getTargetPosition()", frontright.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionFrontright = telemetry.addData("frontright.getPower()", frontright.getPower());
+
+            Telemetry.Item telemetrygetCurrentPositionBacktleft = telemetry.addData("backleft.getCurrentPosition()", backleft.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionBackleft = telemetry.addData("backleft.getTargetPosition()", backleft.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionBacktleft = telemetry.addData("backleft.getPower()", backleft.getPower());
+
+            Telemetry.Item telemetrygetCurrentPositionBackright = telemetry.addData("backright.getCurrentPosition()", backright.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionBackright = telemetry.addData("backright.getTargetPosition()", backright.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionBackright = telemetry.addData("backright.getPower()", backright.getPower());
+
+
+            telemetry.update();
+
+            frontleft.setTargetPosition(new_frontLeftTarget);
+            frontright.setTargetPosition(new_frontRightTarget);
+            backleft.setTargetPosition(new_backLeftTarget);
+            backright.setTargetPosition(new_backRightTarget);
+
+            // Turn On RUN_TO_POSITION
+            frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            frontleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            frontright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+
+//            frontleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            frontright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (parent.opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (frontleft.isBusy() || frontright.isBusy() || backleft.isBusy() || backright.isBusy())) {
+                // Display it for the driver.
+//                telemetry.addData("Path1", "Running to %7d  :%7d :%7d :%7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
+//                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
+//                        frontleft.getCurrentPosition(),
+//                        frontright.getCurrentPosition(),
+//                        backleft.getCurrentPosition(),
+//                        backright.getCurrentPosition());
+                telemetrygetCurrentPosition.setValue( frontleft.getCurrentPosition());
+                telemetrygetTargetPosition.setValue( frontleft.getTargetPosition());
+                telemetryliftCurrentPosition.setValue( frontleft.getPower());
+
+
+                telemetrygetCurrentPositionFrontright.setValue( frontright.getCurrentPosition());
+                telemetrygetTargetPositionFrontright.setValue( frontright.getTargetPosition());
+                telemetryliftCurrentPositionFrontright.setValue( frontright.getPower());
+
+                telemetrygetCurrentPositionBacktleft.setValue(backleft.getCurrentPosition());
+                telemetrygetTargetPositionBackleft.setValue( backleft.getTargetPosition());
+                telemetryliftCurrentPositionBacktleft.setValue( backleft.getPower());
+
+                telemetrygetCurrentPositionBackright.setValue( backright.getCurrentPosition());
+                telemetrygetTargetPositionBackright.setValue( backright.getTargetPosition());
+                telemetryliftCurrentPositionBackright.setValue(backright.getPower());
+
+                telemetry.update();
+            }
+        }
+        // Stop all motion;
+        frontleft.setPower(0);
+        frontright.setPower(0);
+        backleft.setPower(0);
+        backright.setPower(0);
+
+        // Turn off RUN_TO_POSITION
+        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        parent.sleep(250);   // optional pause after each move
+    }
+
+    public void turnAntiClockwise(int whatAngle, double speed, double timeoutS) {
+
+
+
+        // fetch motor positions
+        int new_frontLeftTarget = frontleft.getCurrentPosition();
+        int new_frontRightTarget = frontright.getCurrentPosition();
+        int new_backLeftTarget = backleft.getCurrentPosition();
+        int new_backRightTarget = backright.getCurrentPosition();
+
+        // calculate new targets
+        new_frontLeftTarget -= whatAngle * newGlobalConfig.clicksPerInch;
+        new_frontRightTarget += whatAngle * newGlobalConfig.clicksPerInch;
+        new_backLeftTarget -= whatAngle * newGlobalConfig.clicksPerInch;
+        new_backRightTarget += whatAngle * newGlobalConfig.clicksPerInch;
+
+
+
+
+        if (parent.opModeIsActive()) {
+
+            //telemetry.setAutoClear(false);
+            Telemetry.Item telemetrygetCurrentPosition = telemetry.addData("frontleft.getCurrentPosition()", frontleft.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPosition = telemetry.addData("frontleft.getTargetPosition()", frontleft.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPosition = telemetry.addData("frontleft.getPower()", frontleft.getPower());
+
+
+            Telemetry.Item telemetrygetCurrentPositionFrontright = telemetry.addData("frontright.getCurrentPosition()", frontright.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionFrontright = telemetry.addData("frontright.getTargetPosition()", frontright.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionFrontright = telemetry.addData("frontright.getPower()", frontright.getPower());
+
+            Telemetry.Item telemetrygetCurrentPositionBacktleft = telemetry.addData("backleft.getCurrentPosition()", backleft.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionBackleft = telemetry.addData("backleft.getTargetPosition()", backleft.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionBacktleft = telemetry.addData("backleft.getPower()", backleft.getPower());
+
+            Telemetry.Item telemetrygetCurrentPositionBackright = telemetry.addData("backright.getCurrentPosition()", backright.getCurrentPosition());
+            Telemetry.Item telemetrygetTargetPositionBackright = telemetry.addData("backright.getTargetPosition()", backright.getTargetPosition());
+            Telemetry.Item telemetryliftCurrentPositionBackright = telemetry.addData("backright.getPower()", backright.getPower());
+
+
+            telemetry.update();
+
+            frontleft.setTargetPosition(new_frontLeftTarget);
+            frontright.setTargetPosition(new_frontRightTarget);
+            backleft.setTargetPosition(new_backLeftTarget);
+            backright.setTargetPosition(new_backRightTarget);
+
+            // Turn On RUN_TO_POSITION
+            frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            frontleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            frontright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backleft.setPower(Range.clip((speed+ newGlobalConfig.leftWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+            backright.setPower(Range.clip((speed+ newGlobalConfig.rightWheelErrorAdjustment) * newGlobalConfig.autodrivePowerfactor, -1, 1));
+
+//            frontleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            frontright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backleft.setPower(speed* newGlobalConfig.leftWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+//            backright.setPower(speed* newGlobalConfig.rightWheelErrorAdjustment * newGlobalConfig.robotAutonomusSpeedReducer);
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (parent.opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (frontleft.isBusy() || frontright.isBusy() || backleft.isBusy() || backright.isBusy())) {
+                // Display it for the driver.
+//                telemetry.addData("Path1", "Running to %7d  :%7d :%7d :%7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
+//                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
+//                        frontleft.getCurrentPosition(),
+//                        frontright.getCurrentPosition(),
+//                        backleft.getCurrentPosition(),
+//                        backright.getCurrentPosition());
+                telemetrygetCurrentPosition.setValue( frontleft.getCurrentPosition());
+                telemetrygetTargetPosition.setValue( frontleft.getTargetPosition());
+                telemetryliftCurrentPosition.setValue( frontleft.getPower());
+
+
+                telemetrygetCurrentPositionFrontright.setValue( frontright.getCurrentPosition());
+                telemetrygetTargetPositionFrontright.setValue( frontright.getTargetPosition());
+                telemetryliftCurrentPositionFrontright.setValue( frontright.getPower());
+
+                telemetrygetCurrentPositionBacktleft.setValue(backleft.getCurrentPosition());
+                telemetrygetTargetPositionBackleft.setValue( backleft.getTargetPosition());
+                telemetryliftCurrentPositionBacktleft.setValue( backleft.getPower());
+
+                telemetrygetCurrentPositionBackright.setValue( backright.getCurrentPosition());
+                telemetrygetTargetPositionBackright.setValue( backright.getTargetPosition());
+                telemetryliftCurrentPositionBackright.setValue(backright.getPower());
+
+                telemetry.update();
+            }
+        }
+        // Stop all motion;
+        frontleft.setPower(0);
+        frontright.setPower(0);
+        backleft.setPower(0);
+        backright.setPower(0);
+
+        // Turn off RUN_TO_POSITION
+        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        parent.sleep(250);   // optional pause after each move
+    }
+
 }

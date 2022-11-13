@@ -82,7 +82,7 @@ public class PG$TeleOpPrototypeNoIMU extends LinearOpMode {
 
             else{
                 //wheels.move(lefty,righty,leftx,rightx);
-                wheels.move(lefty,righty,leftx,rightx);
+                wheels.move(lefty,leftx,rightx);
                 //spinner.setPower(0);
             }
 

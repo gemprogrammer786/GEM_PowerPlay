@@ -29,17 +29,9 @@ public class PG$TeleOpDrivePrototype extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        //Hardware Mapping
-
-       // wheels = new PG$MecanumDriveFourWheels_BKP(hardwareMap,telemetry);
 
         wheels = new PG$RobotTeleOpDrive(hardwareMap,telemetry);
-
-
-        //wheels.rightErrorAdjustment = 0.93;//1;
-        //wheels.telemetry = telemetry;
         wheels.parent = this;
-
 
         waitForStart();
         //claw.initiateLift();
@@ -84,7 +76,7 @@ public class PG$TeleOpDrivePrototype extends LinearOpMode {
 
             else{
                 //wheels.move(lefty,righty,leftx,rightx);
-                wheels.move(lefty,righty,leftx,rightx);
+                wheels.move(lefty,leftx,rightx);
                 //spinner.setPower(0);
             }
 

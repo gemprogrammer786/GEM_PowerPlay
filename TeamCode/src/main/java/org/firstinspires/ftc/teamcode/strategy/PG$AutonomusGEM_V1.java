@@ -25,7 +25,7 @@ public class PG$AutonomusGEM_V1 extends LinearOpMode {
     PG$RobotAutoDrive wheels;
     PG$ClawOperator claw;
     PG$LinearOperator lift;
-    PG$TurnTableOperation turnTable;
+    //PG$TurnTableOperation turnTable;
 
 
     @Override
@@ -34,12 +34,12 @@ public class PG$AutonomusGEM_V1 extends LinearOpMode {
         wheels = new PG$RobotAutoDrive(hardwareMap,telemetry);
         wheels.parent = this;
 
-        turnTable= new PG$TurnTableOperation(hardwareMap,telemetry);
-        turnTable.parent = this;
-
+//        turnTable= new PG$TurnTableOperation(hardwareMap,telemetry);
+//        turnTable.parent = this;
+//
         claw= new PG$ClawOperator(hardwareMap,telemetry);
         claw.parent = this;
-
+//
         lift= new PG$LinearOperator(hardwareMap,telemetry);
         lift.parent = this;
 
@@ -49,15 +49,37 @@ public class PG$AutonomusGEM_V1 extends LinearOpMode {
 
         waitForStart();
 
-        while (opModeIsActive()) {
 
-            wheels.encoderDrive(.5,50.0,50.0,50.0,50.0,2.0);
-            //lift.runViperMotor(1,1,1);
-            //lift.runViperMotor(1,0,1);
-            claw.release();
+    /*        wheels.encoderDrive(.5,10.0,10.0,10.0,10.0,2.0);
+
+
             claw.grab();
-            //turnTable.turn(0.2f,0);
-        }
+        lift.runViperMotor(1,2,1);
+        claw.release();
+
+        wheels.encoderDrive(.5,-10.0,-10.0,-10.0,-10.0,2.0);
+        lift.runViperMotor(1,0,1);
+        claw.grab();
+
+        wheels.encoderDrive(.5,-20.0,20.0,-20.0,20.0,2.0);
+*/
+
+
+        wheels.moveForward(5, newGlobalConfig.fast,2.0);
+        wheels.turnClockwise(-45, newGlobalConfig.fast,2.0);
+        wheels.moveForward(5, newGlobalConfig.fast,2.0);
+        wheels.turnClockwise(-45, newGlobalConfig.fast,2.0);
+        wheels.moveForward(6, newGlobalConfig.fast,2.0);
+
+        wheels.moveForward(-6, newGlobalConfig.fast,2.0);
+        wheels.turnClockwise(-3, newGlobalConfig.medium,2.0); // aiming tweak
+        wheels.moveRight(5, newGlobalConfig.fast,2.0);
+
+        wheels.moveForward(-5, newGlobalConfig.fast,2.0);
+        wheels.turnClockwise(-135, newGlobalConfig.fast,2.0);
+        wheels.moveForward(10, newGlobalConfig.fast,2.0);
+
+
     }
 }
 

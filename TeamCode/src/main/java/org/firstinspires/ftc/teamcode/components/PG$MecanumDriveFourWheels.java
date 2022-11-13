@@ -21,15 +21,21 @@ public class PG$MecanumDriveFourWheels {
 
 
     //Configuration used: 4wheelConfig
-    public DcMotorEx frontright;
-    public DcMotorEx frontleft;
-    public DcMotorEx backright;
-    public DcMotorEx backleft;
+//    public DcMotorEx frontright;
+//    public DcMotorEx frontleft;
+//    public DcMotorEx backright;
+//    public DcMotorEx backleft;
+
+    public DcMotor frontleft ;
+    public DcMotor backleft ;
+    public DcMotor frontright ;
+    public DcMotor backright ;
+
+
     public BNO055IMU imu;
 
     //public DcMotorEx xRail;
     public HardwareMap hardwareMap;
-
 
 
 
@@ -54,17 +60,21 @@ public class PG$MecanumDriveFourWheels {
         frontleft.setPower(reset);
         backleft.setPower(reset);
         backright.setPower(reset);
-        backright.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontright.setDirection(DcMotorSimple.Direction.FORWARD);
-        backleft.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontleft.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        //backright.setDirection(DcMotorSimple.Direction.REVERSE);
+        //frontright.setDirection(DcMotorSimple.Direction.REVERSE);
+        //backleft.setDirection(DcMotorSimple.Direction.FORWARD);
+        //frontleft.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        backright.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontright.setDirection(DcMotorSimple.Direction.REVERSE);
 
         if(IsAutonomous)
         {
 
-//            backright.setDirection(DcMotorSimple.Direction.REVERSE);
-//            frontright.setDirection(DcMotorSimple.Direction.FORWARD);
+
+
+
 //            backleft.setDirection(DcMotorSimple.Direction.FORWARD);
 //            frontleft.setDirection(DcMotorSimple.Direction.FORWARD);
 
@@ -80,14 +90,15 @@ public class PG$MecanumDriveFourWheels {
 //            frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //            backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            frontright.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
-            frontleft.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
-            backright.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
-            backleft.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
+//            frontright.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
+//            frontleft.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
+//            backright.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
+//            backleft.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
 
         }
         else
         {
+            // Retrieve the IMU from the hardware map
             imu = hardwareMap.get(BNO055IMU.class, "imu");
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
             // Technically this is the default, however specifying it is clearer

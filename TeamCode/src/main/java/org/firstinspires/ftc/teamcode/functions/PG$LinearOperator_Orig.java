@@ -52,16 +52,16 @@ public class PG$LinearOperator_Orig extends PG$LinearMotion {
 
     public int levelToPostionCalc(int level) {
         int position = newGlobalConfig.liftLevelMin;
-        //return(newGlobalConfig.lifLevel[level]);
+        //return(newGlobalConfig.lifLevelInches[level]);
         if(level==0 ){
             return(0);
         }
         else if (level>=getCurrentLevel()){
-            position=newGlobalConfig.lifLevel[level]- newGlobalConfig.lifLevel[getCurrentLevel()];
+            position=newGlobalConfig.lifLevelInches[level]- newGlobalConfig.lifLevelInches[getCurrentLevel()];
             return ((int)linearLift.getCurrentPosition() + (int)(position * ticksPerInchMecanum));
 
         } else{
-            position=newGlobalConfig.lifLevel[getCurrentLevel()] - newGlobalConfig.lifLevel[level];
+            position=newGlobalConfig.lifLevelInches[getCurrentLevel()] - newGlobalConfig.lifLevelInches[level];
             return ((int)linearLift.getCurrentPosition() - (int)(position * ticksPerInchMecanum));
 
         }

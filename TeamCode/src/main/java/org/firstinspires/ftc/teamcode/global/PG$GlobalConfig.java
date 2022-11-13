@@ -17,11 +17,21 @@ public class PG$GlobalConfig {
     public String frontLeftWheel="frontLeft";
     public String backRightWheel="backRight";
     public String backLeftWheel="backLeft";
-    public double leftWheelErrorAdjustment = 0.45; // This is value added to Power. Total value (power+errorAdjustment) should not be greater than 1
+    public double leftWheelErrorAdjustment = 0.0; // This is value added to Power. Total value (power+errorAdjustment) should not be greater than 1
     public double rightWheelErrorAdjustment = 0.0; // This is value added to Power. Total value (power+errorAdjustment) should not be greater than 1
     public double mecanumWheelCircumference = 11.87; //inches
-    public double teleOpdrivePowerfactor = 0.6;// the value should be between 0 to 1
+    public double teleOpdrivePowerfactor = 0.5;// the value should be between 0 to 1
     public double autodrivePowerfactor = 0.8;// the value should be between 0 to 1
+
+    public double fast = 0.5; // Limit motor power to this value for RUN_USING_ENCODER mode
+    public double medium = 0.3; // medium speed
+    public double slow = 0.1; // slow speed
+    public double clicksPerInch = 87.5; // empirically measured
+    public double clicksPerDeg = 21.94; // empirically measured
+
+
+
+
 
     public float turnTablePowerFactor = .5f;
 
@@ -37,7 +47,9 @@ public class PG$GlobalConfig {
     public double turnTableCenter = 0.5;
     public double turnTableMax = 1.0;
 
-    public int[] lifLevel = {0, 25, 55, 75};
+    public int[] lifLevelInches = {0, 25, 55, 75};
+    public int[] lifLevelTicks = {0,1800, 3600, 4100};
+
     public int liftLevelMin = 0;
     public int liftLevelMax = 4400;
 
