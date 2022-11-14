@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.auton.AprilTagDetectionPipeline;
+import org.firstinspires.ftc.teamcode.functions.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.functions.PG$ClawOperator;
 import org.firstinspires.ftc.teamcode.functions.PG$LinearOperator;
 import org.firstinspires.ftc.teamcode.functions.PG$RobotAutoDrive;
@@ -21,10 +21,10 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name="PG$AutonomusGEM_V2")
+@Autonomous(name="PG$AutonomusRightRed")
 
 //@Disabled
-public class PG$AutonomusGEM_V2 extends LinearOpMode {
+public class PG$AutonomusBlueRight extends LinearOpMode {
 
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
     PG$RobotAutoDrive wheels;
@@ -200,39 +200,10 @@ public class PG$AutonomusGEM_V2 extends LinearOpMode {
         wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
         lift.runViperMotor(1,0,1);
         claw.grab();
-
-
         /* END OF SECOND CONE */
 
 
 
-        /* END OF THIRD CONE */
-
-
-       /*
-        lift.runViperMotor(1,2,1);
-        claw.release();
-
-        wheels.encoderDrive(.5,-10.0,-10.0,-10.0,-10.0,2.0);
-        lift.runViperMotor(1,0,1);
-        claw.grab();
-
-        wheels.encoderDrive(.5,-20.0,20.0,-20.0,20.0,2.0);
-
-
-
-        wheels.turnClockwise(-45, newGlobalConfig.fast,2.0);
-        wheels.moveForward(5, newGlobalConfig.fast,2.0);
-        wheels.turnClockwise(-45, newGlobalConfig.fast,2.0);
-        wheels.moveForward(6, newGlobalConfig.fast,2.0);
-
-        wheels.moveForward(-6, newGlobalConfig.fast,2.0);
-        wheels.turnClockwise(-3, newGlobalConfig.medium,2.0); // aiming tweak
-        wheels.moveRight(5, newGlobalConfig.fast,2.0);
-
-        wheels.moveForward(-5, newGlobalConfig.fast,2.0);
-        wheels.turnClockwise(-135, newGlobalConfig.fast,2.0);
-        wheels.moveForward(10, newGlobalConfig.fast,2.0);*/
 
         if(tagOfInterest.id == RIGHT){
             //trajectory for parking in RIGHT

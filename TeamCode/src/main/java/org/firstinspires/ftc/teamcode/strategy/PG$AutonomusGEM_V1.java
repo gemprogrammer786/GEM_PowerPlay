@@ -6,17 +6,15 @@ package org.firstinspires.ftc.teamcode.strategy;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.functions.PG$ClawOperator;
 import org.firstinspires.ftc.teamcode.functions.PG$LinearOperator;
 import org.firstinspires.ftc.teamcode.functions.PG$RobotAutoDrive;
-import org.firstinspires.ftc.teamcode.functions.PG$TurnTableOperation;
 import org.firstinspires.ftc.teamcode.global.PG$GlobalConfig;
 
 
-@Autonomous(name="PG$AutonomusGEM_V1")
+@Autonomous(name="PG$Autonomus Blue Right")
 
 //@Disabled
 public class PG$AutonomusGEM_V1 extends LinearOpMode {

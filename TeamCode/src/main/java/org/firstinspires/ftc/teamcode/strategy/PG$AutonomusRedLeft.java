@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.auton.AprilTagDetectionPipeline;
+import org.firstinspires.ftc.teamcode.functions.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.functions.PG$ClawOperator;
 import org.firstinspires.ftc.teamcode.functions.PG$LinearOperator;
 import org.firstinspires.ftc.teamcode.functions.PG$RobotAutoDrive;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 @Autonomous(name="PG$Autonomus Red Left")
 
 //@Disabled
-public class PG$AutonomusGEM_V3 extends LinearOpMode {
+public class PG$AutonomusRedLeft extends LinearOpMode {
 
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
     PG$RobotAutoDrive wheels;
@@ -71,7 +71,7 @@ public class PG$AutonomusGEM_V3 extends LinearOpMode {
         telemetry.update();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 2"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
 
         camera.setPipeline(aprilTagDetectionPipeline);

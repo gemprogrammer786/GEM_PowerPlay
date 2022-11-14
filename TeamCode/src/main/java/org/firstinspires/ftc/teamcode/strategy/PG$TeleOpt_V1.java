@@ -15,10 +15,10 @@ import org.firstinspires.ftc.teamcode.functions.PG$TurnTableOperation;
 import org.firstinspires.ftc.teamcode.global.PG$GlobalConfig;
 
 
-@TeleOp(name = "PG$TeleOptGEM_V1")
+@TeleOp(name = "PG$TeleOpt_V1")
 
 //@Disabled
-public class PG$TeleOptGEM_V1 extends LinearOpMode {
+public class PG$TeleOpt_V1 extends LinearOpMode {
 
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
     PG$RobotTeleOpDrive wheels;
