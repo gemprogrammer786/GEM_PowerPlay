@@ -192,7 +192,7 @@ public class PG$AutonomusGEM_V2 extends LinearOpMode {
         wheels.moveForward(24, newGlobalConfig.medium,2.0);
         claw.grab();
         wheels.moveForward(-24, newGlobalConfig.medium,2.0);
-        wheels.moveRight(43,newGlobalConfig.medium,2.0);
+        wheels.moveRight(44,newGlobalConfig.medium,2.0);
         lift.runViperMotor(1,2,1);
         wheels.moveForward(7.5, newGlobalConfig.medium,2.0);
         sleep(200);
@@ -200,7 +200,7 @@ public class PG$AutonomusGEM_V2 extends LinearOpMode {
         wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
         lift.runViperMotor(1,0,1);
         claw.grab();
-        wheels.moveLeft(-43,newGlobalConfig.medium,2.0);
+
 
         /* END OF SECOND CONE */
 
@@ -236,14 +236,21 @@ public class PG$AutonomusGEM_V2 extends LinearOpMode {
 
         if(tagOfInterest.id == RIGHT){
             //trajectory for parking in RIGHT
+            wheels.moveLeft(12,newGlobalConfig.medium,2.0);
+            wheels.moveForward(-26, newGlobalConfig.medium,2.0);
         }
 
         if(tagOfInterest.id == MIDDLE){
             //trajectory for parking in MIDDLE
+            wheels.moveLeft(12,newGlobalConfig.medium,2.0);
         }
 
         if(tagOfInterest.id == LEFT){
             //trajectory for parking in LEFT
+            wheels.moveLeft(12,newGlobalConfig.medium,2.0);
+            wheels.moveForward(26, newGlobalConfig.medium,2.0);
+
+
         }
 
     }

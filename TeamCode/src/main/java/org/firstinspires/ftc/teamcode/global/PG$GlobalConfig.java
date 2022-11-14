@@ -49,7 +49,7 @@ public class PG$GlobalConfig {
     public double turnTableMax = 1.0;
 
     public int[] lifLevelInches = {0, 25, 55, 75};
-    public int[] lifLevelTicks = {0,1800, 3600, 4100};
+    public int[] lifLevelTicks = {0,1900, 3200, 4300};
 
     public int liftLevelMin = 0;
     public int liftLevelMax = 4400;
