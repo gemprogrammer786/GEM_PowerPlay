@@ -34,7 +34,7 @@ public class PG$TeleOpt_V1 extends LinearOpMode {
         wheels.parent = this;
         claw= new PG$ClawOperator(hardwareMap,telemetry);
         claw.parent = this;
-        lift= new PG$LinearOperator(hardwareMap,telemetry);
+        lift = new PG$LinearOperator(hardwareMap,telemetry);
         lift.parent = this;
         //telemetry.setAutoClear(false);
         Telemetry.Item telemetryDebug = telemetry.addData("Currenlty at", "PG$TeleGEMPrototype_V1 - runOpMode");
@@ -44,23 +44,23 @@ public class PG$TeleOpt_V1 extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            lefty = - gamepad1.left_stick_y ;
-            leftx =  gamepad1.left_stick_x * 1.1;
+            lefty = -gamepad1.left_stick_y ;
+            leftx = gamepad1.left_stick_x * 1.1;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
 
             boolean dpad_left = gamepad2.dpad_left;
             boolean dpad_right = gamepad2.dpad_right;
-            boolean dpad_up= gamepad2.dpad_up;
-            boolean dpad_down= gamepad2.dpad_down;
+            boolean dpad_up = gamepad2.dpad_up;
+            boolean dpad_down = gamepad2.dpad_down;
             boolean a = gamepad2.a;
-            boolean b= gamepad2.b;
+            boolean b = gamepad2.b;
             boolean x = gamepad2.x;
             boolean y = gamepad2.y;
-            boolean gm1_lb =gamepad1.left_bumper;
-            boolean gm1_rb =gamepad1.right_bumper;
-            float gm1_lt =gamepad2.left_trigger*newGlobalConfig.turnTablePowerFactor;
-            float gm1_rt =-gamepad2.right_trigger*newGlobalConfig.turnTablePowerFactor;
+            boolean gm1_lb = gamepad1.left_bumper;
+            boolean gm1_rb = gamepad1.right_bumper;
+            float gm1_lt = gamepad2.left_trigger*newGlobalConfig.turnTablePowerFactor;
+            float gm1_rt = -gamepad2.right_trigger*newGlobalConfig.turnTablePowerFactor;
 
             if(dpad_left)
                 lift.runViperMotor(1,1,"lifLevelTicks",1);
