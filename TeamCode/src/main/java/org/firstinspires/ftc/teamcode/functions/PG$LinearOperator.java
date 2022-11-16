@@ -16,11 +16,6 @@ public class PG$LinearOperator extends PG$LinearMotion {
     public LinearOpMode parent;
 
     public double motorErrorAdjustment = 1.0;
-    public boolean IsAutonomous = false;
-    public double linearGearCircumference = 6.2; //inches
-    double ticksPerInchMecanum = (384.44 / linearGearCircumference);
-    //double ticksPerInchMecanum =1.0;
-
     HardwareMap hardwareMap;
     Telemetry telemetry;
 
@@ -48,35 +43,24 @@ public class PG$LinearOperator extends PG$LinearMotion {
     public void setCurrentLevel(int newPosition) {
         this.currentLevel = newPosition;
     }
-
-
-    public int levelToPostionCalc(int level) {
-       return(level==0 ? 0 :newGlobalConfig.lifLevelTicks[level] );
-    }
-
+    public int levelToPostionCalc(int level) {return(level==0 ? 0 :newGlobalConfig.lifLevelTicks[level] );};
 
     public void runViperMotor(double speed, int liftTargetLevel, String whichLevelData, double timeoutS) {
         int new_TargetPosition=0;
-
         if (parent.opModeIsActive()) {
-
             //new_TargetPosition = levelToPostionCalc(liftTargetLevel);
             new_TargetPosition=(liftTargetLevel==0 ? 0 :(whichLevelData=="coneLevelTicks" ? newGlobalConfig.coneLevelTicks[liftTargetLevel]:newGlobalConfig.lifLevelTicks[liftTargetLevel]) );
             linearLift.setTargetPosition(new_TargetPosition);
             linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
             telemetry.setAutoClear(false);
             Telemetry.Item telemetryliftCurrentLevel = telemetry.addData("Lift Current Level", getCurrentLevel());
             Telemetry.Item telemetryliftTargetLevel = telemetry.addData("Lift Target Level", liftTargetLevel);
             Telemetry.Item telemetryliftCurrentPosition = telemetry.addData("Lift Current Position", linearLift.getCurrentPosition());
             Telemetry.Item telemetryliftNewTargetPosition = telemetry.addData("Lift NewTarget Position", new_TargetPosition);
             Telemetry.Item telemetryliftCurrentTargetPosition = telemetry.addData("Lift CurrentTarget Position", linearLift.getTargetPosition());
-
             telemetry.update();
-
             runtime.reset();
             linearLift.setPower( speed*motorErrorAdjustment);
-
             while (parent.opModeIsActive() &&
                     //(runtime.seconds() < timeoutS) &&
                     (linearLift.isBusy()) &&
@@ -91,7 +75,7 @@ public class PG$LinearOperator extends PG$LinearMotion {
                 telemetry.update();
             }
         }
-        parent.sleep(250);   // optional pause after each move
+        //parent.sleep(250);   // optional pause after each move
         setCurrentLevel(liftTargetLevel);
     }
 }

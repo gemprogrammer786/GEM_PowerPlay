@@ -34,30 +34,9 @@ public class PG$LinearMotion {
         linearLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         linearLift.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
-        //linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //linearLift.setTargetPosition(0);
-        //linearLift.setPower(0.2);
-
         telemetry.addData("PG$LinearMotion", "Initialization Completed");
         telemetry.update();
     }
-
-
-
-//    //initialize for TeleOp
-//    public void initialize() {
-//        double reset = 0;
-//        linearLift.setPower(reset);
-//        linearLift.setDirection(DcMotorSimple.Direction.REVERSE);
-//        linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        linearLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        linearLift.setTargetPosition(0);
-//        linearLift.setPower(0.2);
-//    }
 
 
 

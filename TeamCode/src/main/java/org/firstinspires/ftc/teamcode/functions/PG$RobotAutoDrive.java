@@ -16,15 +16,11 @@ public class PG$RobotAutoDrive extends PG$MecanumDriveFourWheels{
     Telemetry telemetry;
     private ElapsedTime runtime = new ElapsedTime();
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
-    // PG$MecanumDriveFourWheels robot = new PG$MecanumDriveFourWheels(hardwareMap, telemetry );
-
 
     public PG$RobotAutoDrive(HardwareMap hardwareMap, Telemetry telemetry){
         super(hardwareMap, telemetry);
         this.hardwareMap=hardwareMap;
         this.telemetry=telemetry;
-        //robot = new PG$MecanumDriveFourWheels(hardwareMap, telemetry );
-
     }
 
 
@@ -142,8 +138,6 @@ public class PG$RobotAutoDrive extends PG$MecanumDriveFourWheels{
 
     public void echoDrive(int distance, double speed, double timeoutS) {
 
-
-
         // fetch motor positions
         int new_frontLeftTarget = frontleft.getCurrentPosition();
         int new_frontRightTarget = frontright.getCurrentPosition();
@@ -155,8 +149,6 @@ public class PG$RobotAutoDrive extends PG$MecanumDriveFourWheels{
         new_frontRightTarget += distance * newGlobalConfig.clicksPerInch;
         new_backLeftTarget += distance * newGlobalConfig.clicksPerInch;
         new_backRightTarget += distance * newGlobalConfig.clicksPerInch;
-
-
 
         if (parent.opModeIsActive()) {
 

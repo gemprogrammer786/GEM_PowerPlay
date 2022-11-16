@@ -20,15 +20,6 @@ public class PG$ClawOperator extends PG$ClawServo {
         this.telemetry=telemetry;
     }
 
-    public void initiateClaw() {
-
-    }
-
-    public void pick()
-    {
-        clawGrabber.setPosition(newGlobalConfig.clawMax);
-    }
-
     public void grab()
     {
         telemetry.addData("Postion Claw 1:%d", clawGrabber.getPosition());
@@ -42,7 +33,6 @@ public class PG$ClawOperator extends PG$ClawServo {
         clawGrabber.setPosition(newGlobalConfig.clawMin);
         telemetry.addData("Postion Claw 1:%d", clawGrabber.getPosition());
         telemetry.update();
-        //parent.sleep(5000);
     }
 
 

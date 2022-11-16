@@ -18,15 +18,12 @@ public class PG$RobotTeleOpDrive extends PG$MecanumDriveFourWheels{
         super(hardwareMap, telemetry);
         this.hardwareMap=hardwareMap;
         this.telemetry=telemetry;
-
     }
 
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
     private ElapsedTime runtime = new ElapsedTime();
 
-
     public void move(double y,  double x, double rx){
-
         y *= newGlobalConfig.teleOpdrivePowerfactor;
         x *= newGlobalConfig.teleOpdrivePowerfactor;
         rx *= newGlobalConfig.teleOpdrivePowerfactor;
@@ -46,8 +43,8 @@ public class PG$RobotTeleOpDrive extends PG$MecanumDriveFourWheels{
     }
 
     public void moveNoIMU(double y, double x, double rx){
-         y *=newGlobalConfig.teleOpdrivePowerfactor; // Remember, this is reversed!
-         x *= newGlobalConfig.teleOpdrivePowerfactor * 1.1 ; // Counteract imperfect strafing
+         y *=newGlobalConfig.teleOpdrivePowerfactor;
+         x *= newGlobalConfig.teleOpdrivePowerfactor * 1.1 ;
          rx *=newGlobalConfig.teleOpdrivePowerfactor;
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx ) / denominator;
@@ -58,8 +55,6 @@ public class PG$RobotTeleOpDrive extends PG$MecanumDriveFourWheels{
         backleft.setPower(backLeftPower);
         frontright.setPower(frontRightPower);
         backright.setPower(backRightPower);
-        telemetry.update();
-
     }
 
 

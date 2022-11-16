@@ -227,7 +227,6 @@ public class PG$AutonomusBlueRight extends LinearOpMode {
     void tagToTelemetry(AprilTagDetection detection)
     {
         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-
     }
 
 }

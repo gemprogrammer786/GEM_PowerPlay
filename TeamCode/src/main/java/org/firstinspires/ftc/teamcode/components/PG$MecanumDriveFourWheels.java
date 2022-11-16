@@ -18,29 +18,14 @@ public class PG$MecanumDriveFourWheels {
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
     public LinearOpMode parent;
     public Telemetry telemetry;
-
-
-    //Configuration used: 4wheelConfig
-//    public DcMotorEx frontright;
-//    public DcMotorEx frontleft;
-//    public DcMotorEx backright;
-//    public DcMotorEx backleft;
-
     public DcMotor frontleft ;
     public DcMotor backleft ;
     public DcMotor frontright ;
     public DcMotor backright ;
-
-
     public BNO055IMU imu;
-
-    //public DcMotorEx xRail;
     public HardwareMap hardwareMap;
 
-
-
     public PG$MecanumDriveFourWheels( HardwareMap hardwareMap,Telemetry telemetry) {
-
         this.telemetry=telemetry;
         this.hardwareMap=hardwareMap;
 
@@ -52,64 +37,27 @@ public class PG$MecanumDriveFourWheels {
         frontleft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         backright.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         backleft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-
-
-
         double reset = 0;
         frontright.setPower(reset);
         frontleft.setPower(reset);
         backleft.setPower(reset);
         backright.setPower(reset);
-
-        //backright.setDirection(DcMotorSimple.Direction.REVERSE);
-        //frontright.setDirection(DcMotorSimple.Direction.REVERSE);
-        //backleft.setDirection(DcMotorSimple.Direction.FORWARD);
-        //frontleft.setDirection(DcMotorSimple.Direction.FORWARD);
-
         backright.setDirection(DcMotorSimple.Direction.REVERSE);
         frontright.setDirection(DcMotorSimple.Direction.REVERSE);
-
         if(IsAutonomous)
         {
-
-
-
-
-//            backleft.setDirection(DcMotorSimple.Direction.FORWARD);
-//            frontleft.setDirection(DcMotorSimple.Direction.FORWARD);
-
             PIDFCoefficients newPIDF = new PIDFCoefficients(10.0,  3.0,   0.0,  12.0);
             frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
-//            frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//            backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//            frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//            backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-//            frontright.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
-//            frontleft.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
-//            backright.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
-//            backleft.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODER, newPIDF);
-
         }
         else
         {
-            // Retrieve the IMU from the hardware map
             imu = hardwareMap.get(BNO055IMU.class, "imu");
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-            // Technically this is the default, however specifying it is clearer
             parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-            // Without this, data retrieving from the IMU throws an exception
             imu.initialize(parameters);
-
-            // Send telemetry message to signify robot waiting;
-            // telemetry.addData(">", "Robot Ready.  Press Play.");    //
-            // telemetry.update();
-
         }
 
 
