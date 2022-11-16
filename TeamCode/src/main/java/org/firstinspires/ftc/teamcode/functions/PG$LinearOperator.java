@@ -51,24 +51,18 @@ public class PG$LinearOperator extends PG$LinearMotion {
 
 
     public int levelToPostionCalc(int level) {
-        int position = newGlobalConfig.liftLevelMin;
        return(level==0 ? 0 :newGlobalConfig.lifLevelTicks[level] );
-
     }
 
 
-    public void runViperMotor(double speed, int liftTargetLevel, double timeoutS) {
+    public void runViperMotor(double speed, int liftTargetLevel, String whichLevelData, double timeoutS) {
         int new_TargetPosition=0;
 
-        // Ensure that the opmode is still active
         if (parent.opModeIsActive()) {
 
-            // Determine new target position, and pass to motor controller
-            new_TargetPosition = levelToPostionCalc(liftTargetLevel);
-
+            //new_TargetPosition = levelToPostionCalc(liftTargetLevel);
+            new_TargetPosition=(liftTargetLevel==0 ? 0 :(whichLevelData=="coneLevelTicks" ? newGlobalConfig.coneLevelTicks[liftTargetLevel]:newGlobalConfig.lifLevelTicks[liftTargetLevel]) );
             linearLift.setTargetPosition(new_TargetPosition);
-
-            // Turn On RUN_TO_POSITION
             linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             telemetry.setAutoClear(false);
@@ -83,94 +77,21 @@ public class PG$LinearOperator extends PG$LinearMotion {
             runtime.reset();
             linearLift.setPower( speed*motorErrorAdjustment);
 
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            telemetry.addData("Before WhileLoop", "1- "+parent.opModeIsActive()
-                    + "2-" + (runtime.seconds() < timeoutS)
-                    +"3-"+ linearLift.isBusy()
-                    +"4-"+ (  Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition()))
-                    +"5-"+ (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin)
-                    +"6-"+ (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
-                    +"9:"+ (parent.opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (linearLift.isBusy() ) &&
-                    (  Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition())) &&
-                    (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) && (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax ))
-                    + "--"+ linearLift.getTargetPosition()
-                    +"--"+ linearLift.getCurrentPosition()
-            );
-            telemetry.update();
-
-
-                while (parent.opModeIsActive() &&
-                        //(runtime.seconds() < timeoutS) &&
-                        (linearLift.isBusy()) &&
-                        (Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition())) &&
-                        (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) &&
-                        (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)) {
-                    telemetryliftCurrentLevel.setValue(getCurrentLevel());
-                    telemetryliftTargetLevel.setValue(liftTargetLevel);
-                    telemetryliftCurrentPosition.setValue(linearLift.getCurrentPosition());
-                    telemetryliftNewTargetPosition.setValue(new_TargetPosition);
-                    telemetryliftCurrentTargetPosition.setValue(linearLift.getTargetPosition());
-                    telemetry.addData("Inside While Loop",
-                            "1- " + parent.opModeIsActive()
-                          //          + "2-" + (runtime.seconds() < timeoutS)
-                                    + "3-" + linearLift.isBusy()
-                                    + "4-" + (Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition()))
-                                    + "5-" + ( linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin)
-                                    + "6-" + ( linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
-                                    + "9:" + (parent.opModeIsActive() &&
-                                    (runtime.seconds() < timeoutS) &&
-                                    (linearLift.isBusy()) &&
-                                    (Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition())) &&
-                                    ( linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) && ( linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax))
-                                    + "--" + linearLift.getTargetPosition()
-                                    + "--" + linearLift.getCurrentPosition()
-
-                    );
-
-                    telemetry.update();
-                }
-
-
+            while (parent.opModeIsActive() &&
+                    //(runtime.seconds() < timeoutS) &&
+                    (linearLift.isBusy()) &&
+                    (Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition())) &&
+                    (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) &&
+                    (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)) {
+                telemetryliftCurrentLevel.setValue(getCurrentLevel());
+                telemetryliftTargetLevel.setValue(liftTargetLevel);
+                telemetryliftCurrentPosition.setValue(linearLift.getCurrentPosition());
+                telemetryliftNewTargetPosition.setValue(new_TargetPosition);
+                telemetryliftCurrentTargetPosition.setValue(linearLift.getTargetPosition());
+                telemetry.update();
+            }
         }
-        // Stop all motion;
-        //linearLift.setPower(0);
-
-        // Turn off RUN_TO_POSITION
-        //linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         parent.sleep(250);   // optional pause after each move
-
-//        telemetry.addData("Lift Current Position:",  "At %7d ", getCurrentLevel());
-//        telemetry.addData("Lift Target Position:",  "At %7d ", getNewTargetPosition());
-//        telemetry.addData("Lift New Lift Position:",  "At %7d ", new_TargetPosition);
-//        telemetry.addData("Lift Lift Position Request:",  "Running to %7d ", liftTargetLevel);
-//        telemetry.addData("Motor Current Position", "Running at %7d", linearLift.getCurrentPosition());
-//        telemetry.update();
-
         setCurrentLevel(liftTargetLevel);
-        telemetry.addData("outside While Loop",
-                "1- "+parent.opModeIsActive()
-                      //  + "2-" + (runtime.seconds() < timeoutS)
-                        +"3-"+ linearLift.isBusy()
-                        +"4-"+ (  Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition()))
-                        +"5-"+ (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin)
-                        +"6-"+ (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax)
-                        +"9:"+ (parent.opModeIsActive() &&
-                        (runtime.seconds() < timeoutS) &&
-                        (linearLift.isBusy() ) &&
-                        (  Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition())) &&
-                        (linearLift.getCurrentPosition() >= newGlobalConfig.liftLevelMin) && (linearLift.getCurrentPosition() <= newGlobalConfig.liftLevelMax ))
-                        + "--"+ linearLift.getTargetPosition()
-                        +"--"+ linearLift.getCurrentPosition()
-        );
-        telemetry.update();
-
-
     }
-
-
-
-
 }

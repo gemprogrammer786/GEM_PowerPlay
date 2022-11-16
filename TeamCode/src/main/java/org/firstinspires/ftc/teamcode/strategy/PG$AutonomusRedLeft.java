@@ -177,12 +177,12 @@ public class PG$AutonomusRedLeft extends LinearOpMode {
         /* START OF FIRST CONE */
         claw.grab();
         wheels.moveLeft(21,newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,1,1);
+        lift.runViperMotor(1,1,"lifLevelTicks",1);
         wheels.moveForward(7.5, newGlobalConfig.medium,2.0);
         sleep(200);
         claw.release();
         wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,0,1);
+        lift.runViperMotor(1,0,"lifLevelTicks",1);
         claw.grab();
         wheels.moveRight(19,newGlobalConfig.medium,2.0);
 
@@ -193,46 +193,18 @@ public class PG$AutonomusRedLeft extends LinearOpMode {
         claw.grab();
         wheels.moveForward(-24, newGlobalConfig.medium,2.0);
         wheels.moveLeft(43,newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,2,1);
+        lift.runViperMotor(1,2,"lifLevelTicks",1);
         wheels.moveForward(7.5, newGlobalConfig.medium,2.0);
         sleep(200);
         claw.release();
         wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,0,1);
+        lift.runViperMotor(1,0,"lifLevelTicks",1);
         claw.grab();
         //wheels.moveRight(-43,newGlobalConfig.medium,2.0);
 
         /* END OF SECOND CONE */
 
 
-
-        /* END OF THIRD CONE */
-
-
-       /*
-        lift.runViperMotor(1,2,1);
-        claw.release();
-
-        wheels.encoderDrive(.5,-10.0,-10.0,-10.0,-10.0,2.0);
-        lift.runViperMotor(1,0,1);
-        claw.grab();
-
-        wheels.encoderDrive(.5,-20.0,20.0,-20.0,20.0,2.0);
-
-
-
-        wheels.turnClockwise(-45, newGlobalConfig.fast,2.0);
-        wheels.moveForward(5, newGlobalConfig.fast,2.0);
-        wheels.turnClockwise(-45, newGlobalConfig.fast,2.0);
-        wheels.moveForward(6, newGlobalConfig.fast,2.0);
-
-        wheels.moveForward(-6, newGlobalConfig.fast,2.0);
-        wheels.turnClockwise(-3, newGlobalConfig.medium,2.0); // aiming tweak
-        wheels.moveRight(5, newGlobalConfig.fast,2.0);
-
-        wheels.moveForward(-5, newGlobalConfig.fast,2.0);
-        wheels.turnClockwise(-135, newGlobalConfig.fast,2.0);
-        wheels.moveForward(10, newGlobalConfig.fast,2.0);*/
 
         if(tagOfInterest.id == RIGHT){
             //trajectory for parking in RIGHT

@@ -31,9 +31,6 @@ public class PG$GlobalConfig {
     public double clicksPerDeg = 0.5; // empirically measured
 
 
-
-
-
     public float turnTablePowerFactor = .5f;
 
     public String clawServoName = "claw";
@@ -48,8 +45,9 @@ public class PG$GlobalConfig {
     public double turnTableCenter = 0.5;
     public double turnTableMax = 1.0;
 
-    public int[] lifLevelInches = {0, 25, 55, 75};
-    public int[] lifLevelTicks = {0,1900, 3200, 4300};
+    public int[] lifLevelTicks = {0,1900, 3200, 4350};
+    public int[] coneLevelTicks = {300,400, 500, 600,700};
+
 
     public int liftLevelMin = 0;
     public int liftLevelMax = 4400;

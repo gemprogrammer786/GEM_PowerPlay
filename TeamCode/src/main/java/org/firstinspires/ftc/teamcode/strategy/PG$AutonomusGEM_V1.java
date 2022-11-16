@@ -5,6 +5,7 @@ the robot just like an Rc Car.
 package org.firstinspires.ftc.teamcode.strategy;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -14,9 +15,9 @@ import org.firstinspires.ftc.teamcode.functions.PG$RobotAutoDrive;
 import org.firstinspires.ftc.teamcode.global.PG$GlobalConfig;
 
 
-@Autonomous(name="PG$Autonomus Blue Right")
+@Autonomous(name="PG$Autonomus GEN V1")
 
-//@Disabled
+@Disabled
 public class PG$AutonomusGEM_V1 extends LinearOpMode {
 
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
@@ -54,12 +55,12 @@ public class PG$AutonomusGEM_V1 extends LinearOpMode {
         /* START OF FIRST CONE */
         claw.grab();
         wheels.moveRight(21,newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,1,1);
+        lift.runViperMotor(1,1,"lifLevelTicks",1);
         wheels.moveForward(7.5, newGlobalConfig.medium,2.0);
         sleep(200);
         claw.release();
         wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,0,1);
+        lift.runViperMotor(1,0,"lifLevelTicks",1);
         claw.grab();
         wheels.moveLeft(19,newGlobalConfig.medium,2.0);
 
@@ -70,12 +71,12 @@ public class PG$AutonomusGEM_V1 extends LinearOpMode {
         claw.grab();
         wheels.moveForward(-24, newGlobalConfig.medium,2.0);
         wheels.moveRight(43,newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,2,1);
+        lift.runViperMotor(1,2,"lifLevelTicks",1);
         wheels.moveForward(7.5, newGlobalConfig.medium,2.0);
         sleep(200);
         claw.release();
         wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,0,1);
+        lift.runViperMotor(1,0,"lifLevelTicks",1);
         claw.grab();
         wheels.moveLeft(-43,newGlobalConfig.medium,2.0);
 

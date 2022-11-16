@@ -21,7 +21,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name="PG$AutonomusRightRed")
+@Autonomous(name="PG$Autonomus Blue Right")
 
 //@Disabled
 public class PG$AutonomusBlueRight extends LinearOpMode {
@@ -171,18 +171,16 @@ public class PG$AutonomusBlueRight extends LinearOpMode {
         waitForStart();
 
 
-    /*        wheels.encoderDrive(.5,10.0,10.0,10.0,10.0,2.0);
-     */
 
         /* START OF FIRST CONE */
         claw.grab();
         wheels.moveRight(21,newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,1,1);
+        lift.runViperMotor(1,1,"lifLevelTicks",1);
         wheels.moveForward(7.5, newGlobalConfig.medium,2.0);
         sleep(200);
         claw.release();
         wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,0,1);
+        lift.runViperMotor(1,0,"lifLevelTicks",1);
         claw.grab();
         wheels.moveLeft(19,newGlobalConfig.medium,2.0);
 
@@ -193,12 +191,12 @@ public class PG$AutonomusBlueRight extends LinearOpMode {
         claw.grab();
         wheels.moveForward(-24, newGlobalConfig.medium,2.0);
         wheels.moveRight(44,newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,2,1);
+        lift.runViperMotor(1,2,"lifLevelTicks",1);
         wheels.moveForward(7.5, newGlobalConfig.medium,2.0);
         sleep(200);
         claw.release();
         wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,0,1);
+        lift.runViperMotor(1,0,"lifLevelTicks",1);
         claw.grab();
         /* END OF SECOND CONE */
 

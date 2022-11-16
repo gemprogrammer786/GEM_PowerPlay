@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode.strategy;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -72,7 +73,7 @@ import java.util.ArrayList;
  */
 
 @Autonomous(name="Drive Encoder AprilTag", group="GEMBot")
-//@Disabled
+@Disabled
 public class AutoDrive_Encoder_AprilTag extends LinearOpMode {
 
     /* Declare OpMode members. */
