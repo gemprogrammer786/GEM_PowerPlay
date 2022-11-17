@@ -46,7 +46,7 @@ public class PG$GlobalConfig {
     public double turnTableMax = 1.0;
 
     public int[] lifLevelTicks = {0,1900, 3200, 4350};
-    public int[] coneLevelTicks = {0,300,0, 400, 500,600,1900};
+    public int[] coneLevelTicks = {0,300,0, 390, 490,590,1900};
 
 
 

@@ -24,7 +24,6 @@ public class PG$RobotTeleOpDrive extends PG$MecanumDriveFourWheels{
     private ElapsedTime runtime = new ElapsedTime();
 
 
-
     public void moveNoIMU(double y, double x, double rx){
          y *=newGlobalConfig.teleOpdrivePowerfactor;
          x *= newGlobalConfig.teleOpdrivePowerfactor * 1.1 ;
