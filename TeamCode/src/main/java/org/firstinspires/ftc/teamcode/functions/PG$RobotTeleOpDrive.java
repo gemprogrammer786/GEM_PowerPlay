@@ -23,24 +23,7 @@ public class PG$RobotTeleOpDrive extends PG$MecanumDriveFourWheels{
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
     private ElapsedTime runtime = new ElapsedTime();
 
-    public void move(double y,  double x, double rx){
-        y *= newGlobalConfig.teleOpdrivePowerfactor;
-        x *= newGlobalConfig.teleOpdrivePowerfactor;
-        rx *= newGlobalConfig.teleOpdrivePowerfactor;
-        double botHeading = -imu.getAngularOrientation().firstAngle;
-        double rotX = x * Math.cos(botHeading) - y * Math.sin(botHeading);
-        double rotY = x * Math.sin(botHeading) + y * Math.cos(botHeading);
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (rotY + rotX + rx) / denominator;
-        double backLeftPower = (rotY - rotX + rx) / denominator;
-        double frontRightPower = (rotY - rotX - rx) / denominator;
-        double backRightPower = (rotY + rotX - rx) / denominator;
-        frontleft.setPower(frontLeftPower);
-        backleft.setPower(backLeftPower);
-        frontright.setPower(frontRightPower);
-        backright.setPower(backRightPower);
-
-    }
+ß
 
     public void moveNoIMU(double y, double x, double rx){
          y *=newGlobalConfig.teleOpdrivePowerfactor;

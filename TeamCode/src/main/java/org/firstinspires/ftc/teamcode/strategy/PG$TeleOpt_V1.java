@@ -41,22 +41,24 @@ public class PG$TeleOpt_V1 extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
-
+        int afterGrabLevel=1;
         while (opModeIsActive()) {
 
             lefty = -gamepad1.left_stick_y ;
             leftx = gamepad1.left_stick_x * 1.1;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
+            wheels.moveNoIMU(lefty,leftx,rightx);
 
             boolean dpad_left = gamepad2.dpad_left;
             boolean dpad_right = gamepad2.dpad_right;
             boolean dpad_up = gamepad2.dpad_up;
             boolean dpad_down = gamepad2.dpad_down;
-            boolean a = gamepad2.a;
-            boolean b = gamepad2.b;
-            boolean x = gamepad2.x;
-            boolean y = gamepad2.y;
+            boolean a2 = gamepad2.a;
+            boolean b2 = gamepad2.b;
+            boolean x2 = gamepad2.x;
+            boolean y2 = gamepad2.y;
+            boolean x1 = gamepad1.x;
             boolean gm1_lb = gamepad1.left_bumper;
             boolean gm1_rb = gamepad1.right_bumper;
             float gm1_lt = gamepad2.left_trigger*newGlobalConfig.turnTablePowerFactor;
@@ -70,20 +72,35 @@ public class PG$TeleOpt_V1 extends LinearOpMode {
                 lift.runViperMotor(1,3,"lifLevelTicks",1);
             else if(dpad_down)
                 lift.runViperMotor(1,0,"lifLevelTicks",1);
-            else if(gm1_lb)
+            else if(gm1_lb) {
+                lift.runViperMotor(1, 0, "coneLevelTicks", 1);
+                sleep(250);
                 claw.release();
-            else if(gm1_rb)
+            }
+            else if(gm1_rb) {
                 claw.grab();
-            else if(a)
+                sleep(250);
+                lift.runViperMotor(1, afterGrabLevel,"coneLevelTicks", 1);
+                afterGrabLevel=1;
+            }
+            else if(x1)
                 lift.runViperMotor(1, 1,"coneLevelTicks", 1);
-            else if(b)
-                lift.runViperMotor(1, 2,"coneLevelTicks", 1);
-            else if(x)
-                lift.runViperMotor(1, 3,"coneLevelTicks", 1);
-            else if(y)
-                lift.runViperMotor(1, 4,"coneLevelTicks", 1);
-            else
-                wheels.moveNoIMU(lefty,leftx,rightx);
+            else if(x2) {
+                lift.runViperMotor(1, 3, "coneLevelTicks", 1);
+                afterGrabLevel=6;
+            }
+            else if(y2) {
+                lift.runViperMotor(1, 4, "coneLevelTicks", 1);
+                afterGrabLevel=6;
+            }
+            else if(b2) {
+                lift.runViperMotor(1, 5, "coneLevelTicks", 1);
+                afterGrabLevel=6;
+            }
+            else if(a2) {
+                lift.runViperMotor(1, 2, "coneLevelTicks", 1);
+                afterGrabLevel=6;
+            }
         }
     }
 }
