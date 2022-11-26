@@ -174,19 +174,37 @@ public class BAS_BlueRightRedAlliance extends LinearOpMode {
 
         /* START OF FIRST CONE */
         claw.grab();
-        wheels.moveRight(21,newGlobalConfig.fast,2.0);
-        lift.runViperMotor(1,1,"lifLevelTicks",1);
-        wheels.moveForward(7.5, newGlobalConfig.medium,2.0);
+        lift.runViperMotor(1,1,"lifeLevelTicks",1);
+        wheels.moveRight(250,newGlobalConfig.fast,2.365);
         sleep(200);
+        lift.runViperMotor(1,3,"lifLevelTicks",1);
+        sleep(500);
+        wheels.moveForward(5, newGlobalConfig.veryslow,2.0);
+        sleep(400);
         claw.release();
-        wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,0,"lifLevelTicks",1);
+        sleep(400);
+        lift.runViperMotor(1,1,"lifeLevelTicks",1);
+        sleep(400);
+        wheels.moveForward(-4, newGlobalConfig.medium,2.0);
+        wheels.moveLeft(16, newGlobalConfig.veryfast,2.05);
+
+        wheels.turnAntiClockwise(180,1,.93);
+        wheels.moveForward(20,newGlobalConfig.medium,2.6);
+
+        wheels.moveForward(10, newGlobalConfig.veryslow,1);
         claw.grab();
-        wheels.moveRight(42,newGlobalConfig.fast,2.0);
-        wheels.turnAntiClockwise(90,1,2.0);
-        wheels.moveForward(1,2,1);
-
-
+        wheels.moveForward(-10, newGlobalConfig.veryslow,1);
+        /*
+        wheels.moveForward(-25, newGlobalConfig.medium,1);
+        wheels.turnAntiClockwise(180,1,.94);
+        wheels.moveForward(-3,newGlobalConfig.slow,1);
+        wheels.moveRight(16, newGlobalConfig.medium,2.05);
+        lift.runViperMotor(1,3,"lifLevelTicks",1);
+        wheels.moveForward(4, newGlobalConfig.medium,2.0);
+        claw.release();
+        wheels.moveForward(-4, newGlobalConfig.medium,2.0);
+        lift.runViperMotor(1,0,"lifeLevelTicks",1);
+        */
 
         /* START OF SECOND CONE */
 
