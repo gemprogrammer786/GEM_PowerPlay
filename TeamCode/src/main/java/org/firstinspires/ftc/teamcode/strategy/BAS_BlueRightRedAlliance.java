@@ -2,7 +2,7 @@
 forward and backward movement and letting the right stick x control the rotating of
 the robot just like an Rc Car.
 */
-package org.firstinspires.ftc.teamcode.BilalAutoOp;
+package org.firstinspires.ftc.teamcode.strategy;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
