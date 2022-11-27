@@ -13,9 +13,11 @@ public class PG$GlobalConfig {
     public double teleOpdrivePowerfactor = 1;// the value should be between 0 to 1
     public double autodrivePowerfactor = 0.8;// the value should be between 0 to 1
 
+    public double veryfast = 1;
     public double fast = 0.8; // Limit motor power to this value for RUN_USING_ENCODER mode
     public double medium = 0.6; // medium speed
     public double slow = 0.3; // slow speed
+    public double veryslow = 0.1;
     //public double clicksPerInch = 87.5; // empirically measured
     public double clicksPerInch = 42; // empirically measured
     public double clicksPerDeg = 0.5; // empirically measured
@@ -24,8 +26,8 @@ public class PG$GlobalConfig {
     public float turnTablePowerFactor = .5f;
 
     public String clawServoName = "claw";
-    public double clawMin = 0.38; // Bilal - 11/25/2022
-    public double clawMax = 0.65; // Bilal - 11/25/2022
+    public double clawMin = .2;
+    public double clawMax = .7;
 
     public String viperMotorName = "viperMotor";
 
