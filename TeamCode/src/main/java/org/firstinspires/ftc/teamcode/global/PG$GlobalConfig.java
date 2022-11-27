@@ -20,7 +20,7 @@ public class PG$GlobalConfig {
     public double leftWheelErrorAdjustment = 0.0; // This is value added to Power. Total value (power+errorAdjustment) should not be greater than 1
     public double rightWheelErrorAdjustment = 0.0; // This is value added to Power. Total value (power+errorAdjustment) should not be greater than 1
     public double mecanumWheelCircumference = 11.87; //inches
-    public double teleOpdrivePowerfactor = 0.5;// the value should be between 0 to 1
+    public double teleOpdrivePowerfactor = 1;// the value should be between 0 to 1
     public double autodrivePowerfactor = 0.8;// the value should be between 0 to 1
 
     public double fast = 0.8; // Limit motor power to this value for RUN_USING_ENCODER mode
