@@ -239,9 +239,11 @@ public class BAS_BlueRightRedAlliance extends LinearOpMode {
     {
         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
         if(distanceSensorBack.getDistance(DistanceUnit.INCH) >= 29.0 && distanceSensorBack.getDistance(DistanceUnit.INCH) <= 30.5) {
+            telemetry.addLine(String.format("\nDistance Back=%.01f inch", distanceSensorBack.getDistance(DistanceUnit.INCH)));
             telemetry.addLine("Robot Placement: GOOD");
         }
         else {
+            telemetry.addLine(String.format("\nDistance Back=%.01f inch", distanceSensorBack.getDistance(DistanceUnit.INCH)));
             telemetry.addLine("Robot Placement: Need Adjustment");
         }
     }
