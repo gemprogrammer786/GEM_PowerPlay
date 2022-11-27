@@ -6,9 +6,11 @@ package org.firstinspires.ftc.teamcode.strategy;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.functions.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.functions.PG$ClawOperator;
 import org.firstinspires.ftc.teamcode.functions.PG$LinearOperator;
@@ -30,7 +32,7 @@ public class PG$AutonomusBlueRight extends LinearOpMode {
     PG$RobotAutoDrive wheels;
     PG$ClawOperator claw;
     PG$LinearOperator lift;
-    //PG$TurnTableOperation turnTable;
+    DistanceSensor distanceSensorBack;
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -65,6 +67,8 @@ public class PG$AutonomusBlueRight extends LinearOpMode {
 //
         lift= new PG$LinearOperator(hardwareMap,telemetry);
         lift.parent = this;
+
+        distanceSensorBack = hardwareMap.get(DistanceSensor.class,"distancesensor_back");
 
         //telemetry.setAutoClear(false);
         Telemetry.Item telemetryDebug = telemetry.addData("Currenlty at", "PG$TeleGEMPrototype_V1 - runOpMode");
@@ -237,6 +241,12 @@ public class PG$AutonomusBlueRight extends LinearOpMode {
     void tagToTelemetry(AprilTagDetection detection)
     {
         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
+        if(distanceSensorBack.getDistance(DistanceUnit.INCH) >= 29.0 && distanceSensorBack.getDistance(DistanceUnit.INCH) <= 30.5) {
+            telemetry.addLine("Robot Placement: GOOD");
+        }
+        else {
+            telemetry.addLine("Robot Placement: Need Adjustment");
+        }
     }
 
 }
