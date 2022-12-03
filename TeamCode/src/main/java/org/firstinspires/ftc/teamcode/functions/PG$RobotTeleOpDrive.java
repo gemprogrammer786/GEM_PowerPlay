@@ -44,7 +44,8 @@ public class PG$RobotTeleOpDrive extends PG$MecanumDriveFourWheels{
 
     public void moveNoIMU(double y, double x, double rx, float gm1_rt){
         double speedReducer=(gm1_rt>=newGlobalConfig.teleOpdrivePowerfactor? newGlobalConfig.teleOpdrivePowerfactor : newGlobalConfig.teleOpdrivePowerfactor -gm1_rt);
-         y *=speedReducer;
+
+        y *=speedReducer;
          x *= speedReducer * 1.1 ;
          rx *=speedReducer;
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);

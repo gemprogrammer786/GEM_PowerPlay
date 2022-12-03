@@ -48,8 +48,8 @@ public class PG$TeleOpt_V1 extends LinearOpMode {
             leftx = gamepad1.left_stick_x * 1.1;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
-            float gm1_lt = gamepad2.left_trigger;
-            float gm1_rt = gamepad2.right_trigger;
+            float gm1_lt = gamepad1.left_trigger;
+            float gm1_rt = gamepad1.right_trigger;
             wheels.moveNoIMU(lefty,leftx,rightx,gm1_rt);
 
             boolean dpad_left = gamepad2.dpad_left;
