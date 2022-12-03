@@ -179,38 +179,43 @@ public class PG$AutonomusBlueRight extends LinearOpMode {
 
         /* START OF FIRST CONE */
         claw.grab();
-        sleep(250);
+        sleep(150);
         lift.runViperMotor(1, afterGrabLevel,"coneLevelTicks", 1); // required to lift the cone to avoid any hitting to the object
-        wheels.moveRight(21,newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,1,"lifLevelTicks",1); // lift to the hight of small pole
-        wheels.moveForward(7.5, newGlobalConfig.medium,2.0);
+        wheels.moveRight(77.2,newGlobalConfig.fast,3.0);
+        lift.runViperMotor(1,3,"lifLevelTicks",1); // lift to the hight of small pole
+        wheels.moveForward(4, newGlobalConfig.veryslow,3.0);
         sleep(200);
         lift.runViperMotor(1, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
-        sleep(250);
+        sleep(200);
         claw.release();
-        wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
+        wheels.moveForward(-4, newGlobalConfig.medium,3.0);
+        wheels.moveLeft(15, newGlobalConfig.veryfast,3.0);
         //lift.runViperMotor(1,0,"lifLevelTicks",1);
-        claw.grab();
-        wheels.moveLeft(19,newGlobalConfig.medium,2.0);
+        //claw.grab();
+        wheels.turnAntiClockwise(180,1,.93);
+        wheels.moveForward(22,newGlobalConfig.medium,3.0);
 
         /* END OF FIRST CONE */
         /* START OF SECOND CONE */
-        claw.release();
-        wheels.moveForward(24, newGlobalConfig.medium,2.0);
+        //claw.release();
+        //wheels.moveForward(24, newGlobalConfig.medium,2.0);
         lift.runViperMotor(1, 5, "coneLevelTicks", 1); // to lift the cone from the stack
         afterGrabLevel=6;
         claw.grab();
         sleep(250);
         lift.runViperMotor(1, afterGrabLevel,"coneLevelTicks", 1); // to ensure that its not tripping the stack down
         afterGrabLevel=1;
-        wheels.moveForward(-24, newGlobalConfig.medium,2.0);
-        wheels.moveRight(44,newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,2,"lifLevelTicks",1);
-        wheels.moveForward(7.5, newGlobalConfig.medium,2.0);
+        wheels.moveForward(-22, newGlobalConfig.medium,2.0);
+        wheels.turnAntiClockwise(180,1,.93);
+
+        wheels.moveLeft(15, newGlobalConfig.veryfast,3.0);
+        wheels.moveForward(4, newGlobalConfig.veryslow,3.0);
+        sleep(200);
+        lift.runViperMotor(1, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
         sleep(200);
         claw.release();
-        wheels.moveForward(-7.5, newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,0,"lifLevelTicks",1);
+        wheels.moveForward(-4, newGlobalConfig.medium,3.0);
+
         claw.grab();
         /* END OF SECOND CONE */
 

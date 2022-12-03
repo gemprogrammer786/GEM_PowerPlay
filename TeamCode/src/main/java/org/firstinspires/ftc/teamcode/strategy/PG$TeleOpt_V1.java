@@ -61,8 +61,8 @@ public class PG$TeleOpt_V1 extends LinearOpMode {
             boolean x1 = gamepad1.x;
             boolean gm1_lb = gamepad1.left_bumper;
             boolean gm1_rb = gamepad1.right_bumper;
-            float gm1_lt = gamepad2.left_trigger*newGlobalConfig.turnTablePowerFactor;
-            float gm1_rt = -gamepad2.right_trigger*newGlobalConfig.turnTablePowerFactor;
+            float gm1_lt = (1- gamepad2.left_trigger);
+            float gm1_rt = (1-gamepad2.right_trigger);
 
             if(dpad_left)
                 lift.runViperMotor(1,1,"lifLevelTicks",1);
