@@ -26,8 +26,8 @@ public class PG$GlobalConfig {
     public float turnTablePowerFactor = .5f;
 
     public String clawServoName = "claw";
-    public double clawMin = .2;
-    public double clawMax = .7;
+    public double clawMin = 0.2;
+    public double clawMax = 0.7;
 
     public String viperMotorName = "viperMotor";
 
@@ -37,8 +37,8 @@ public class PG$GlobalConfig {
     public double turnTableCenter = 0.5;
     public double turnTableMax = 1.0;
 
-    public int[] lifLevelTicks = {0,4500, 6900, 9000};
-    public int[] coneLevelTicks = {0,500,0, 590, 790,990,2100};
+    public int[] lifLevelTicks = {0,4600, 7000, 9100};
+    public int[] coneLevelTicks = {0,900,0, 590, 790,990,2100};
     public int liftLevelMin = 0;
     public int liftLevelMax = 10000;
 

@@ -48,7 +48,9 @@ public class PG$TeleOpt_V1 extends LinearOpMode {
             leftx = gamepad1.left_stick_x * 1.1;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
-            wheels.moveNoIMU(lefty,leftx,rightx);
+            float gm1_lt = gamepad2.left_trigger;
+            float gm1_rt = gamepad2.right_trigger;
+            wheels.moveNoIMU(lefty,leftx,rightx,gm1_rt);
 
             boolean dpad_left = gamepad2.dpad_left;
             boolean dpad_right = gamepad2.dpad_right;
@@ -61,8 +63,7 @@ public class PG$TeleOpt_V1 extends LinearOpMode {
             boolean x1 = gamepad1.x;
             boolean gm1_lb = gamepad1.left_bumper;
             boolean gm1_rb = gamepad1.right_bumper;
-            float gm1_lt = (1- gamepad2.left_trigger);
-            float gm1_rt = (1-gamepad2.right_trigger);
+
 
             if(dpad_left)
                 lift.runViperMotor(1,1,"lifLevelTicks",1);
