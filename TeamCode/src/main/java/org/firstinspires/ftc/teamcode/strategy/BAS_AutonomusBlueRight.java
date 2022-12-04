@@ -23,10 +23,10 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name="BAS_Autonomus_Blue_Right_Red_Alliance")
+@Autonomous(name="BAS_AutonomusBlueRight")
 
 //@Disabled
-public class BAS_BlueRightRedAlliance extends LinearOpMode {
+public class BAS_AutonomusBlueRight extends LinearOpMode {
 
     PG$GlobalConfig newGlobalConfig = new PG$GlobalConfig();
     PG$RobotAutoDrive wheels;
@@ -173,62 +173,72 @@ public class BAS_BlueRightRedAlliance extends LinearOpMode {
         }
 
         waitForStart();
-//ok
+
+        int afterGrabLevel=1;
 
 
         /* START OF FIRST CONE */
         claw.grab();
-        lift.runViperMotor(1,1,"lifeLevelTicks",1);
-        wheels.moveRight(250,newGlobalConfig.fast,2.365);
-        sleep(200);
-        lift.runViperMotor(1,3,"lifLevelTicks",1);
+        sleep(50);
+        lift.runViperMotor(.6, afterGrabLevel,"coneLevelTicks", 1); // required to lift the cone to avoid any hitting to the object
+        wheels.moveRight(76,newGlobalConfig.veryfast,3.0);
+        lift.runViperMotor(.6,3,"lifLevelTicks",1); // lift to the hight of small pole
+        wheels.moveForward(4.3, newGlobalConfig.veryslow,3.0);
+        lift.runViperMotor(.6, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
+        claw.release();
         sleep(500);
-        wheels.moveForward(5, newGlobalConfig.veryslow,2.0);
-        sleep(400);
-        claw.release();
-        sleep(400);
-        lift.runViperMotor(1,1,"lifLevelTicks",1);
-        sleep(400);
-        wheels.moveForward(-4, newGlobalConfig.medium,2.0);
-        wheels.moveLeft(16, newGlobalConfig.veryfast,2.05);
-
-        wheels.turnAntiClockwise(180,1,.93);
-        wheels.moveForward(20,newGlobalConfig.medium,2.6);
-
-        wheels.moveForward(10, newGlobalConfig.veryslow,1);
         claw.grab();
-        wheels.moveForward(-10, newGlobalConfig.veryslow,1);
-        /*
-        wheels.moveForward(-25, newGlobalConfig.medium,1);
-        wheels.turnAntiClockwise(180,1,.94);
-        wheels.moveForward(-3,newGlobalConfig.slow,1);
-        wheels.moveRight(16, newGlobalConfig.medium,2.05);
-        lift.runViperMotor(1,3,"lifLevelTicks",1);
-        wheels.moveForward(4, newGlobalConfig.medium,2.0);
-        claw.release();
-        wheels.moveForward(-4, newGlobalConfig.medium,2.0);
-        lift.runViperMotor(1,0,"lifeLevelTicks",1);
-        */
+        wheels.moveForward(-4.6, newGlobalConfig.medium,3.0);
+        wheels.moveLeft(15, newGlobalConfig.veryfast,3.0);
+      /*  wheels.turnAntiClockwise(180,1,.897);
+        wheels.moveForward(26,newGlobalConfig.fast,3.0);
 
+        /* END OF FIRST CONE */
         /* START OF SECOND CONE */
+        //claw.release();
+        //wheels.moveForward(24, newGlobalConfig.medium,2.0);
+       /* sleep(200);
+        lift.runViperMotor(1, 5, "coneLevelTicks", 1); // to lift the cone from the stack
+        afterGrabLevel=6;
+        claw.grab();
+        sleep(150);
+        lift.runViperMotor(1, afterGrabLevel,"coneLevelTicks", 1); // to ensure that its not tripping the stack down
+        afterGrabLevel=1;
+        wheels.moveForward(-26, newGlobalConfig.medium,2.0);
+        wheels.turnAntiClockwise(180,1,.897);
+        lift.runViperMotor(1,3,"liflevelticks",1);
+
+        wheels.moveRight(12.5, newGlobalConfig.fast,10.0);
+        wheels.moveForward(4.6, newGlobalConfig.veryslow,3.0);
+        sleep(200);
+        lift.runViperMotor(1, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
+        claw.release();
+        wheels.moveForward(-4.6, newGlobalConfig.medium,3.0);
+
+        claw.grab();
+
+        /* END OF SECOND CONE */
+
 
 
 
         if(tagOfInterest.id == RIGHT){
             //trajectory for parking in RIGHT
-            wheels.moveLeft(12,newGlobalConfig.medium,2.0);
-            wheels.moveForward(-26, newGlobalConfig.medium,2.0);
+            //wheels.moveLeft(12,newGlobalConfig.medium,2.0);
+            wheels.moveForward(-23.6, newGlobalConfig.veryfast,2.0);
+            wheels.moveLeft(24,newGlobalConfig.veryfast,3.0);
         }
 
-        if(tagOfInterest.id == MIDDLE){
+        if(tagOfInterest.id == MIDDLE) {
             //trajectory for parking in MIDDLE
-            wheels.moveLeft(12,newGlobalConfig.medium,2.0);
+            wheels.moveLeft(24, newGlobalConfig.veryfast, 2.0);
         }
 
         if(tagOfInterest.id == LEFT){
             //trajectory for parking in LEFT
-            wheels.moveLeft(12,newGlobalConfig.medium,2.0);
-            wheels.moveForward(26, newGlobalConfig.medium,2.0);
+            //wheels.moveLeft(12,newGlobalConfig.medium,2.0);
+            wheels.moveForward(24, newGlobalConfig.veryfast,2.0);
+            wheels.moveLeft(24,newGlobalConfig.veryfast,2);
 
 
         }
@@ -240,11 +250,11 @@ public class BAS_BlueRightRedAlliance extends LinearOpMode {
         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
         if(distanceSensorBack.getDistance(DistanceUnit.INCH) >= 29.0 && distanceSensorBack.getDistance(DistanceUnit.INCH) <= 30.5) {
             telemetry.addLine(String.format("\nDistance Back=%.01f inch", distanceSensorBack.getDistance(DistanceUnit.INCH)));
-            telemetry.addLine("Robot Placement: GOOD");
+            telemetry.addLine("Robot Placement: Ur Good ma G");
         }
         else {
             telemetry.addLine(String.format("\nDistance Back=%.01f inch", distanceSensorBack.getDistance(DistanceUnit.INCH)));
-            telemetry.addLine("Robot Placement: Need Adjustment");
+            telemetry.addLine("Robot Placement: Fix it, watcha doin");
         }
     }
 

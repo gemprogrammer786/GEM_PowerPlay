@@ -37,11 +37,11 @@ public class PG$GlobalConfig {
     public double turnTableCenter = 0.5;
     public double turnTableMax = 1.0;
 
-    public int[] lifLevelTicks = {0,1900, 3200, 4350};
+    public int[] lifLevelTicks = {0,1900, 3200, 4100};
     public int[] coneLevelTicks = {0,300,0, 390, 490,590,1900};
     public int liftLevelMin = 0;
     public int liftLevelMax = 4400;
-
+//The value will change once the new claw is installed
 
 
 
