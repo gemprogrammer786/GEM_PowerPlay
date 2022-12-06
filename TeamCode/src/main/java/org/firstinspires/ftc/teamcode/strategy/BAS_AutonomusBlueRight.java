@@ -190,8 +190,8 @@ public class BAS_AutonomusBlueRight extends LinearOpMode {
         claw.grab();
         wheels.moveForward(-4.6, newGlobalConfig.medium,3.0);
         wheels.moveLeft(15, newGlobalConfig.veryfast,3.0);
-      /*  wheels.turnAntiClockwise(180,1,.897);
-        wheels.moveForward(26,newGlobalConfig.fast,3.0);
+        // wheels.turnAntiClockwise(180,1,.897);
+        // wheels.moveForward(26,newGlobalConfig.fast,3.0);
 
         /* END OF FIRST CONE */
         /* START OF SECOND CONE */
@@ -248,7 +248,7 @@ public class BAS_AutonomusBlueRight extends LinearOpMode {
     void tagToTelemetry(AprilTagDetection detection)
     {
         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-        if(distanceSensorBack.getDistance(DistanceUnit.INCH) >= 29.0 && distanceSensorBack.getDistance(DistanceUnit.INCH) <= 30.5) {
+        if(distanceSensorBack.getDistance(DistanceUnit.INCH) >= 27.0 && distanceSensorBack.getDistance(DistanceUnit.INCH) <= 28.0) {
             telemetry.addLine(String.format("\nDistance Back=%.01f inch", distanceSensorBack.getDistance(DistanceUnit.INCH)));
             telemetry.addLine("Robot Placement: Ur Good ma G");
         }
