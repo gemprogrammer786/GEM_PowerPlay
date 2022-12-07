@@ -26,8 +26,8 @@ public class PG$GlobalConfig {
    // public float turnTablePowerFactor = .5f;
 
     public String clawServoName = "claw";
-    public double clawMin = .2;
-    public double clawMax = .7;
+    public double clawMin = 0.2;
+    public double clawMax = 0.7;
 
     public String viperMotorName = "viperMotor";
 
