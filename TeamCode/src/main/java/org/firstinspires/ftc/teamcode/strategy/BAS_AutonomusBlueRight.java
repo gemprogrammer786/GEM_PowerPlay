@@ -178,45 +178,19 @@ public class BAS_AutonomusBlueRight extends LinearOpMode {
 
 
         /* START OF FIRST CONE */
-       // claw.grab();
-        //sleep(50);
-        //lift.runViperMotor(.6, afterGrabLevel,"coneLevelTicks", 1); // required to lift the cone to avoid any hitting to the object
+        claw.grab();
+        sleep(50);
+        lift.runViperMotor(.6, afterGrabLevel,"coneLevelTicks", 1); // required to lift the cone to avoid any hitting to the object
         wheels.moveRight(77,newGlobalConfig.veryfast,3.0);
-        //lift.runViperMotor(.6,3,"lifLevelTicks",1); // lift to the hight of small pole
-       // wheels.moveForward(4.3, newGlobalConfig.veryslow,3.0);
-        //lift.runViperMotor(.6, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
-        //claw.release();
-        //sleep(500);
-        //wheels.moveForward(-4.6, newGlobalConfig.medium,3.0);
-        wheels.moveLeft(16, newGlobalConfig.veryfast,3.0);
-        // wheels.turnAntiClockwise(180,1,.897);
-        // wheels.moveForward(26,newGlobalConfig.fast,3.0);
-
-        /* END OF FIRST CONE */
-        /* START OF SECOND CONE */
-        //claw.release();
-        //wheels.moveForward(24, newGlobalConfig.medium,2.0);
-       /* sleep(200);
-        lift.runViperMotor(1, 5, "coneLevelTicks", 1); // to lift the cone from the stack
-        afterGrabLevel=6;
-        claw.grab();
-        sleep(150);
-        lift.runViperMotor(1, afterGrabLevel,"coneLevelTicks", 1); // to ensure that its not tripping the stack down
-        afterGrabLevel=1;
-        wheels.moveForward(-26, newGlobalConfig.medium,2.0);
-        wheels.turnAntiClockwise(180,1,.897);
-        lift.runViperMotor(1,3,"liflevelticks",1);
-
-        wheels.moveRight(12.5, newGlobalConfig.fast,10.0);
-        wheels.moveForward(4.6, newGlobalConfig.veryslow,3.0);
-        sleep(200);
-        lift.runViperMotor(1, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
+        lift.runViperMotor(.6,3,"lifLevelTicks",1); // lift to the hight of small pole
+        wheels.moveForward(4.3, newGlobalConfig.veryslow,3.0);
+        lift.runViperMotor(.6, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
         claw.release();
+        sleep(500);
         wheels.moveForward(-4.6, newGlobalConfig.medium,3.0);
-
-        claw.grab();
-
-        /* END OF SECOND CONE */
+        wheels.moveLeft(16, newGlobalConfig.veryfast,3.0);
+        wheels.turnAntiClockwise(180,1,.897);
+        wheels.moveForward(26,newGlobalConfig.fast,3.0);
 
 
 
