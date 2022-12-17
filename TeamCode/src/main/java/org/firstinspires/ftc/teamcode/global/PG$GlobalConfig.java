@@ -10,7 +10,7 @@ public class PG$GlobalConfig {
     public double leftWheelErrorAdjustment = 0.0; // This is value added to Power. Total value (power+errorAdjustment) should not be greater than 1
     public double rightWheelErrorAdjustment = 0.0; // This is value added to Power. Total value (power+errorAdjustment) should not be greater than 1
     public double mecanumWheelCircumference = 11.87; //inches
-    public double teleOpdrivePowerfactor = 0.7;// the value should be between 0 to 1
+    public double teleOpdrivePowerfactor = 0.6;// the value should be between 0 to 1
     public double autodrivePowerfactor = 0.8;// the value should be between 0 to 1
 
     public double veryfast = 1;
@@ -26,8 +26,8 @@ public class PG$GlobalConfig {
    // public float turnTablePowerFactor = .5f;
 
     public String clawServoName = "claw";
-    public double clawMin = .2;
-    public double clawMax = .7;
+    public double clawMin = .6;
+    public double clawMax = .8;
 
     public String viperMotorName = "viperMotor";
 
@@ -37,7 +37,7 @@ public class PG$GlobalConfig {
   //  public double turnTableCenter = 0.5;
   //  public double turnTableMax = 1.0;
 
-    public int[] lifLevelTicks = {0,1900, 3050, 3950};
+    public int[] lifLevelTicks = {0,1625,2900,3750};
     public int[] coneLevelTicks = {0,300,0, 390, 490,590,1900};
     public int liftLevelMin = 0;
     public int liftLevelMax = 4400;

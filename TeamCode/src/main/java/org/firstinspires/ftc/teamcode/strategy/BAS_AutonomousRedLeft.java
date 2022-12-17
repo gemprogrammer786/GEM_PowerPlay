@@ -178,36 +178,35 @@ public class BAS_AutonomousRedLeft extends LinearOpMode {
 
 
         /* START OF FIRST CONE */
-        claw.grab();
-        sleep(50);
-        lift.runViperMotor(.6, afterGrabLevel,"coneLevelTicks", 1); // required to lift the cone to avoid any hitting to the object
-        wheels.moveLeft(76,newGlobalConfig.veryfast,3.0);
-        lift.runViperMotor(.6,3,"lifLevelTicks",1); // lift to the hight of small pole
-        wheels.moveForward(4.3, newGlobalConfig.veryslow,3.0);
-        lift.runViperMotor(.6, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
-        claw.release();
-        sleep(500);
-        claw.grab();
-        wheels.moveForward(-4.6, newGlobalConfig.medium,3.0);
-        wheels.moveRight(15, newGlobalConfig.veryfast,3.0);
+       // claw.grab();
+       // sleep(50);
+       // lift.runViperMotor(.6, afterGrabLevel,"coneLevelTicks", 1); // required to lift the cone to avoid any hitting to the object
+        wheels.moveLeft(77,newGlobalConfig.veryfast,3.0);
+       // lift.runViperMotor(.6,3,"lifLevelTicks",1); // lift to the hight of small pole
+       // wheels.moveForward(4.3, newGlobalConfig.veryslow,3.0);
+       // lift.runViperMotor(.6, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
+       // claw.release();
+       // sleep(500);
+       // wheels.moveForward(-4.6, newGlobalConfig.medium,3.0);
+        wheels.moveRight(16, newGlobalConfig.veryfast,3.0);
 
 
         if(tagOfInterest.id == RIGHT){
             //trajectory for parking in RIGHT
             //wheels.moveLeft(12,newGlobalConfig.medium,2.0);
-            wheels.moveForward(-23.6, newGlobalConfig.veryfast,2.0);
+            wheels.moveForward(-24, newGlobalConfig.veryfast,2.0);
             wheels.moveRight(24,newGlobalConfig.veryfast,3.0);
         }
 
         if(tagOfInterest.id == MIDDLE) {
             //trajectory for parking in MIDDLE
-            wheels.moveLeft(24, newGlobalConfig.veryfast, 2.0);
+            wheels.moveRight(24, newGlobalConfig.veryfast, 2.0);
         }
 
         if(tagOfInterest.id == LEFT){
             //trajectory for parking in LEFT
             //wheels.moveLeft(12,newGlobalConfig.medium,2.0);
-            wheels.moveForward(24, newGlobalConfig.veryfast,2.0);
+            wheels.moveForward(23.7, newGlobalConfig.veryfast,2.0);
             wheels.moveRight(24,newGlobalConfig.veryfast,2);
 
 
@@ -218,7 +217,7 @@ public class BAS_AutonomousRedLeft extends LinearOpMode {
     void tagToTelemetry(AprilTagDetection detection)
     {
         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-        if(distanceSensorBack.getDistance(DistanceUnit.INCH) >= 29.0 && distanceSensorBack.getDistance(DistanceUnit.INCH) <= 30.5) {
+        if(distanceSensorBack.getDistance(DistanceUnit.INCH) >= 27.0 && distanceSensorBack.getDistance(DistanceUnit.INCH) <= 28.0) {
             telemetry.addLine(String.format("\nDistance Back=%.01f inch", distanceSensorBack.getDistance(DistanceUnit.INCH)));
             telemetry.addLine("Robot Placement: Ur Good ma G");
         }

@@ -61,6 +61,9 @@ public class BAS_TeleOp extends LinearOpMode {
             boolean x2 = gamepad2.x;
             boolean y2 = gamepad2.y;
             boolean x1 = gamepad1.x;
+            boolean a1 = gamepad1.a;
+            boolean b1 = gamepad1.b;
+            boolean y1 = gamepad1.y;
             boolean gm1_lb = gamepad1.left_bumper;
             boolean gm1_rb = gamepad1.right_bumper;
 
@@ -87,8 +90,18 @@ public class BAS_TeleOp extends LinearOpMode {
                 lift.runViperMotor(1, afterGrabLevel,"coneLevelTicks", 1);
                 afterGrabLevel=1;
             }
+            else if(a1) {
+                claw.release();
+                sleep(100);
+            }
             else if(x1) {
-                double teleOpdrivePowerfactor = .5;
+                lift.runViperMotor(1,1,"liflevelTicks",1);
+            }
+            else if(y1) {
+                lift.runViperMotor(1,2,"liflevelTicks",1);
+            }
+            else if(b1) {
+                lift.runViperMotor(1,3,"liflevelTicks",1);
             }
             else if(x2) {
                 lift.runViperMotor(1, 3, "coneLevelTicks", 1);

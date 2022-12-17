@@ -178,18 +178,17 @@ public class BAS_AutonomusBlueRight extends LinearOpMode {
 
 
         /* START OF FIRST CONE */
-        claw.grab();
-        sleep(50);
-        lift.runViperMotor(.6, afterGrabLevel,"coneLevelTicks", 1); // required to lift the cone to avoid any hitting to the object
-        wheels.moveRight(76,newGlobalConfig.veryfast,3.0);
-        lift.runViperMotor(.6,3,"lifLevelTicks",1); // lift to the hight of small pole
-        wheels.moveForward(4.3, newGlobalConfig.veryslow,3.0);
-        lift.runViperMotor(.6, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
-        claw.release();
-        sleep(500);
-        claw.grab();
-        wheels.moveForward(-4.6, newGlobalConfig.medium,3.0);
-        wheels.moveLeft(15, newGlobalConfig.veryfast,3.0);
+       // claw.grab();
+        //sleep(50);
+        //lift.runViperMotor(.6, afterGrabLevel,"coneLevelTicks", 1); // required to lift the cone to avoid any hitting to the object
+        wheels.moveRight(77,newGlobalConfig.veryfast,3.0);
+        //lift.runViperMotor(.6,3,"lifLevelTicks",1); // lift to the hight of small pole
+       // wheels.moveForward(4.3, newGlobalConfig.veryslow,3.0);
+        //lift.runViperMotor(.6, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
+        //claw.release();
+        //sleep(500);
+        //wheels.moveForward(-4.6, newGlobalConfig.medium,3.0);
+        wheels.moveLeft(16, newGlobalConfig.veryfast,3.0);
         // wheels.turnAntiClockwise(180,1,.897);
         // wheels.moveForward(26,newGlobalConfig.fast,3.0);
 
@@ -225,7 +224,7 @@ public class BAS_AutonomusBlueRight extends LinearOpMode {
         if(tagOfInterest.id == RIGHT){
             //trajectory for parking in RIGHT
             //wheels.moveLeft(12,newGlobalConfig.medium,2.0);
-            wheels.moveForward(-23.6, newGlobalConfig.veryfast,2.0);
+            wheels.moveForward(-23.7, newGlobalConfig.veryfast,2.0);
             wheels.moveLeft(24,newGlobalConfig.veryfast,3.0);
         }
 
