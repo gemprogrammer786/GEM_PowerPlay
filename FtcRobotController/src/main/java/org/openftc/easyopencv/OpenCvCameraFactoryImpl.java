@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.BuildConfig;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -37,7 +38,7 @@ import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
-class OpenCvCameraFactoryImpl extends OpenCvCameraFactory
+class OpenCvCameraFactoryImpl extends org.openftc.easyopencv.OpenCvCameraFactory
 {
     private static int appVersion = -1;
     private static int sdk_8_0_versionCode = 47;
@@ -64,75 +65,75 @@ class OpenCvCameraFactoryImpl extends OpenCvCameraFactory
     }
 
     @Override
-    public OpenCvInternalCamera createInternalCamera(OpenCvInternalCamera.CameraDirection direction)
+    public org.openftc.easyopencv.OpenCvInternalCamera createInternalCamera(org.openftc.easyopencv.OpenCvInternalCamera.CameraDirection direction)
     {
         throwIfIncompatibleSdkVersion();
-        return new OpenCvInternalCameraImpl(direction);
+        return new org.openftc.easyopencv.OpenCvInternalCameraImpl(direction);
     }
 
     @Override
-    public OpenCvInternalCamera createInternalCamera(OpenCvInternalCamera.CameraDirection direction, int containerId)
+    public org.openftc.easyopencv.OpenCvInternalCamera createInternalCamera(org.openftc.easyopencv.OpenCvInternalCamera.CameraDirection direction, int containerId)
     {
         throwIfIncompatibleSdkVersion();
-        return new OpenCvInternalCameraImpl(direction, containerId);
+        return new org.openftc.easyopencv.OpenCvInternalCameraImpl(direction, containerId);
     }
 
     @Override
-    public OpenCvInternalCamera2 createInternalCamera2(OpenCvInternalCamera2.CameraDirection direction)
+    public org.openftc.easyopencv.OpenCvInternalCamera2 createInternalCamera2(org.openftc.easyopencv.OpenCvInternalCamera2.CameraDirection direction)
     {
         throwIfIncompatibleSdkVersion();
         return new OpenCvInternalCamera2Impl(direction);
     }
 
     @Override
-    public OpenCvInternalCamera2 createInternalCamera2(OpenCvInternalCamera2.CameraDirection direction, int containerId)
+    public org.openftc.easyopencv.OpenCvInternalCamera2 createInternalCamera2(org.openftc.easyopencv.OpenCvInternalCamera2.CameraDirection direction, int containerId)
     {
         throwIfIncompatibleSdkVersion();
         return new OpenCvInternalCamera2Impl(direction, containerId);
     }
 
     @Override
-    public OpenCvWebcam createWebcam(WebcamName webcamName)
+    public org.openftc.easyopencv.OpenCvWebcam createWebcam(WebcamName webcamName)
     {
         throwIfIncompatibleSdkVersion();
-        return new OpenCvWebcamImpl(webcamName);
+        return new org.openftc.easyopencv.OpenCvWebcamImpl(webcamName);
     }
 
     @Override
-    public OpenCvWebcam createWebcam(WebcamName webcamName, int viewportContainerId)
+    public org.openftc.easyopencv.OpenCvWebcam createWebcam(WebcamName webcamName, int viewportContainerId)
     {
         throwIfIncompatibleSdkVersion();
-        return new OpenCvWebcamImpl(webcamName, viewportContainerId);
+        return new org.openftc.easyopencv.OpenCvWebcamImpl(webcamName, viewportContainerId);
     }
 
     @Override
-    public OpenCvSwitchableWebcam createSwitchableWebcam(WebcamName... names)
-    {
-        throwIfIncompatibleSdkVersion();
-        SwitchableCameraName cameraName = ClassFactory.getInstance().getCameraManager().nameForSwitchableCamera(names);
-
-        return new OpenCvSwitchableWebcamImpl(cameraName);
-    }
-
-    @Override
-    public OpenCvSwitchableWebcam createSwitchableWebcam(int viewportContainerId, WebcamName... names)
+    public org.openftc.easyopencv.OpenCvSwitchableWebcam createSwitchableWebcam(WebcamName... names)
     {
         throwIfIncompatibleSdkVersion();
         SwitchableCameraName cameraName = ClassFactory.getInstance().getCameraManager().nameForSwitchableCamera(names);
 
-        return new OpenCvSwitchableWebcamImpl(cameraName, viewportContainerId);
+        return new org.openftc.easyopencv.OpenCvSwitchableWebcamImpl(cameraName);
     }
 
     @Override
-    public OpenCvCamera createVuforiaPassthrough(VuforiaLocalizer vuforiaLocalizer, VuforiaLocalizer.Parameters parameters, int viewportId)
+    public org.openftc.easyopencv.OpenCvSwitchableWebcam createSwitchableWebcam(int viewportContainerId, WebcamName... names)
     {
-        return new OpenCvVuforiaPassthroughImpl(vuforiaLocalizer, parameters, viewportId);
+        throwIfIncompatibleSdkVersion();
+        SwitchableCameraName cameraName = ClassFactory.getInstance().getCameraManager().nameForSwitchableCamera(names);
+
+        return new org.openftc.easyopencv.OpenCvSwitchableWebcamImpl(cameraName, viewportContainerId);
     }
 
     @Override
-    public OpenCvCamera createVuforiaPassthrough(VuforiaLocalizer vuforiaLocalizer, VuforiaLocalizer.Parameters parameters)
+    public org.openftc.easyopencv.OpenCvCamera createVuforiaPassthrough(VuforiaLocalizer vuforiaLocalizer, VuforiaLocalizer.Parameters parameters, int viewportId)
     {
-        return new OpenCvVuforiaPassthroughImpl(vuforiaLocalizer, parameters);
+        return new org.openftc.easyopencv.OpenCvVuforiaPassthroughImpl(vuforiaLocalizer, parameters, viewportId);
+    }
+
+    @Override
+    public org.openftc.easyopencv.OpenCvCamera createVuforiaPassthrough(VuforiaLocalizer vuforiaLocalizer, VuforiaLocalizer.Parameters parameters)
+    {
+        return new org.openftc.easyopencv.OpenCvVuforiaPassthroughImpl(vuforiaLocalizer, parameters);
     }
 
     @Override
@@ -165,11 +166,11 @@ class OpenCvCameraFactoryImpl extends OpenCvCameraFactory
 
                     if(containerLayout == null)
                     {
-                        throw new OpenCvCameraException("Viewport container specified by user does not exist!");
+                        throw new org.openftc.easyopencv.OpenCvCameraException("Viewport container specified by user does not exist!");
                     }
                     else if(containerLayout.getChildCount() != 0)
                     {
-                        throw new OpenCvCameraException("Viewport container specified by user is not empty!");
+                        throw new org.openftc.easyopencv.OpenCvCameraException("Viewport container specified by user is not empty!");
                     }
 
                     containerLayout.setVisibility(View.VISIBLE);
@@ -199,7 +200,7 @@ class OpenCvCameraFactoryImpl extends OpenCvCameraFactory
                         containerLayout.addView(linearLayout);
                     }
 
-                    LIFO_OpModeCallbackDelegate.getInstance().add(new LIFO_OpModeCallbackDelegate.OnOpModeStoppedListener()
+                    org.openftc.easyopencv.LIFO_OpModeCallbackDelegate.getInstance().add(new org.openftc.easyopencv.LIFO_OpModeCallbackDelegate.OnOpModeStoppedListener()
                     {
                         @Override
                         public void onOpModePostStop(OpMode opMode)

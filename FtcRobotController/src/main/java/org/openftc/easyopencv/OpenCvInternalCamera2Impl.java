@@ -21,6 +21,8 @@
 
 package org.openftc.easyopencv;
 
+import static org.openftc.easyopencv.OpenCvInternalCamera2.*;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.ImageFormat;
@@ -52,14 +54,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.ReentrantLock;
 
 @SuppressLint({"NewApi", "MissingPermission"})
-public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenCvInternalCamera2, ImageReader.OnImageAvailableListener
+public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements org.openftc.easyopencv.OpenCvInternalCamera2, ImageReader.OnImageAvailableListener
 {
     CameraDevice mCameraDevice;
 
-    FixedHandlerThread cameraHardwareHandlerThread;
+    org.openftc.easyopencv.FixedHandlerThread cameraHardwareHandlerThread;
     private Handler cameraHardwareHandler;
 
-    FixedHandlerThread frameWorkerHandlerThread;
+    org.openftc.easyopencv.FixedHandlerThread frameWorkerHandlerThread;
     Handler frameWorkerHandler;
 
     volatile CountDownLatch cameraOpenedLatch;
@@ -69,7 +71,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
     CameraCaptureSession cameraCaptureSession;
     long ptrNativeContext;
     Mat rgbMat;
-    OpenCvInternalCamera2.CameraDirection direction;
+    CameraDirection direction;
     public float exposureTime = 1/50f;
     private volatile boolean isStreaming = false;
     Surface surface;
@@ -82,14 +84,14 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
     private boolean sensorTimestampsAreRealtime = false;
 
     @SuppressLint("WrongConstant")
-    public OpenCvInternalCamera2Impl(OpenCvInternalCamera2.CameraDirection direction)
+    public OpenCvInternalCamera2Impl(CameraDirection direction)
     {
         this.direction = direction;
         cameraManager = (CameraManager) AppUtil.getInstance().getActivity().getSystemService(Context.CAMERA_SERVICE);
     }
 
     @SuppressLint("WrongConstant")
-    public OpenCvInternalCamera2Impl(OpenCvInternalCamera2.CameraDirection direction, int containerLayoutId)
+    public OpenCvInternalCamera2Impl(CameraDirection direction, int containerLayoutId)
     {
         super(containerLayoutId);
         this.direction = direction;
@@ -97,25 +99,25 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
     }
 
     @Override
-    protected OpenCvCameraRotation getDefaultRotation()
+    protected org.openftc.easyopencv.OpenCvCameraRotation getDefaultRotation()
     {
-        return OpenCvCameraRotation.UPRIGHT;
+        return org.openftc.easyopencv.OpenCvCameraRotation.UPRIGHT;
     }
 
     @Override
-    protected int mapRotationEnumToOpenCvRotateCode(OpenCvCameraRotation rotation)
+    protected int mapRotationEnumToOpenCvRotateCode(org.openftc.easyopencv.OpenCvCameraRotation rotation)
     {
         if(direction == CameraDirection.BACK)
         {
-            if(rotation == OpenCvCameraRotation.UPRIGHT)
+            if(rotation == org.openftc.easyopencv.OpenCvCameraRotation.UPRIGHT)
             {
                 return Core.ROTATE_90_CLOCKWISE;
             }
-            else if(rotation == OpenCvCameraRotation.UPSIDE_DOWN)
+            else if(rotation == org.openftc.easyopencv.OpenCvCameraRotation.UPSIDE_DOWN)
             {
                 return Core.ROTATE_90_COUNTERCLOCKWISE;
             }
-            else if(rotation == OpenCvCameraRotation.SIDEWAYS_RIGHT)
+            else if(rotation == org.openftc.easyopencv.OpenCvCameraRotation.SIDEWAYS_RIGHT)
             {
                 return Core.ROTATE_180;
             }
@@ -126,15 +128,15 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         }
         else
         {
-            if(rotation == OpenCvCameraRotation.UPRIGHT)
+            if(rotation == org.openftc.easyopencv.OpenCvCameraRotation.UPRIGHT)
             {
                 return Core.ROTATE_90_COUNTERCLOCKWISE;
             }
-            else if(rotation == OpenCvCameraRotation.UPSIDE_DOWN)
+            else if(rotation == org.openftc.easyopencv.OpenCvCameraRotation.UPSIDE_DOWN)
             {
                 return Core.ROTATE_90_CLOCKWISE;
             }
-            else if(rotation == OpenCvCameraRotation.SIDEWAYS_RIGHT)
+            else if(rotation == org.openftc.easyopencv.OpenCvCameraRotation.SIDEWAYS_RIGHT)
             {
                 return Core.ROTATE_180;
             }
@@ -310,11 +312,11 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
     @Override
     public void startStreaming(int width, int height)
     {
-        startStreaming(width, height, OpenCvCameraRotation.UPRIGHT);
+        startStreaming(width, height, org.openftc.easyopencv.OpenCvCameraRotation.UPRIGHT);
     }
 
     @Override
-    public void startStreaming(int width, int height, OpenCvCameraRotation rotation)
+    public void startStreaming(int width, int height, org.openftc.easyopencv.OpenCvCameraRotation rotation)
     {
         sync.lock();
 
@@ -322,7 +324,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("startStreaming() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("startStreaming() called, but camera is not opened!");
             }
 
             /*
@@ -359,7 +361,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
                     supportedSizesBuilder.append(String.format("[%dx%d], ", s.getWidth(), s.getHeight()));
                 }
 
-                throw new OpenCvCameraException("Camera does not support requested resolution! Supported resolutions are " + supportedSizesBuilder.toString());
+                throw new org.openftc.easyopencv.OpenCvCameraException("Camera does not support requested resolution! Supported resolutions are " + supportedSizesBuilder.toString());
             }
 
             rgbMat = new Mat(height, width, CvType.CV_8UC3);
@@ -536,7 +538,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
 
         sync.lock();
 
-        frameWorkerHandlerThread = new FixedHandlerThread("FrameWorkerHandlerThread");
+        frameWorkerHandlerThread = new org.openftc.easyopencv.FixedHandlerThread("FrameWorkerHandlerThread");
         frameWorkerHandlerThread.start();
 
         frameWorkerHandler = new Handler(frameWorkerHandlerThread.getLooper());
@@ -565,7 +567,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
     {
         sync.lock();
 
-        cameraHardwareHandlerThread = new FixedHandlerThread("CameraHardwareHandlerThread");
+        cameraHardwareHandlerThread = new org.openftc.easyopencv.FixedHandlerThread("CameraHardwareHandlerThread");
         cameraHardwareHandlerThread.start();
         cameraHardwareHandler = new Handler(cameraHardwareHandlerThread.getLooper());
 
@@ -676,7 +678,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("getMinSensorGain() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("getMinSensorGain() called, but camera is not opened!");
             }
 
             return cameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE).getLower();
@@ -696,7 +698,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("getMinSensorGain() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("getMinSensorGain() called, but camera is not opened!");
             }
 
             return cameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE).getUpper();
@@ -716,7 +718,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("setSensorGain() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("setSensorGain() called, but camera is not opened!");
             }
 
             mPreviewRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, iso);
@@ -737,7 +739,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("setWhiteBalanceMode() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("setWhiteBalanceMode() called, but camera is not opened!");
             }
 
             switch (whiteBalanceMode)
@@ -796,7 +798,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("setAutoWhiteBalanceLocked() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("setAutoWhiteBalanceLocked() called, but camera is not opened!");
             }
 
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK, locked);
@@ -818,7 +820,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("setExposureMode() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("setExposureMode() called, but camera is not opened!");
             }
 
             if(exposureMode == ExposureMode.MANUAL)
@@ -847,7 +849,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("setAutoExposureLocked() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("setAutoExposureLocked() called, but camera is not opened!");
             }
 
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_LOCK, locked);
@@ -869,7 +871,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("setSensorFps() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("setSensorFps() called, but camera is not opened!");
             }
 
             long nanos = (long) ((1.0/sensorFps)*1e9);
@@ -893,7 +895,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("setSensorFps() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("setSensorFps() called, but camera is not opened!");
             }
 
             if(enabled)
@@ -922,7 +924,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("getMinAutoExposureCompensation() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("getMinAutoExposureCompensation() called, but camera is not opened!");
             }
 
             return cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getLower();
@@ -942,7 +944,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("getMaxAutoExposureCompensation() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("getMaxAutoExposureCompensation() called, but camera is not opened!");
             }
 
             return cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper();
@@ -962,16 +964,16 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("setAutoExposureCompensation() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("setAutoExposureCompensation() called, but camera is not opened!");
             }
 
             if(aeCompensation < getMinAutoExposureCompensation())
             {
-                throw new OpenCvCameraException("Auto exposure compensation must be >= the value returned by getMinAutoExposureCompensation()");
+                throw new org.openftc.easyopencv.OpenCvCameraException("Auto exposure compensation must be >= the value returned by getMinAutoExposureCompensation()");
             }
             else if(aeCompensation > getMaxAutoExposureCompensation())
             {
-                throw new OpenCvCameraException("Auto exposure compensation must be <= the value returned by getMaxAutoExposureCompensation()");
+                throw new org.openftc.easyopencv.OpenCvCameraException("Auto exposure compensation must be <= the value returned by getMaxAutoExposureCompensation()");
             }
 
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, aeCompensation);
@@ -1002,7 +1004,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("setExposureNanos() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("setExposureNanos() called, but camera is not opened!");
             }
 
             mPreviewRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, nanos);
@@ -1023,7 +1025,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("setFocusMode() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("setFocusMode() called, but camera is not opened!");
             }
 
             if(focusMode == FocusMode.MANUAL)
@@ -1056,7 +1058,7 @@ public class OpenCvInternalCamera2Impl extends OpenCvCameraBase implements OpenC
         {
             if(mCameraDevice == null)
             {
-                throw new OpenCvCameraException("getMinFocusDistance() called, but camera is not opened!");
+                throw new org.openftc.easyopencv.OpenCvCameraException("getMinFocusDistance() called, but camera is not opened!");
             }
 
             return cameraCharacteristics.get(CameraCharacteristics.LENS_INFO_MINIMUM_FOCUS_DISTANCE);

@@ -178,16 +178,16 @@ public class BAS_AutonomousRedLeft extends LinearOpMode {
 
 
         /* START OF FIRST CONE */
-       // claw.grab();
-       // sleep(50);
-       // lift.runViperMotor(.6, afterGrabLevel,"coneLevelTicks", 1); // required to lift the cone to avoid any hitting to the object
+        claw.grab();
+        sleep(50);
+        lift.runViperMotor(.6, afterGrabLevel,"coneLevelTicks", 1); // required to lift the cone to avoid any hitting to the object
         wheels.moveLeft(77,newGlobalConfig.veryfast,3.0);
-       // lift.runViperMotor(.6,3,"lifLevelTicks",1); // lift to the hight of small pole
-       // wheels.moveForward(4.3, newGlobalConfig.veryslow,3.0);
-       // lift.runViperMotor(.6, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
-       // claw.release();
-       // sleep(500);
-       // wheels.moveForward(-4.6, newGlobalConfig.medium,3.0);
+        lift.runViperMotor(.6,3,"lifLevelTicks",1); // lift to the hight of small pole
+        wheels.moveForward(4.3, newGlobalConfig.veryslow,3.0);
+        lift.runViperMotor(.6, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
+        claw.release();
+        sleep(500);
+        wheels.moveForward(-4.6, newGlobalConfig.medium,3.0);
         wheels.moveRight(16, newGlobalConfig.veryfast,3.0);
 
 

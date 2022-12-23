@@ -21,6 +21,8 @@
 
 package org.openftc.easyopencv;
 
+import static org.openftc.easyopencv.OpenCvCameraRotation.*;
+
 import android.content.ComponentCallbacks;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -41,6 +43,7 @@ import com.qualcomm.robotcore.util.GlobalWarningSource;
 import com.qualcomm.robotcore.util.MovingStatistics;
 import com.qualcomm.robotcore.util.RobotLog;
 
+import org.firstinspires.ftc.BuildConfig;
 import org.firstinspires.ftc.robotcore.external.android.util.Size;
 import org.firstinspires.ftc.robotcore.external.function.Consumer;
 import org.firstinspires.ftc.robotcore.external.function.Continuation;
@@ -61,17 +64,17 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.concurrent.CountDownLatch;
 
-public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSource, GlobalWarningSource
+public abstract class OpenCvCameraBase implements org.openftc.easyopencv.OpenCvCamera, CameraStreamSource, GlobalWarningSource
 {
 
-    private OpenCvPipeline pipeline = null;
+    private org.openftc.easyopencv.OpenCvPipeline pipeline = null;
     private LinearLayout viewportContainerLayout;
     private MovingStatistics msFrameIntervalRollingAverage;
     private MovingStatistics msUserPipelineRollingAverage;
     private MovingStatistics msTotalFrameProcessingTimeRollingAverage;
     private ElapsedTime timer;
-    protected OpenCvViewport viewport;
-    private OpenCvCameraRotation rotation;
+    protected org.openftc.easyopencv.OpenCvViewport viewport;
+    private org.openftc.easyopencv.OpenCvCameraRotation rotation;
     private int frameCount = 0;
     private float avgFps;
     private int avgPipelineTime;
@@ -107,7 +110,7 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
         System.out.println("OpenCvCameraBase ctor: EasyOpenCV version " + BuildConfig.VERSION_NAME);
 
         frameCount = 0;
-        LIFO_OpModeCallbackDelegate.getInstance().add(opModeNotifications);
+        org.openftc.easyopencv.LIFO_OpModeCallbackDelegate.getInstance().add((org.openftc.easyopencv.LIFO_OpModeCallbackDelegate.OnOpModeStoppedListener) opModeNotifications);
         RobotLog.registerGlobalWarningSource(this);
 
 
@@ -146,7 +149,7 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
         return hasBeenCleanedUp;
     }
 
-    public synchronized final void prepareForStartStreaming(int width, int height, OpenCvCameraRotation rotation)
+    public synchronized final void prepareForStartStreaming(int width, int height, org.openftc.easyopencv.OpenCvCameraRotation rotation)
     {
         this.rotation = rotation;
         msFrameIntervalRollingAverage = new MovingStatistics(30);
@@ -210,7 +213,7 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
     }
 
     @Override
-    public synchronized final void setPipeline(OpenCvPipeline pipeline)
+    public synchronized final void setPipeline(org.openftc.easyopencv.OpenCvPipeline pipeline)
     {
         synchronized (pipelineChangeLock)
         {
@@ -237,14 +240,14 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
 
                     if(viewportContainerLayout == null)
                     {
-                        throw new OpenCvCameraException("Viewport container specified by user does not exist!");
+                        throw new org.openftc.easyopencv.OpenCvCameraException("Viewport container specified by user does not exist!");
                     }
                     else if(viewportContainerLayout.getChildCount() != 0)
                     {
-                        throw new OpenCvCameraException("Viewport container specified by user is not empty!");
+                        throw new org.openftc.easyopencv.OpenCvCameraException("Viewport container specified by user is not empty!");
                     }
 
-                    viewport = new OpenCvViewport(AppUtil.getInstance().getActivity(), new View.OnClickListener()
+                    viewport = new org.openftc.easyopencv.OpenCvViewport(AppUtil.getInstance().getActivity(), new View.OnClickListener()
                     {
                         @Override
                         public void onClick(View view)
@@ -312,7 +315,7 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
     }
 
     @Override
-    public synchronized void startRecordingPipeline(PipelineRecordingParameters parameters)
+    public synchronized void startRecordingPipeline(org.openftc.easyopencv.PipelineRecordingParameters parameters)
     {
         System.out.println("startRecordingPipeline()");
 
@@ -356,7 +359,7 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
             mediaRecorderSurface = null;
             mediaRecorder = null;
 
-            throw new OpenCvCameraException("Unable to begin recording");
+            throw new org.openftc.easyopencv.OpenCvCameraException("Unable to begin recording");
         }
         catch (Exception e)
         {
@@ -453,9 +456,9 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
 
         if(pipeline != null)
         {
-            if(pipeline instanceof TimestampedOpenCvPipeline)
+            if(pipeline instanceof org.openftc.easyopencv.TimestampedOpenCvPipeline)
             {
-                ((TimestampedOpenCvPipeline) pipeline).setTimestamp(timestamp);
+                ((org.openftc.easyopencv.TimestampedOpenCvPipeline) pipeline).setTimestamp(timestamp);
             }
 
             long pipelineStart = System.currentTimeMillis();
@@ -479,7 +482,7 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
                 /*
                  * Silly user, they returned null from their pipeline....
                  */
-                throw new OpenCvCameraException("User pipeline returned null frame for viewport display");
+                throw new org.openftc.easyopencv.OpenCvCameraException("User pipeline returned null frame for viewport display");
             }
             else if(userProcessedFrame.cols() != frame.cols() || userProcessedFrame.rows() != frame.rows())
             {
@@ -498,7 +501,7 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
                      * a dimension than the one we gave them!
                      */
 
-                    throw new OpenCvCameraException("User pipeline returned frame of unexpected size");
+                    throw new org.openftc.easyopencv.OpenCvCameraException("User pipeline returned frame of unexpected size");
                 }
 
                 //We re-use this buffer, only create if needed
@@ -528,7 +531,7 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
                     /*
                      * Oof, we don't know how to handle the type they gave us
                      */
-                    throw new OpenCvCameraException("User pipeline returned a frame of an illegal type. Valid types are CV_8UC1, CV_8UC3, and CV_8UC4");
+                    throw new org.openftc.easyopencv.OpenCvCameraException("User pipeline returned a frame of an illegal type. Valid types are CV_8UC1, CV_8UC3, and CV_8UC4");
                 }
 
                 //Copy the user's frame onto a Mat of the correct size
@@ -811,7 +814,7 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
         }
     }
 
-    private class OpModeNotifications implements LIFO_OpModeCallbackDelegate.OnOpModeStoppedListener
+    private class OpModeNotifications implements org.openftc.easyopencv.LIFO_OpModeCallbackDelegate.OnOpModeStoppedListener
     {
         @Override
         public void onOpModePostStop(OpMode opMode)
@@ -824,7 +827,7 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
         }
     }
 
-    protected Size getFrameSizeAfterRotation(int width, int height, OpenCvCameraRotation rotation)
+    protected Size getFrameSizeAfterRotation(int width, int height, org.openftc.easyopencv.OpenCvCameraRotation rotation)
     {
         int screenRenderedWidth, screenRenderedHeight;
         int openCvRotateCode = mapRotationEnumToOpenCvRotateCode(rotation);
@@ -845,78 +848,78 @@ public abstract class OpenCvCameraBase implements OpenCvCamera, CameraStreamSour
         return new Size(screenRenderedWidth, screenRenderedHeight);
     }
 
-    protected OpenCvViewport.OptimizedRotation getOptimizedViewportRotation(OpenCvCameraRotation streamRotation, int windowRotation)
+    protected org.openftc.easyopencv.OpenCvViewport.OptimizedRotation getOptimizedViewportRotation(org.openftc.easyopencv.OpenCvCameraRotation streamRotation, int windowRotation)
     {
         if(!cameraOrientationIsTiedToDeviceOrientation())
         {
-            return OpenCvViewport.OptimizedRotation.NONE;
+            return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.NONE;
         }
 
         if(windowRotation == Surface.ROTATION_0)
         {
-            if(streamRotation == OpenCvCameraRotation.SIDEWAYS_LEFT)
+            if(streamRotation == SIDEWAYS_LEFT)
             {
-                return OpenCvViewport.OptimizedRotation.ROT_90_COUNTERCLOCWISE;
+                return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.ROT_90_COUNTERCLOCWISE;
             }
-            else if(streamRotation == OpenCvCameraRotation.SIDEWAYS_RIGHT)
+            else if(org.openftc.easyopencv.OpenCvCameraRotation.SIDEWAYS_RIGHT == streamRotation)
             {
-                return OpenCvViewport.OptimizedRotation.ROT_90_CLOCKWISE;
+                return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.ROT_90_CLOCKWISE;
             }
-            else if(streamRotation == OpenCvCameraRotation.UPSIDE_DOWN)
+            else if(streamRotation == UPSIDE_DOWN)
             {
-                return OpenCvViewport.OptimizedRotation.ROT_180;
+                return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.ROT_180;
             }
             else
             {
-                return OpenCvViewport.OptimizedRotation.NONE;
+                return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.NONE;
             }
         }
         else if(windowRotation == Surface.ROTATION_90)
         {
-            if(streamRotation == OpenCvCameraRotation.SIDEWAYS_RIGHT)
+            if(streamRotation == org.openftc.easyopencv.OpenCvCameraRotation.SIDEWAYS_RIGHT)
             {
-                return OpenCvViewport.OptimizedRotation.ROT_180;
+                return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.ROT_180;
             }
-            else if(streamRotation == OpenCvCameraRotation.UPRIGHT)
+            else if(streamRotation == org.openftc.easyopencv.OpenCvCameraRotation.UPRIGHT)
             {
-                return OpenCvViewport.OptimizedRotation.ROT_90_CLOCKWISE;
+                return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.ROT_90_CLOCKWISE;
             }
-            else if(streamRotation == OpenCvCameraRotation.UPSIDE_DOWN)
+            else if(streamRotation == org.openftc.easyopencv.OpenCvCameraRotation.UPSIDE_DOWN)
             {
-                return OpenCvViewport.OptimizedRotation.ROT_90_COUNTERCLOCWISE;
+                return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.ROT_90_COUNTERCLOCWISE;
             }
             else
             {
-                return OpenCvViewport.OptimizedRotation.NONE;
+                return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.NONE;
             }
         }
         else if(windowRotation == Surface.ROTATION_270)
         {
-            if(streamRotation == OpenCvCameraRotation.SIDEWAYS_LEFT)
+            if(streamRotation == org.openftc.easyopencv.OpenCvCameraRotation.SIDEWAYS_LEFT)
             {
-                return OpenCvViewport.OptimizedRotation.ROT_180;
+                return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.ROT_180;
             }
-            else if(streamRotation == OpenCvCameraRotation.UPRIGHT)
+            else if(streamRotation == org.openftc.easyopencv.OpenCvCameraRotation.UPRIGHT)
             {
-                return OpenCvViewport.OptimizedRotation.ROT_90_COUNTERCLOCWISE;
+                return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.ROT_90_COUNTERCLOCWISE;
             }
-            else if(streamRotation == OpenCvCameraRotation.UPSIDE_DOWN)
+            else if(streamRotation == org.openftc.easyopencv.OpenCvCameraRotation.UPSIDE_DOWN)
             {
-                return OpenCvViewport.OptimizedRotation.ROT_90_CLOCKWISE;
+                return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.ROT_90_CLOCKWISE;
             }
             else
             {
-                return OpenCvViewport.OptimizedRotation.NONE;
+                return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.NONE;
             }
         }
         else
         {
-            return OpenCvViewport.OptimizedRotation.NONE;
+            return org.openftc.easyopencv.OpenCvViewport.OptimizedRotation.NONE;
         }
     }
 
-    protected abstract OpenCvCameraRotation getDefaultRotation();
-    protected abstract int mapRotationEnumToOpenCvRotateCode(OpenCvCameraRotation rotation);
+    protected abstract org.openftc.easyopencv.OpenCvCameraRotation getDefaultRotation();
+    protected abstract int mapRotationEnumToOpenCvRotateCode(org.openftc.easyopencv.OpenCvCameraRotation rotation);
     protected abstract boolean cameraOrientationIsTiedToDeviceOrientation();
     protected abstract boolean isStreaming();
 

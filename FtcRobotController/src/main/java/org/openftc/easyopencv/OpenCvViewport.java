@@ -34,6 +34,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import org.firstinspires.ftc.BuildConfig;
 import org.firstinspires.ftc.robotcore.external.android.util.Size;
 import org.firstinspires.ftc.robotcore.external.function.Consumer;
 import org.firstinspires.ftc.robotcore.internal.collections.EvictingBlockingQueue;
@@ -52,8 +53,8 @@ public class OpenCvViewport extends SurfaceView implements SurfaceHolder.Callbac
     private double aspectRatio;
     private static final int VISION_PREVIEW_FRAME_QUEUE_CAPACITY = 2;
     private static final int FRAMEBUFFER_RECYCLER_CAPACITY = VISION_PREVIEW_FRAME_QUEUE_CAPACITY + 2; //So that the evicting queue can be full, and the render thread has one checked out (+1) and post() can still take one (+1).
-    private EvictingBlockingQueue<MatRecycler.RecyclableMat> visionPreviewFrameQueue = new EvictingBlockingQueue<>(new ArrayBlockingQueue<MatRecycler.RecyclableMat>(VISION_PREVIEW_FRAME_QUEUE_CAPACITY));
-    private MatRecycler framebufferRecycler;
+    private EvictingBlockingQueue<org.openftc.easyopencv.MatRecycler.RecyclableMat> visionPreviewFrameQueue = new EvictingBlockingQueue<>(new ArrayBlockingQueue<org.openftc.easyopencv.MatRecycler.RecyclableMat>(VISION_PREVIEW_FRAME_QUEUE_CAPACITY));
+    private org.openftc.easyopencv.MatRecycler framebufferRecycler;
     private volatile RenderingState internalRenderingState = RenderingState.STOPPED;
     private int statBoxW = 450;
     private int statBoxH = 120;
@@ -75,8 +76,8 @@ public class OpenCvViewport extends SurfaceView implements SurfaceHolder.Callbac
     private String TAG = "OpenCvViewport";
     private ReentrantLock renderThreadAliveLock = new ReentrantLock();
     private volatile OptimizedRotation optimizedViewRotation;
-    private volatile OpenCvCamera.ViewportRenderer renderer = OpenCvCamera.ViewportRenderer.SOFTWARE;
-    private volatile OpenCvCamera.ViewportRenderingPolicy renderingPolicy = OpenCvCamera.ViewportRenderingPolicy.MAXIMIZE_EFFICIENCY;
+    private volatile org.openftc.easyopencv.OpenCvCamera.ViewportRenderer renderer = org.openftc.easyopencv.OpenCvCamera.ViewportRenderer.SOFTWARE;
+    private volatile org.openftc.easyopencv.OpenCvCamera.ViewportRenderingPolicy renderingPolicy = org.openftc.easyopencv.OpenCvCamera.ViewportRenderingPolicy.MAXIMIZE_EFFICIENCY;
     private volatile boolean isRecording;
 
     public OpenCvViewport(Context context, OnClickListener onClickListener)
@@ -101,10 +102,10 @@ public class OpenCvViewport extends SurfaceView implements SurfaceHolder.Callbac
 
         getHolder().addCallback(this);
 
-        visionPreviewFrameQueue.setEvictAction(new Consumer<MatRecycler.RecyclableMat>()
+        visionPreviewFrameQueue.setEvictAction(new Consumer<org.openftc.easyopencv.MatRecycler.RecyclableMat>()
         {
             @Override
-            public void accept(MatRecycler.RecyclableMat value)
+            public void accept(org.openftc.easyopencv.MatRecycler.RecyclableMat value)
             {
                 /*
                  * If a Mat is evicted from the queue, we need
@@ -139,12 +140,12 @@ public class OpenCvViewport extends SurfaceView implements SurfaceHolder.Callbac
         }
     }
 
-    public void setRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy policy)
+    public void setRenderingPolicy(org.openftc.easyopencv.OpenCvCamera.ViewportRenderingPolicy policy)
     {
         renderingPolicy = policy;
     }
 
-    public void setRenderer(OpenCvCamera.ViewportRenderer renderer) throws IllegalStateException
+    public void setRenderer(org.openftc.easyopencv.OpenCvCamera.ViewportRenderer renderer) throws IllegalStateException
     {
         synchronized (syncObj)
         {
@@ -190,7 +191,7 @@ public class OpenCvViewport extends SurfaceView implements SurfaceHolder.Callbac
             //from when we might have been running before
             visionPreviewFrameQueue.clear();
 
-            framebufferRecycler = new MatRecycler(FRAMEBUFFER_RECYCLER_CAPACITY);
+            framebufferRecycler = new org.openftc.easyopencv.MatRecycler(FRAMEBUFFER_RECYCLER_CAPACITY);
         }
     }
 
@@ -226,7 +227,7 @@ public class OpenCvViewport extends SurfaceView implements SurfaceHolder.Callbac
                      * instead of doing a new alloc and then having
                      * to free it after rendering/eviction from queue
                      */
-                    MatRecycler.RecyclableMat matToCopyTo = framebufferRecycler.takeMat();
+                    org.openftc.easyopencv.MatRecycler.RecyclableMat matToCopyTo = framebufferRecycler.takeMat();
                     mat.copyTo(matToCopyTo);
                     visionPreviewFrameQueue.offer(matToCopyTo);
                 }
@@ -484,11 +485,11 @@ public class OpenCvViewport extends SurfaceView implements SurfaceHolder.Callbac
 
         private Canvas lockCanvas()
         {
-            if(renderer == OpenCvCamera.ViewportRenderer.SOFTWARE)
+            if(renderer == org.openftc.easyopencv.OpenCvCamera.ViewportRenderer.SOFTWARE)
             {
                 return getHolder().lockCanvas();
             }
-            else if(renderer == OpenCvCamera.ViewportRenderer.GPU_ACCELERATED)
+            else if(renderer == org.openftc.easyopencv.OpenCvCamera.ViewportRenderer.GPU_ACCELERATED)
             {
                 return getHolder().getSurface().lockHardwareCanvas();
             }
@@ -498,11 +499,11 @@ public class OpenCvViewport extends SurfaceView implements SurfaceHolder.Callbac
 
         private void swapBuffer(Canvas canvas)
         {
-            if(renderer == OpenCvCamera.ViewportRenderer.SOFTWARE)
+            if(renderer == org.openftc.easyopencv.OpenCvCamera.ViewportRenderer.SOFTWARE)
             {
                 getHolder().unlockCanvasAndPost(canvas);
             }
-            else if(renderer == OpenCvCamera.ViewportRenderer.GPU_ACCELERATED)
+            else if(renderer == org.openftc.easyopencv.OpenCvCamera.ViewportRenderer.GPU_ACCELERATED)
             {
                 getHolder().getSurface().unlockCanvasAndPost(canvas);
             }
@@ -522,7 +523,7 @@ public class OpenCvViewport extends SurfaceView implements SurfaceHolder.Callbac
             //hold 'syncObj' mutex to synchronize with post()!
             synchronized (syncObj)
             {
-                for(MatRecycler.RecyclableMat mat : visionPreviewFrameQueue)
+                for(org.openftc.easyopencv.MatRecycler.RecyclableMat mat : visionPreviewFrameQueue)
                 {
                     framebufferRecycler.returnMat(mat);
                 }
@@ -546,7 +547,7 @@ public class OpenCvViewport extends SurfaceView implements SurfaceHolder.Callbac
                     {
                         shouldPaintOrange = true;
 
-                        MatRecycler.RecyclableMat mat;
+                        org.openftc.easyopencv.MatRecycler.RecyclableMat mat;
 
                         try
                         {
@@ -582,11 +583,11 @@ public class OpenCvViewport extends SurfaceView implements SurfaceHolder.Callbac
                             //Draw the background each time to prevent double buffering problems
                             canvas.drawColor(Color.rgb(239,239,239)); // RC activity background color
 
-                            if(renderingPolicy == OpenCvCamera.ViewportRenderingPolicy.MAXIMIZE_EFFICIENCY)
+                            if(renderingPolicy == org.openftc.easyopencv.OpenCvCamera.ViewportRenderingPolicy.MAXIMIZE_EFFICIENCY)
                             {
                                 drawOptimizingEfficiency(canvas);
                             }
-                            else if(renderingPolicy == OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW)
+                            else if(renderingPolicy == org.openftc.easyopencv.OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW)
                             {
                                 drawOptimizingView(canvas);
                             }
