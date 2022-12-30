@@ -181,32 +181,40 @@ public class BAS_AutonomusBlueRight extends LinearOpMode {
         claw.grab();
         sleep(50);
         lift.runViperMotor(.6, afterGrabLevel,"coneLevelTicks", 1); // required to lift the cone to avoid any hitting to the object
-        wheels.moveRight(77,newGlobalConfig.veryfast,3.0);
+        wheels.moveRight(76,newGlobalConfig.veryfast,3.0);
         lift.runViperMotor(.6,3,"lifLevelTicks",1); // lift to the hight of small pole
-        wheels.moveForward(2.6, newGlobalConfig.veryslow,3.0);
+        wheels.moveForward(2.8, newGlobalConfig.slow,3.0);
         lift.runViperMotor(.6,4, "liflevelticks", 1);
         claw.release();
+        sleep(50);
         wheels.moveForward(-3.5, newGlobalConfig.medium,3.0);
         lift.runViperMotor(.6, afterGrabLevel, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
         sleep(500);
-
         wheels.moveLeft(16, newGlobalConfig.veryfast,3.0);
-        wheels.turnAntiClockwise(180,1,.897);
-        wheels.moveForward(26,newGlobalConfig.fast,3.0);
+
+        /*wheels.turnAntiClockwise(180,1,.897);
+        wheels.moveForward(27,newGlobalConfig.fast,3.0);
+        lift.runViperMotor(.6, 7, "coneLevelTicks", 1);
+        //wheels.moveForward(1,newGlobalConfig.medium,1);
         claw.grab();
         sleep(50);
-        wheels.moveForward(-25,newGlobalConfig.fast,3.0);
+        lift.runViperMotor(.6,1, "liflevelticks", 1);
+        wheels.moveForward(-27,newGlobalConfig.fast,3.0);
         wheels.turnAntiClockwise(180,1,.897);
-        wheels.moveRight(14, newGlobalConfig.veryfast,3.0);
+        wheels.moveRight(13.5, newGlobalConfig.veryfast,3.0);
 
         lift.runViperMotor(.6,3,"lifLevelTicks",1); // lift to the hight of small pole
-        wheels.moveForward(3, newGlobalConfig.veryslow,3.0);
+        wheels.moveForward(3, newGlobalConfig.slow,3.0);
         lift.runViperMotor(.6,4, "liflevelticks", 1);
         claw.release();
+        sleep(100);
         wheels.moveForward(-4, newGlobalConfig.medium,3.0);
         lift.runViperMotor(.6, afterGrabLevel, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
         sleep(100);
         wheels.moveLeft(16, newGlobalConfig.veryfast,3.0);
+        sleep(100);
+
+         */
 
 
 
@@ -218,7 +226,7 @@ public class BAS_AutonomusBlueRight extends LinearOpMode {
             //trajectory for parking in RIGHT
             //wheels.moveLeft(12,newGlobalConfig.medium,2.0);
             wheels.moveForward(-23.7, newGlobalConfig.veryfast,2.0);
-            wheels.moveLeft(24,newGlobalConfig.veryfast,3.0);
+            //wheels.moveLeft(24,newGlobalConfig.veryfast,3.0);
         }
 
         if(tagOfInterest.id == MIDDLE) {
@@ -230,7 +238,7 @@ public class BAS_AutonomusBlueRight extends LinearOpMode {
             //trajectory for parking in LEFT
             //wheels.moveLeft(12,newGlobalConfig.medium,2.0);
             wheels.moveForward(24, newGlobalConfig.veryfast,2.0);
-            wheels.moveLeft(24,newGlobalConfig.veryfast,2);
+           // wheels.moveLeft(24,newGlobalConfig.veryfast,2);
 
 
         }

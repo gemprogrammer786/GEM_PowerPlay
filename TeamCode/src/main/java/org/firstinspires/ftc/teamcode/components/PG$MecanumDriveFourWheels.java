@@ -51,6 +51,11 @@ public class PG$MecanumDriveFourWheels {
             backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            frontleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            backleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            frontright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            backright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         else
         {

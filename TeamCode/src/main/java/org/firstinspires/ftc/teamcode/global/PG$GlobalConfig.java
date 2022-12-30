@@ -14,7 +14,7 @@ public class PG$GlobalConfig {
     public double autodrivePowerfactor = 0.8;// the value should be between 0 to 1
 
     public double veryfast = 1;
-    public double fast = 0.8; // Limit motor power to this value for RUN_USING_ENCODER mode
+    public double fast = 0.7; // Limit motor power to this value for RUN_USING_ENCODER mode
     public double medium = 0.6; // medium speed
     public double slow = 0.3; // slow speed
     public double veryslow = 0.1;
@@ -31,8 +31,8 @@ public class PG$GlobalConfig {
 
     public String viperMotorName = "viperMotor";
 
-    public int[] lifLevelTicks = {0,1800, 3050, 3900, 3800};
-    public int[] coneLevelTicks = {0,300,0, 390, 490,590,1900};
+    public int[] lifLevelTicks = {0,1700, 2900, 3700, 3100};
+    public int[] coneLevelTicks = {0,300,0, 390, 490,590,1900, 430};
     public int liftLevelMin = 0;
     public int liftLevelMax = 4400;
 //The value will change once the new claw is installed
