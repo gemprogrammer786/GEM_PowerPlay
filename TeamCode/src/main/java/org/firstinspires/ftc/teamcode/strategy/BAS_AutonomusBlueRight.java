@@ -226,7 +226,7 @@ public class BAS_AutonomusBlueRight extends LinearOpMode {
             //trajectory for parking in RIGHT
             //wheels.moveLeft(12,newGlobalConfig.medium,2.0);
             wheels.moveForward(-23.7, newGlobalConfig.veryfast,2.0);
-            //wheels.moveLeft(24,newGlobalConfig.veryfast,3.0);
+           // wheels.moveLeft(24,newGlobalConfig.veryfast,3.0);
         }
 
         if(tagOfInterest.id == MIDDLE) {
@@ -238,7 +238,7 @@ public class BAS_AutonomusBlueRight extends LinearOpMode {
             //trajectory for parking in LEFT
             //wheels.moveLeft(12,newGlobalConfig.medium,2.0);
             wheels.moveForward(24, newGlobalConfig.veryfast,2.0);
-           // wheels.moveLeft(24,newGlobalConfig.veryfast,2);
+            wheels.moveLeft(24,newGlobalConfig.veryfast,2);
 
 
         }
