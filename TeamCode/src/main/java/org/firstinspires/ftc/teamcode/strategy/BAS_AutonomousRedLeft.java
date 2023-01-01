@@ -178,36 +178,71 @@ public class BAS_AutonomousRedLeft extends LinearOpMode {
 
 
         /* START OF FIRST CONE */
-        claw.grab();
-        sleep(50);
-        lift.runViperMotor(.6, afterGrabLevel,"coneLevelTicks", 1); // required to lift the cone to avoid any hitting to the object
-        wheels.moveLeft(77,newGlobalConfig.veryfast,3.0);
-        lift.runViperMotor(.6,3,"lifLevelTicks",1); // lift to the hight of small pole
-        wheels.moveForward(4.3, newGlobalConfig.veryslow,3.0);
-        lift.runViperMotor(.6, 0, "coneLevelTicks", 1); // To ensure that cone is not falling outside the pole
-        claw.release();
-        sleep(500);
-        wheels.moveForward(-4.6, newGlobalConfig.medium,3.0);
-        wheels.moveRight(16, newGlobalConfig.veryfast,3.0);
-
 
         if(tagOfInterest.id == RIGHT){
             //trajectory for parking in RIGHT
-            //wheels.moveLeft(12,newGlobalConfig.medium,2.0);
-            wheels.moveForward(-24, newGlobalConfig.veryfast,2.0);
-            wheels.moveRight(24,newGlobalConfig.veryfast,3.0);
+            claw.grab();
+            lift.runViperMotor(1,1,"coneLevelTicks",1);
+            sleep(50);
+            wheels.moveLeft(34, newGlobalConfig.veryfast, 2.0);
+            wheels.moveForward(26,newGlobalConfig.medium,2.0);
+            wheels.turnClockwise(180,newGlobalConfig.medium,1.42);
+            wheels.moveRight(14,newGlobalConfig.medium,2);
+            lift.runViperMotor(.6,2,"lifLevelTicks",1);
+            wheels.moveForward(8,newGlobalConfig.veryslow,1);
+            lift.runViperMotor(.6,5,"lifLevelTicks",1);
+            sleep(500);
+            claw.release();
+            wheels.moveForward(-3.5,newGlobalConfig.slow,1);
+            sleep(200);
+            lift.runViperMotor(.6,0,"lifLevelTicks",1);
+            sleep(1000);
+            wheels.moveForward(-2,newGlobalConfig.slow,1);
+            sleep(200);
         }
 
         if(tagOfInterest.id == MIDDLE) {
             //trajectory for parking in MIDDLE
-            wheels.moveRight(24, newGlobalConfig.veryfast, 2.0);
+            claw.grab();
+            lift.runViperMotor(1,1,"coneLevelTicks",1);
+            sleep(50);
+            wheels.moveLeft(49, newGlobalConfig.medium, 2.0);
+            lift.runViperMotor(.6,2,"lifLevelTicks",1);
+            sleep(1500);
+            wheels.moveForward(3.25,newGlobalConfig.slow,1);
+            sleep(1500);
+            lift.runViperMotor(.6,5,"lifLevelTicks",1);
+            sleep(400);
+            claw.release();
+            wheels.moveForward(-3.5,newGlobalConfig.slow,1);
+            sleep(200);
+            lift.runViperMotor(.6,0,"lifLevelTicks",1);
+            sleep(1000);
+            wheels.moveForward(-1,newGlobalConfig.slow,1);
+            sleep(200);
         }
 
         if(tagOfInterest.id == LEFT){
             //trajectory for parking in LEFT
             //wheels.moveLeft(12,newGlobalConfig.medium,2.0);
-            wheels.moveForward(23.7, newGlobalConfig.veryfast,2.0);
-            wheels.moveRight(24,newGlobalConfig.veryfast,2);
+            claw.grab();
+            lift.runViperMotor(1,1,"coneLevelTicks",1);
+            sleep(50);
+            wheels.moveForward(-26,newGlobalConfig.medium,2);
+            wheels.moveLeft(49.5,newGlobalConfig.medium,2);
+            lift.runViperMotor(1,1,"lifLevelTicks",1);
+            wheels.moveForward(3.25,newGlobalConfig.slow,1);
+            sleep(1500);
+            lift.runViperMotor(.6,6,"lifLevelTicks",1);
+            sleep(400);
+            claw.release();
+            sleep(500);
+            wheels.moveForward(-1,newGlobalConfig.slow,1);
+            sleep(3000);
+            lift.runViperMotor(.6,0,"lifLevelTicks",1);
+            sleep(200);
+            wheels.moveForward(-2,newGlobalConfig.slow,1);
+            sleep(200);
 
 
         }

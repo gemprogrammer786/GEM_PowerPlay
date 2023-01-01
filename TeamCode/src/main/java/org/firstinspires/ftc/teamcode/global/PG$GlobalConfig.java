@@ -31,7 +31,7 @@ public class PG$GlobalConfig {
 
     public String viperMotorName = "viperMotor";
 
-    public int[] lifLevelTicks = {0,1700, 2900, 3700, 3100};
+    public int[] lifLevelTicks = {0,1700, 2650, 3700, 3100, 2350,1450};
     public int[] coneLevelTicks = {0,300,0, 390, 490,590,1900, 430};
     public int liftLevelMin = 0;
     public int liftLevelMax = 4400;
