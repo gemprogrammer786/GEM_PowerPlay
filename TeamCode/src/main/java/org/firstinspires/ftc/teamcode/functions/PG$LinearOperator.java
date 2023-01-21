@@ -52,16 +52,16 @@ public class PG$LinearOperator extends PG$LinearMotion {
             new_TargetPosition=(liftTargetLevel==0 ? 0 :(whichLevelData=="coneLevelTicks" ? newGlobalConfig.coneLevelTicks[liftTargetLevel]:newGlobalConfig.lifLevelTicks[liftTargetLevel]) );
             linearLift.setTargetPosition(new_TargetPosition);
             linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            telemetry.setAutoClear(false);
+            /*telemetry.setAutoClear(false);
             Telemetry.Item telemetryliftCurrentLevel = telemetry.addData("Lift Current Level", getCurrentLevel());
             Telemetry.Item telemetryliftTargetLevel = telemetry.addData("Lift Target Level", liftTargetLevel);
             Telemetry.Item telemetryliftCurrentPosition = telemetry.addData("Lift Current Position", linearLift.getCurrentPosition());
             Telemetry.Item telemetryliftNewTargetPosition = telemetry.addData("Lift NewTarget Position", new_TargetPosition);
             Telemetry.Item telemetryliftCurrentTargetPosition = telemetry.addData("Lift CurrentTarget Position", linearLift.getTargetPosition());
-            telemetry.update();
+            telemetry.update();*/
             runtime.reset();
             linearLift.setPower( speed*motorErrorAdjustment);
-            while (parent.opModeIsActive() &&
+            /*while (parent.opModeIsActive() &&
                     //(runtime.seconds() < timeoutS) &&
                     (linearLift.isBusy()) &&
                     (Math.abs(linearLift.getTargetPosition()) >= Math.abs(linearLift.getCurrentPosition())) &&
@@ -73,7 +73,7 @@ public class PG$LinearOperator extends PG$LinearMotion {
                 telemetryliftNewTargetPosition.setValue(new_TargetPosition);
                 telemetryliftCurrentTargetPosition.setValue(linearLift.getTargetPosition());
                 telemetry.update();
-            }
+            }*/
         }
         //parent.sleep(250);   // optional pause after each move
         setCurrentLevel(liftTargetLevel);
