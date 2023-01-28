@@ -186,14 +186,14 @@ public class BAS_AutonomousRedLeft extends LinearOpMode {
             sleep(50);
             wheels.moveLeft(34, newGlobalConfig.veryfast, 2.0);
             wheels.moveForward(26,newGlobalConfig.medium,2.0);
-            wheels.turnClockwise(180,newGlobalConfig.medium,1.42);
+            wheels.turnClockwise(180,newGlobalConfig.medium,1.4211111111);
             wheels.moveRight(14,newGlobalConfig.medium,2);
             lift.runViperMotor(.6,2,"lifLevelTicks",1);
-            wheels.moveForward(8,newGlobalConfig.veryslow,1);
+            wheels.moveForward(55,newGlobalConfig.veryslow,1);
             lift.runViperMotor(.6,5,"lifLevelTicks",1);
             sleep(500);
             claw.release();
-            wheels.moveForward(-3.5,newGlobalConfig.slow,1);
+            wheels.moveForward(-3,newGlobalConfig.slow,1);
             sleep(200);
             lift.runViperMotor(.6,0,"lifLevelTicks",1);
             sleep(1000);
@@ -209,7 +209,7 @@ public class BAS_AutonomousRedLeft extends LinearOpMode {
             wheels.moveLeft(49, newGlobalConfig.medium, 2.0);
             lift.runViperMotor(.6,2,"lifLevelTicks",1);
             sleep(1500);
-            wheels.moveForward(3.25,newGlobalConfig.slow,1);
+            wheels.moveForward(3.5,newGlobalConfig.slow,1);
             sleep(1500);
             lift.runViperMotor(.6,5,"lifLevelTicks",1);
             sleep(400);
@@ -241,7 +241,7 @@ public class BAS_AutonomousRedLeft extends LinearOpMode {
             sleep(3000);
             lift.runViperMotor(.6,0,"lifLevelTicks",1);
             sleep(200);
-            wheels.moveForward(-2,newGlobalConfig.slow,1);
+            wheels.moveForward(-4,newGlobalConfig.slow,1);
             sleep(200);
 
 

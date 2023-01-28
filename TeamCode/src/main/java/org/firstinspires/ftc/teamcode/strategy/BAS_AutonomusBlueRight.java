@@ -230,7 +230,7 @@ public class BAS_AutonomusBlueRight extends LinearOpMode {
             wheels.turnClockwise(180,newGlobalConfig.medium,1.42);
             wheels.moveLeft(14,newGlobalConfig.medium,2);
             lift.runViperMotor(.6,2,"lifLevelTicks",1);
-            wheels.moveForward(8,newGlobalConfig.veryslow,1);
+            wheels.moveForward(3000,newGlobalConfig.veryslow,1);
             lift.runViperMotor(.6,5,"lifLevelTicks",1);
             sleep(500);
             claw.release();

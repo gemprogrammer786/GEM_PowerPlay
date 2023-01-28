@@ -12,11 +12,13 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.global.PG$GlobalConfig;
 
 public class PG$LinearMotion {
+
     //Configuration used: 6wheelConfig
     public DcMotorEx linearLift;
 
     public LinearOpMode parent;
 
+    private static double power123;
     public int velocity = 200;
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -39,5 +41,11 @@ public class PG$LinearMotion {
     }
 
 
+    public static void setPower(double power123) {
+        PG$LinearMotion.power123 = power123;
+    }
 
+    public static double getPower() {
+        return power123;
+    }
 }

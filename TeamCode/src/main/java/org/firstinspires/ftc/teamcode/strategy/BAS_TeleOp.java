@@ -6,8 +6,10 @@ package org.firstinspires.ftc.teamcode.strategy;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.components.PG$LinearMotion;
 import org.firstinspires.ftc.teamcode.functions.PG$ClawOperator;
 import org.firstinspires.ftc.teamcode.functions.PG$LinearOperator;
 import org.firstinspires.ftc.teamcode.functions.PG$RobotTeleOpDrive;
@@ -37,7 +39,7 @@ public class BAS_TeleOp extends LinearOpMode {
         lift = new PG$LinearOperator(hardwareMap,telemetry);
         lift.parent = this;
         //telemetry.setAutoClear(false);
-        Telemetry.Item telemetryDebug = telemetry.addData("Currenlty at", "PG$TeleGEMPrototype_V1 - runOpMode");
+        Telemetry.Item telemetryDebug = telemetry.addData("Currenlty at", "BAS_TeleOP - runOpMode");
         telemetry.update();
 
         waitForStart();
@@ -66,9 +68,8 @@ public class BAS_TeleOp extends LinearOpMode {
             boolean y1 = gamepad1.y;
             boolean gm1_lb = gamepad1.left_bumper;
             boolean gm1_rb = gamepad1.right_bumper;
-
-
-
+            boolean gm2_lb = gamepad2.left_bumper;
+            boolean gm2_rb = gamepad2.right_bumper;
 
 
             if(dpad_left)
@@ -90,6 +91,12 @@ public class BAS_TeleOp extends LinearOpMode {
                 lift.runViperMotor(1, afterGrabLevel,"coneLevelTicks", 1);
                 afterGrabLevel=1;
             }
+           /* else if (gm2_rb) {
+                PG$LinearMotion.setPower(1);
+            }
+            else if (gm2_lb) {
+                PG$LinearMotion.setPower(-1);
+            }*/
             else if(a1) {
                 claw.release();
                 sleep(100);
